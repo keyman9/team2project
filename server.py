@@ -22,19 +22,19 @@ def mainIndex():
     return render_template('index.html', active = "home")
 
 @app.route('/cart')
-def mainIndex():
+def cart():
     return render_template('cart.html', active = "cart")
 
 @app.route('/checkout')
-def mainIndex():
+def checkout():
     return render_template('checkout.html', active = "checkout")
 
 @app.route('/shop')
-def mainIndex():
+def shop():
     return render_template('shop.html', active = "shop")
 
 @app.route('/single-product')
-def mainIndex():
+def singleProduct():
     return render_template('single-product.html', active = "single-product")
 
 
