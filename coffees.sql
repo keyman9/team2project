@@ -17,3 +17,14 @@ CREATE TABLE Coffee (
   Description text NOT NULL default '',
   PRIMARY KEY  (ID)
 ) ;
+
+--
+-- Insert elements into Coffee table
+--
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Aldo's Blend",14.00,12,"Medium Dark","Central America","Spiced cider, dark chocolate, earthy, mequite");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Bell's Blend",14.00,12,"Medium","Central America","Peanut butter, floral earth, hot cocoa with marshmallows, a happy childhood memory");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Decaf Monk",16.00,12,"Medium Dark","Central American","Red wine, smoked caramel, chocolate undertones");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Espresso Savio",14.00,12,"Medium Dark","Central America","Nutty, fresh citrus, toffee, milk chocolate");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Ethiopia Borboya",16.00,12,"Medium","Africa","Blackberry, lemongrass, and peach tea");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Fazenda Ambiental Fortaleza",16.00,12,"Medium","South America","Plum, fig, cumin, red fruit, tawny port, blood orange");
+INSERT INTO COFFEE(Name,Price,Weight,Roast,Region,Description) VALUES ("Finca Idealista",16.00,12,"Medium","Central America","Dark chocolate and ripe plums. Mellow finish");
