@@ -20,6 +20,13 @@ def connectToDB():
 @app.route('/')
 def mainIndex():
     return render_template('index.html', active = "home")
+    
+
+@app.route('/')
+def userlogin():
+    return render_template('login.html', active = "home")
+
+
 
 # start the server
 if __name__ == '__main__':

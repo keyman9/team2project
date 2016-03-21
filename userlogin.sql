@@ -10,7 +10,7 @@ CREATE TABLE Coffee (
   USER varchar(35)  NOT NULL default '',
   PASSWORD varchar(35)  NOT NULL default '',
   EMAIL varchar(40)  NOT NULL default '',
-  ZIPCODE Price integer NOT NULL default '',
+  ZIPCODE integer NOT NULL default '',
   FAVORITECOFFEE varchar(20)  NOT NULL default '',
   PRIMARY KEY (ID)
 );
