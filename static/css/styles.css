@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
     background-color: white;
 }
 
@@ -31,4 +32,15 @@ p {
     text-align:left;
     color:black;
     padding:5px;
+=======
+    background-color: lightgrey;
+}
+
+h1 {
+    color: blue;
+}
+
+p {
+    color:green;
+>>>>>>> e1884f22ca2da6a733cbaa43ab8dc10bf992df61
 }
