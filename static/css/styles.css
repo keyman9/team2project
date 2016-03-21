@@ -1,0 +1,34 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    color: white;
+    font-family: verdana;
+}
+
+p {
+    color:black;
+}
+
+#header {
+    background-color:brown;
+    color:white;
+    text-align:left;
+    padding:5px;
+}
+
+#nav-bar {
+    line-height:30px;
+    background-color:#eeeeee;
+    padding:5px;
+}
+
+
+#content {
+    line-height:30px;
+    background-color:#eeeeee;
+    text-align:left;
+    color:black;
+    padding:5px;
+}
