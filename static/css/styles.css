@@ -1,36 +1,35 @@
+
+
 body {
-    background-color: white;
+
+    background-color:#F5F0EB;
+}
+.title-bar {
+    background-color:#331E06;
+    text-align:center;
 }
 
-h1 {
-    color: white;
+.title-bar #header {
+    padding:5px;
+    color: #CCB59A;
     font-family: verdana;
 }
 
-p {
-    color:black;
-}
-
-#header {
-    background-color:brown;
-    color:white;
-    text-align:left;
+.title-bar #nav-bar {
     padding:5px;
+    color: #B38F67;
+    /* position: relative;
+    top: 0px */
 }
 
-#nav-bar {
-    line-height:30px;
-    background-color:#eeeeee;
-    padding:5px;
+ul#menu, ul#menu li {
+    float:left;
+    text-align : center;
 }
 
+ul#menu li {
+    text-decoration : none;
+    list-style : none;
+    text-align : center;
 
-#content {
-    line-height:30px;
-    background-color:#eeeeee;
-    text-align:left;
-    color:black;
-    padding:5px;
-    background-color: lightgrey;
 }
-
