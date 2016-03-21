@@ -21,22 +21,6 @@ def connectToDB():
 def mainIndex():
     return render_template('index.html', active = "home")
 
-@app.route('/cart')
-def cart():
-    return render_template('cart.html', active = "cart")
-
-@app.route('/checkout')
-def checkout():
-    return render_template('checkout.html', active = "checkout")
-
-@app.route('/shop')
-def shop():
-    return render_template('shop.html', active = "shop")
-
-@app.route('/single-product')
-def singleProduct():
-    return render_template('single-product.html', active = "single-product")
-
 # start the server
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
