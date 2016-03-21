@@ -17,6 +17,24 @@ CREATE TABLE Coffee (
   PRIMARY KEY  (ID)
 ) ;
 
+DROP TABLE IF EXISTS User;
+CREATE TABLE User (
+  ID serial NOT NULL,
+  First_Name varchar(35)  NOT NULL default '',
+  Last_Name varchar(40)  NOT NULL default '',
+  Username varchar(35)  NOT NULL default '',
+  Password varchar(35)  NOT NULL default '',
+  PRIMARY KEY (ID)
+);
+
+DROP TABLE IF EXISTS User_Info (
+  Username varchar(35) NOT NULL default '' REFERENCES User(Username),
+  Email varchar(40)  NOT NULL default '',
+  Zipcode integer NOT NULL default '',
+  Favorite_Coffee varchar(20)  NOT NULL default '' REFERENCES Coffee(Name),
+  PRIMARY KEY (Username)
+);
+
 --
 -- Grant permissions
 --
