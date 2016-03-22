@@ -1,10 +1,11 @@
 import os
 import time
 import random
-from flask import Flask, render_template, request
-
+import hashlib, uuid
 import psycopg2
 import psycopg2.extras
+from flask import Flask, render_template, request
+
 
 app = Flask(__name__)
 
@@ -22,9 +23,18 @@ def mainIndex():
     return render_template('index.html', active = "home")
     
 
-@app.route('/')
+@app.route('/register', methods = ['GET','POST'])
 def userlogin():
-    return render_template('login.html', active = "home")
+    con = connectToDB()
+    cur = con.cursor()
+    
+    # print(request.form['first'], request.form['last'])
+    # print("Here")
+    # salt = uuid.uuid4().hex
+    # hashedPassword = hashlib.sha512(request.form['password'] + salt).hexdigest()
+    
+    
+    return render_template('register.html', active = "home")
 
 
 
