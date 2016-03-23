@@ -12,7 +12,8 @@ app = Flask(__name__)
 def connectToDB():
     connectionString = 'dbname=Coffee user=visiting password=06*65uSl13Cu host=localhost'
     print connectionString
-    try: # there can be lots of errors early on, good to catch 'em. 
+    try: 
+        # there can be lots of errors early on, good to catch 'em. 
         return psycopg2.connect(connectionString)
     except:
         print("Can't connect to database")
@@ -25,8 +26,8 @@ def mainIndex():
 
 @app.route('/register', methods = ['GET','POST'])
 def userlogin():
-    con = connectToDB()
-    cur = con.cursor()
+    # con = connectToDB()
+    # cur = con.cursor()
     
     # print(request.form['first'], request.form['last'])
     # print("Here")
