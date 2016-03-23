@@ -2,8 +2,8 @@ DROP DATABASE IF EXISTS userCoffee;
 CREATE DATABASE  userCoffee;
 \c userCoffee;
 
-DROP TABLE IF EXISTS Coffee;
-CREATE TABLE Coffee (
+DROP TABLE IF EXISTS user;
+CREATE TABLE user (
   ID serial NOT NULL,
   FIRSTNAME varchar(35)  NOT NULL default '',
   LASTNAME varchar(40)  NOT NULL default '',

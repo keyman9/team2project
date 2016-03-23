@@ -27,11 +27,15 @@ def mainIndex():
 def userlogin():
     con = connectToDB()
     cur = con.cursor()
-    
-    # print(request.form['first'], request.form['last'])
-    # print("Here")
-    # salt = uuid.uuid4().hex
-    # hashedPassword = hashlib.sha512(request.form['password'] + salt).hexdigest()
+    if request.method == 'POST':
+        # http://stackoverflow.com/questions/9594125/salt-and-hash-a-password-in-python
+        # print(request.form['first'])
+        salt = uuid.uuid4().hex
+        hashed_password = hashlib.sha224(request.form['password'] + salt).hexdigest()
+        # print('Password: ' + hashed_password)
+        cur.execute("""INSERT INTO users (First_Name, Last_Name, Username, Password) VALUES (%s, %s, %s, %s)""" ,(request.form['first'], request.form['last'], request.form['username'], hashed_password))
+        con.commit()
+        print("Great Success!")
     
     
     return render_template('register.html', active = "home")

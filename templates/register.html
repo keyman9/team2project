@@ -1,15 +1,16 @@
-{% extends "layout.html" %}
+{% extends "index.html" %}
 
 {% block content %}
+<center>
 <h1>Register Here</h1>
 <form method = "POST" action="/register">
 <table>
   <p><br></p>
   <tr> 
-    <td>First Name</td> <td> <input type="text" name="first"/></td>
+    <td>First Name</td> <td> <input type="text" name="first"></td>
   </tr>
   <tr> 
-    <td>Last Name</td> <td> <input type="text" name="last"/></td>
+    <td>Last Name</td> <td> <input type="text" name="last"></td>
   </tr>
   <tr> 
     <td>Username</td> <td> <input type="text" name="username"/></td>
@@ -17,19 +18,11 @@
   <tr>
     <td>password</td> <td> <input type="password" name="password"/></td>
   </tr>
-  <tr>
-    <td>email</td> <td> <input type="email" name="email"/></td>
-  </tr>
-  <tr>
-    <td>Zipcode</td> <td> <input type="text" name="zipcode"/></td>
-  </tr>
-  <tr>
-    <td>Favorite Coffee</td> <td> <input type="text" name="coffee"/></td>
-  </tr>
 
 </table>
 <input type="Submit" value = "Register"/>
 </form>
+</center>
 
 
 {% endblock %}
