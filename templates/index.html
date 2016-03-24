@@ -1,32 +1,7 @@
- <!DOCTYPE html>
-<html>
-<head>
-    <title>Coffee Homie</title>
-    <link rel="stylesheet" href="static/css/styles.css">
+{% extends layout.html %}
 
-</head>
-<body>
-     <!-- Collapsing Header -->
-    <div class="title-bar">
-        <div id="header">
-            <h1>coffee corner</h1>
-        </div>
+{% block content %}
 
-        <!-- Fixed to the top Nav-bar -->
-        <div  id="nav-bar" >
-            <ul id="menu">
-                <li>HOME</li>
-                <li>BROWSE</li>
-                <li>LEARN</li>
-                <li>ABOUT</li>
-                <li>LOG IN</li>
-
-            </ul>
-            <h2>This is the nav bar</h2>
-        </div>
-    </div>
-    {% block content %} {% endblock %}
+{% endblock %}
 
 
-</body>
-</html>
