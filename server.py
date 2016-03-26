@@ -20,7 +20,7 @@ def connectToDB():
 
 @app.route('/')
 def mainIndex():
-    return render_template('index.html', active = "home")
+    return render_template('layout.html', active = "home")
     
 
 @app.route('/register', methods = ['GET','POST'])
