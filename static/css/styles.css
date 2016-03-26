@@ -4,17 +4,26 @@ body {
     margin-left: 0;
 }
 
-h1 {
+.header{
+    background-color: #241109;
+}
+
+.header h1{
     margin: 0;
     padding: 0;
     padding-top: 40px;
-    margin-bottom: -20px;
-    background-color: #241109;
+    margin-bottom: -5px;
     text-align: center;
     color: #C0B897;
-    font-family: 'Open Sans';
+    font-family: 'Helvetica';
+    font-weight: normal;
     font-size: 2em;
-    
+}
+
+.nav-bar{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
 }
 
 .nav-bar div {
@@ -27,21 +36,22 @@ h1 {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #241109;
     font-family: 'Open Sans';
     font-size: 1.12em;
 }
 
-.nav-bar li {
-    float: left;
-}
-
-.nav-bar li a {
+.nav-bar li a{
     display: block;
     color: #C0B897;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    float: left;
+}
+
+.border-item {
+    border-left: 1px solid #C0B897;
+    padding-left: 20px;
 }
 
 .nav-bar li a:hover:not(.active) {
