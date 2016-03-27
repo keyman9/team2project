@@ -12,7 +12,8 @@ app = Flask(__name__)
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
     print connectionString
-    try: # there can be lots of errors early on, good to catch 'em. 
+    try: 
+        # there can be lots of errors early on, good to catch 'em. 
         return psycopg2.connect(connectionString)
     except:
         print("Can't connect to database")
@@ -36,8 +37,9 @@ def userlogin():
         cur.execute("""INSERT INTO users (First_Name, Last_Name, Username, Password) VALUES (%s, %s, %s, %s)""" ,(request.form['first'], request.form['last'], request.form['username'], hashed_password))
         con.commit()
         print("Great Success!")
-    
+        
     return render_template('register.html', selected="register")
+
 
 
 
