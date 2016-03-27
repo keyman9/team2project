@@ -6,19 +6,40 @@
 </head>
 <body>
 
-<div>
-    <h1>COFFEE CORNER</h1>
+<div class="header">
+	<div>
+	    <h1>coffee corner</h1>
+	</div>
+
+	<div class="nav-bar">
+	    <ul>
+	      <li><a class="active" href="/">HOME</a></li>
+	      <li class="center-item"><a href="#"><span class="border-item">BROWSE</span></a></li>
+	      <li><a href="#"><span class="border-item">LEARN<span></a></li>
+	      <li><a href="#"><span class="border-item">SHOP</span></a></li>
+	      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
+	      <li><a href="#"><span class="border-item">LOG IN</span></a></li>
+	    </ul>
+	</div>
 </div>
 
-<div class="nav-bar">
-    <ul>
-      <li><a class="active" href="#home">HOME</a></li>
-      <li><a href="#news">BROWSE</a></li>
+{% block content %}
 
-      <li><a href="#contact">LEARN</a></li>
-      <li><a href="#about">LOG IN</a></li>
-    </ul>
-</div>
+{% endblock %}
+
+<footer>
+	<div class="nav-bar">
+	    <ul>
+	      <li><a class="active" href="/">HOME</a></li>
+	      <li class="center-item"><a href="#"><span class="border-item">BROWSE</span></a></li>
+	      <li><a href="#"><span class="border-item">LEARN<span></a></li>
+	      <li><a href="#"><span class="border-item">SHOP</span></a></li>
+	      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
+	      <li><a href="#"><span class="border-item">LOG IN</span></a></li>
+	    </ul>
+	</div>
+</footer>
+
 
 </body>
 </html>

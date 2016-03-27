@@ -10,7 +10,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 def connectToDB():
-    connectionString = 'dbname=Coffee user=visiting password=06*65uSl13Cu host=localhost'
+    connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
     print connectionString
     try: 
         # there can be lots of errors early on, good to catch 'em. 
@@ -21,20 +21,23 @@ def connectToDB():
 
 @app.route('/')
 def mainIndex():
-    return render_template('index.html', active = "home")
+    return render_template('layout.html', active = "home")
     
 
 @app.route('/register', methods = ['GET','POST'])
 def userlogin():
-    # con = connectToDB()
-    # cur = con.cursor()
-    
-    # print(request.form['first'], request.form['last'])
-    # print("Here")
-    # salt = uuid.uuid4().hex
-    # hashedPassword = hashlib.sha512(request.form['password'] + salt).hexdigest()
-    
-    
+    con = connectToDB()
+    cur = con.cursor()
+    if request.method == 'POST':
+        # http://stackoverflow.com/questions/9594125/salt-and-hash-a-password-in-python
+        # print(request.form['first'])
+        salt = uuid.uuid4().hex
+        hashed_password = hashlib.sha224(request.form['password'] + salt).hexdigest()
+        # print('Password: ' + hashed_password)
+        cur.execute("""INSERT INTO users (First_Name, Last_Name, Username, Password) VALUES (%s, %s, %s, %s)""" ,(request.form['first'], request.form['last'], request.form['username'], hashed_password))
+        con.commit()
+        print("Great Success!")
+
     return render_template('register.html', active = "home")
 
 
