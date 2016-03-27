@@ -20,7 +20,7 @@ def connectToDB():
 
 @app.route('/')
 def mainIndex():
-    return render_template('layout.html', active = "home")
+    return render_template('layout.html', selected="home")
     
 
 @app.route('/register', methods = ['GET','POST'])
@@ -37,8 +37,7 @@ def userlogin():
         con.commit()
         print("Great Success!")
     
-    
-    return render_template('register.html', active = "home")
+    return render_template('register.html', selected="register")
 
 
 
