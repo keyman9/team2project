@@ -66,6 +66,10 @@ body {
     color: white;
 }
 
+.right-block {
+    border: 1px solid black;
+}
+
 footer{
    position: absolute;
    bottom: 0;

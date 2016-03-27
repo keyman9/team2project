@@ -21,7 +21,7 @@ def connectToDB():
 
 @app.route('/')
 def mainIndex():
-    return render_template('layout.html', selected="home")
+    return render_template('index.html', selected="home")
     
 
 @app.route('/register', methods = ['GET','POST'])
