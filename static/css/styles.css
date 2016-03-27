@@ -2,6 +2,7 @@ body {
     margin-top: 0;
     margin-right: 0;
     margin-left: 0;
+    background-color: #EAE2D8;
 }
 
 .header{
@@ -22,13 +23,8 @@ body {
 
 .nav-bar{
     margin: auto;
-    width: 45%;
+    width: 38%;
     padding: 10px;
-}
-
-.nav-bar div {
-    width: 300px;
-    float: right;
 }
 
 .nav-bar ul {
@@ -44,7 +40,8 @@ body {
     display: block;
     color: #7A5D39;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 12px;
+    padding-bottom: 9px;
     text-decoration: none;
     float: left;
 }
@@ -54,10 +51,6 @@ body {
     padding-left: 20px;
 }
 
-.nav-bar li a:hover:not(.active) {
+.nav-bar a:hover {
+    color: white;
 }
-
-.active {
-    /*background-color: #C0B897;*/
-}
-
