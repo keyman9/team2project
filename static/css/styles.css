@@ -37,13 +37,17 @@ body {
 }
 
 .nav-bar li a{
-    display: block;
     color: #7A5D39;
-    text-align: center;
     padding: 14px 12px;
     padding-bottom: 9px;
     text-decoration: none;
     float: left;
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    /* ...and now for the proper property */
+    transition:.2s;
 }
 
 .border-item {
