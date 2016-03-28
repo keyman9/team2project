@@ -78,6 +78,10 @@ body {
     padding-bottom: 70px;
 }
 
+.page-title h2 {
+    font-family: 'Futura';
+}
+
 .content-block {
     position: relative;
     float: left;
@@ -104,7 +108,7 @@ body {
    
 }
 
-.content-header ul, h2{
+.content-header ul h2{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -140,20 +144,6 @@ body {
     padding-bottom : 5px;
     padding-top: 5px;
     color :#C0B897; /* this is a gross color right now */
-}
-
-.page-title {
-    margin-top : 0;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0;
-    text-align : center;
-    padding-bottom : 5px;
-    padding-top: 5px;
-    font-family: 'Futura';
-    background-color: #e3dace;
-    color: black;
-
 }
 
 footer{
