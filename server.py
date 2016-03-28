@@ -71,12 +71,6 @@ def register():
 
     return render_template('register.html', selected="register")
 
-    
-    
-@app.route('/learn', methods = ['GET','POST'])
-def learn():
-    return render_template('learn.html', selected = "learn")
-
 
 @app.route('/about', methods=['GET'])
 def about():
