@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+
+{% block content %}
+<center>
+<h1>Login</h1>
+<form method = "POST">
+<table>
+  <p><br></p>
+    <td>Username</td> <td> <input type="text" name="username"/></td>
+  </tr>
+  <tr>
+    <td>password</td> <td> <input type="password" name="password"/></td>
+  </tr>
+
+</table>
+<input type="Submit" value = "Login" action='/home'/>
+</form>
+</center>
+{% endblock %}

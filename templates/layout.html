@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -16,19 +17,21 @@
 		      <li {% if selected == 'home' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/">HOME</a></li>
-              <li {% if selected == 'browse' %} id="selected" {%endif%}><a href="#"><span class="border-item">BROWSE</span></a></li>
-		      <li {% if selected == 'learn' %} id="selected" {%endif%}><a href="learn"><span class="border-item">LEARN<span></a></li>
-		      <li {% if selected == 'shop' %} id="selected" {%endif%}><a href="#"><span class="border-item">SHOP</span></a></li>
-		      <li {% if selected == 'about' %} id="selected" {%endif%}><a href="#"><span class="border-item">ABOUT</span></a></li>
+		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
+		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
+		      <li><a href="/shop"><span class="border-item">SHOP</span></a></li>
+		      <!--<li><a href="/about"><span class="border-item">ABOUT</span></a></li>-->
 		      <li{% if selected == 'register' %}
 		      		id="selected"
-		      	  {% endif %}><a href="/register"><span class="border-item">
+		      	  {% endif %}><a href="/login"><span class="border-item">
 		      	  {% if loggedIn %}
 		      	  	ACCOUNT
 		      	  {% else %}
 		      	  	LOG IN
 		      	  {% endif %}
 		      	</span></a></li>
+		      	<li><a href="/register"><span class="border-item">REGISTER</span></a></li>
+		      	<li> {{user}}</li>
 		    </ul>
 		</div>
 	</div>
@@ -43,17 +46,17 @@
 		<div class="nav-bar">
 		    <ul>
 		      <li><a href="/">HOME</a></li>
-		      <li><a href="#"><span class="border-item">BROWSE</span></a></li>
-		      <li><a href="#"><span class="border-item">LEARN<span></a></li>
-		      <li><a href="#"><span class="border-item">SHOP</span></a></li>
-		      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
-		      <li><a href="/register"><span class="border-item">
-		      	  {% if loggedIn %}
-		      	  	ACCOUNT
-		      	  {% else %}
-		      	  	LOG IN
-		      	  {% endif %}
-		      	</span></a></li>
+		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
+		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
+		      <li><a href="/about"><span class="border-item">ABOUT</span></a></li>
+		      <li><a href="/contact"><span class="border-item">CONTACT US</span></a></li>
+		      <!--<li><a href="/register"><span class="border-item">-->
+		      <!--	  {% if loggedIn %}-->
+		      <!--	  	ACCOUNT-->
+		      <!--	  {% else %}-->
+		      <!--	  	LOG IN-->
+		      <!--	  {% endif %}-->
+		      <!--	</span></a></li>-->
 		    </ul>
 		</div>
 	</footer>
