@@ -4,8 +4,7 @@ import random
 import hashlib, uuid
 import psycopg2
 import psycopg2.extras
-from flask import Flask, render_template, request
-
+from flask import Flask, render_template, request, session
 
 app = Flask(__name__)
 
@@ -21,9 +20,11 @@ def connectToDB():
 
 @app.route('/')
 def mainIndex():
-    return render_template('index.html', selected="home")
+	loggedIn = False
+	if 'username' in session:
+		loggedIn = True
+	return render_template('index.html', selected="home", loggedIn=loggedIn)
     
-
 @app.route('/register', methods = ['GET','POST'])
 def userlogin():
     con = connectToDB()
