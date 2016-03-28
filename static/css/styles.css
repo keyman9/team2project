@@ -34,6 +34,7 @@ body {
     color: #C0B897;
 }
 
+
 .nav-bar{
     margin-right: auto;
     margin-left: auto;
@@ -80,14 +81,40 @@ body {
 .content-block {
     position: relative;
     float: left;
-    border: 1px solid black;
-    font-family: 'Futura';
-    width: 390px;
+    font-family: 'Avenir';
+    width: 30%;
     height: 458px;
-    margin-top: 3px;
-    margin-left: 10px;
-    margin-right: 15px;
+    margin-top: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     padding-left: 0;
+}
+
+.content-header {
+    position: relative;
+    font-family: 'Avenir';
+    width: 30%;
+    height: 458px;
+    margin-top: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 0;
+
+   
+}
+
+.content-header ul, h2{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Futura';
+    font-size: 1.7em;
+
+    float : left;
+    background-color : #241109;
+    color: white;
+
 }
 
 /* Used on the learn page, for example */
@@ -103,6 +130,19 @@ body {
     color :#C0B897; /* this is a gross color right now */
 }
 
+.page-title {
+    margin-top : 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    text-align : center;
+    padding-bottom : 5px;
+    padding-top: 5px;
+    font-family: 'Futura';
+    background-color: #e3dace;
+    color: black;
+
+}
 
 footer{
    position: relative;

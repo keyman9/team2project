@@ -77,7 +77,7 @@ def register():
     
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
-    hideHeader = True
+    hideHeader = False 
     return render_template('learn.html', selected = "learn",active = "learn", hideHeader=hideHeader)
 
 @app.route('/login', methods = ['GET','POST'])

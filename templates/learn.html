@@ -2,17 +2,57 @@
 
 {% block content%}
 
-<div class="header">
-    <h1>Learn about Coffee.</h1>
+<script>
+
+function showContent(toShow) {
+
+    if(toShow == 'brew') {
+        document.getElementById("brew").style.visibility = 'visible';
+
+        document.getElementById("beans").style.visibility= 'hidden';
+    } else {
+        document.getElementById("brew").style.visibility = 'hidden';
+
+        document.getElementById("beans").style.visibility = 'visible';
+    }
+}
+document.getElementById("brew-button").onclick = function() {
+}
+
+document.getElementById("bean-button").onclick = function() {
+}
+
+
+
+</script>
+
+<div class="page-title" >
+    <h1>What would you like to learn about?</h1>
+</div>
+
+<div class="content-header">
+    <ul>
+        <li onclick="showContent('brew')"><h2>Brew Techniques</h2></li>
+        <li onclick="showContent('beans')"><h2>Beans & Roasts</h2></li>
+    </ul>
 </div>
 
 <div class="content-block">
-    <h2>Brew Techniques</h2>
+    <div  id="brew" style="visibility: hidden" >
+        <h1> Hey i'm brew </h1>
+        <p> I'm gonna tell you a whole lot of stuff about brewing coffee!
+        you just wait, we're gonan have a lot of good ole times together.
+        </p>
+    </div>
+    <div id="beans" style="visibility:hidden" >
+        <h1> Hey i'm beans</h1>
+        <p>Dark, french, blah balh blah, here's where you learn some stuff
+        about the roast of beans and wher ethey come from. It's about time you
+        knew this shit anyways homies.
+        </p>
+    </div>
 </div>
 
-<div class="content-block">
-    <h2>Coffee Beans</h2>
-    
-</div>
+
 
 {% endblock %}
