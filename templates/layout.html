@@ -6,44 +6,57 @@
 </head>
 <body>
 
-<div class="header">
-	<div>
-	    <h1><a href="/">coffee corner</a></h1>
+	<div class="header">
+		<div>
+		    <h1><a href="/">coffee corner</a></h1>
+		</div>
+
+		<div class="nav-bar">
+		    <ul>
+		      <li {% if selected == 'home' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/">HOME</a></li>
+		      <li><a href="#"><span class="border-item">BROWSE</span></a></li>
+		      <li><a href="#"><span class="border-item">LEARN<span></a></li>
+		      <li><a href="#"><span class="border-item">SHOP</span></a></li>
+		      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
+		      <li{% if selected == 'register' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/register"><span class="border-item">
+		      	  {% if loggedIn %}
+		      	  	ACCOUNT
+		      	  {% else %}
+		      	  	LOG IN
+		      	  {% endif %}
+		      	</span></a></li>
+		    </ul>
+		</div>
 	</div>
 
-	<div class="nav-bar">
-	    <ul>
-	      <li {% if selected == 'home' %}
-	      		id="selected"
-	      	  {% endif %}><a href="/">HOME</a></li>
-	      <li><a href="#"><span class="border-item">BROWSE</span></a></li>
-	      <li><a href="#"><span class="border-item">LEARN<span></a></li>
-	      <li><a href="#"><span class="border-item">SHOP</span></a></li>
-	      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
-	      <li{% if selected == 'register' %}
-	      		id="selected"
-	      	  {% endif %}><a href="/register"><span class="border-item">LOG IN</span></a></li>
-	    </ul>
+	<div class="wrapper">
+		<div class="page-content">
+			{% block content %}{% endblock %}
+		</div>
 	</div>
-</div>
 
-{% block content %}
-
-{% endblock %}
-
-<footer>
-	<div class="nav-bar">
-	    <ul>
-	      <li><a class="active" href="/">HOME</a></li>
-	      <li class="center-item"><a href="#"><span class="border-item">BROWSE</span></a></li>
-	      <li><a href="#"><span class="border-item">LEARN<span></a></li>
-	      <li><a href="#"><span class="border-item">SHOP</span></a></li>
-	      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
-	      <li><a href="/register"><span class="border-item">LOG IN</span></a></li>
-	    </ul>
-	</div>
-</footer>
-
+	<footer>
+		<div class="nav-bar">
+		    <ul>
+		      <li><a href="/">HOME</a></li>
+		      <li><a href="#"><span class="border-item">BROWSE</span></a></li>
+		      <li><a href="#"><span class="border-item">LEARN<span></a></li>
+		      <li><a href="#"><span class="border-item">SHOP</span></a></li>
+		      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
+		      <li><a href="/register"><span class="border-item">
+		      	  {% if loggedIn %}
+		      	  	ACCOUNT
+		      	  {% else %}
+		      	  	LOG IN
+		      	  {% endif %}
+		      	</span></a></li>
+		    </ul>
+		</div>
+	</footer>
 
 </body>
 </html>
