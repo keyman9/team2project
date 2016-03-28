@@ -22,9 +22,10 @@ def connectToDB():
 @app.route('/')
 def mainIndex():
 	loggedIn = False
+        hideHeader = False
 	if 'username' in session:
 		loggedIn = True
-	return render_template('index.html', selected="home", loggedIn=loggedIn)
+	return render_template('index.html', selected="home", loggedIn=loggedIn, hideHeader=hideHeader)
     
 
 @app.route('/home')
@@ -76,7 +77,8 @@ def register():
     
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
-    return render_template('learn.html', selected = "learn",active = "learn")
+    hideHeader = True
+    return render_template('learn.html', selected = "learn",active = "learn", hideHeader=hideHeader)
 
 @app.route('/login', methods = ['GET','POST'])
 def login():

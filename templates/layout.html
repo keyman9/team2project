@@ -8,9 +8,14 @@
 <body>
 
 	<div class="header">
+
+        <!-- Hide the header in some cases -->
+        {% if hideHeader %}
+        {% else %}
 		<div>
 		    <h1><a href="/">coffee corner</a></h1>
 		</div>
+        {% endif %}
 
 		<div class="nav-bar">
 		    <ul>
