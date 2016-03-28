@@ -27,10 +27,11 @@ def mainIndex():
             price = request.form['price']
             weight = request.form['weight']
             roast = request.form['roast']
+			body =  request.form['body']
             region = request.form['region']
             description = request.form['description']
             query = 'INSERT INTO coffee (name, price, weight, roast, region, description) VALUES (%s, %s, %s, %s, %s, %s)'
-            cur.execute(query, [name, price, weight, roast, region, description])
+            cur.execute(query, [name, price, weight, roast, body, region, description])
             con.commit()
         except:
             print 'INSERT ERROR'
