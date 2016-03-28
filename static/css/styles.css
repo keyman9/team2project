@@ -94,11 +94,12 @@ body {
     position: relative;
     font-family: 'Avenir';
     width: 30%;
-    height: 458px;
+    height: 20px;
     margin-top: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 0;
+    padding-right: 10px;
 
    
 }
@@ -115,6 +116,17 @@ body {
     background-color : #241109;
     color: white;
 
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+
+}
+
+.content-header li h2:hover {
+    background-color: white;
+    color: black;
 }
 
 /* Used on the learn page, for example */

@@ -8,12 +8,16 @@ function showContent(toShow) {
 
     if(toShow == 'brew') {
         document.getElementById("brew").style.visibility = 'visible';
-
         document.getElementById("beans").style.visibility= 'hidden';
+
+        document.getElementById("brew").style.display= 'block';
+        document.getElementById("beans").style.display= 'none';
     } else {
         document.getElementById("brew").style.visibility = 'hidden';
-
         document.getElementById("beans").style.visibility = 'visible';
+
+        document.getElementById("brew").style.display= 'none';
+        document.getElementById("beans").style.display= 'block';
     }
 }
 document.getElementById("brew-button").onclick = function() {
@@ -38,13 +42,13 @@ document.getElementById("bean-button").onclick = function() {
 </div>
 
 <div class="content-block">
-    <div  id="brew" style="visibility: hidden" >
+    <div  id="brew" style="visibility: hidden; display: none" >
         <h1> Hey i'm brew </h1>
         <p> I'm gonna tell you a whole lot of stuff about brewing coffee!
         you just wait, we're gonan have a lot of good ole times together.
         </p>
     </div>
-    <div id="beans" style="visibility:hidden" >
+    <div id="beans" style="visibility:hidden; display: none" >
         <h1> Hey i'm beans</h1>
         <p>Dark, french, blah balh blah, here's where you learn some stuff
         about the roast of beans and wher ethey come from. It's about time you
