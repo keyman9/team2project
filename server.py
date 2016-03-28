@@ -25,7 +25,7 @@ def mainIndex():
 	if 'username' in session:
 		loggedIn = True
 	return render_template('index.html', selected="home", loggedIn=loggedIn)
-    
+
 
 @app.route('/browse', methods = ['GET','POST'])
 def browse():
@@ -71,6 +71,13 @@ def register():
 
     return render_template('register.html', selected="register")
 
+    
+    
+@app.route('/learn', methods = ['GET','POST'])
+def learn():
+    return render_template('learn.html', selected = "learn")
+
+
 @app.route('/about', methods=['GET'])
 def about():
 	return render_template('about.html', selected="about")
@@ -92,8 +99,9 @@ def login():
         # else:
         #     print("Username not valid")
 
-    
+   
     return render_template('login.html', selected="login/account")
+
 
 
 

@@ -78,6 +78,10 @@ body {
     padding-bottom: 70px;
 }
 
+.page-title h2 {
+    font-family: 'Futura';
+}
+
 .content-block {
     position: relative;
     float: left;
