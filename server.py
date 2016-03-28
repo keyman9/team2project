@@ -4,13 +4,14 @@ import random
 import hashlib, uuid
 import psycopg2
 import psycopg2.extras
+from collections import defaultdict
 from flask import Flask, render_template, request, session
 
 app = Flask(__name__)
 
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
-    print connectionString
+    print(connectionString)
     try: 
         # there can be lots of errors early on, good to catch 'em. 
         return psycopg2.connect(connectionString)
@@ -30,7 +31,30 @@ def mainIndex():
 def home():
     return render_template('home.html', active = "home")
     
-
+@app.route('/browse', methods = ['GET','POST'])
+def browse():
+    results = defaultdict(list)
+    colNames = []
+    con = connectToDB()
+    cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if request.method == 'POST':
+        searchFor = request.form['roast']
+        statement = """SELECT * FROM coffee WHERE Roast = %s"""
+        try:
+            print(cur.mogrify(statement,(searchFor,)))
+            cur.execute(statement,(searchFor,))
+        except:
+            print("Error executing select statement")
+        results = cur.fetchall()
+    try:
+        cur.execute("""Select column_name from information_schema.columns where table_name = 'coffee'""")     
+    except:
+        print("Error retrieving Column names")
+    colNames = cur.fetchall()    
+    for item in colNames:
+        for colName in item:
+            colName = str(colName).capitalize()
+    return render_template('browse.html',active="browse",columns=colNames,results=results)
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
