@@ -47,9 +47,13 @@ def register():
 
     
     
-    return render_template('register.html', active = "home")
+    return render_template('register.html', active = "register")
     
     
+@app.route('/learn', methods = ['GET','POST'])
+def learn():
+    return render_template('learn.html', selected = "learn",active = "learn")
+
 @app.route('/login', methods = ['GET','POST'])
 def login():
     # con = connectToDB()

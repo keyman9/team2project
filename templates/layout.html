@@ -16,10 +16,10 @@
 		      <li {% if selected == 'home' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/">HOME</a></li>
-		      <li><a href="#"><span class="border-item">BROWSE</span></a></li>
-		      <li><a href="#"><span class="border-item">LEARN<span></a></li>
-		      <li><a href="#"><span class="border-item">SHOP</span></a></li>
-		      <li><a href="#"><span class="border-item">ABOUT</span></a></li>
+              <li {% if selected == 'browse' %} id="selected" {%endif%}><a href="#"><span class="border-item">BROWSE</span></a></li>
+		      <li {% if selected == 'learn' %} id="selected" {%endif%}><a href="learn"><span class="border-item">LEARN<span></a></li>
+		      <li {% if selected == 'shop' %} id="selected" {%endif%}><a href="#"><span class="border-item">SHOP</span></a></li>
+		      <li {% if selected == 'about' %} id="selected" {%endif%}><a href="#"><span class="border-item">ABOUT</span></a></li>
 		      <li{% if selected == 'register' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/register"><span class="border-item">
