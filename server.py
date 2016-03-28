@@ -22,16 +22,11 @@ def connectToDB():
 @app.route('/')
 def mainIndex():
 	loggedIn = False
-        hideHeader = False
 	if 'username' in session:
 		loggedIn = True
-	return render_template('index.html', selected="home", loggedIn=loggedIn, hideHeader=hideHeader)
+	return render_template('index.html', selected="home", loggedIn=loggedIn)
     
 
-@app.route('/home')
-def home():
-    return render_template('home.html', active = "home")
-    
 @app.route('/browse', methods = ['GET','POST'])
 def browse():
     results = defaultdict(list)
@@ -55,7 +50,11 @@ def browse():
     for item in colNames:
         for colName in item:
             colName = str(colName).capitalize()
-    return render_template('browse.html',active="browse",columns=colNames,results=results)
+    return render_template('browse.html',selected="browse",columns=colNames,results=results)
+
+@app.route('/learn', methods = ['GET','POST'])
+def learn():
+    return render_template('learn.html', selected="learn")
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -70,16 +69,13 @@ def register():
         # con.commit()
         print("Great Success!")
 
-    
-    
-    return render_template('register.html', active = "register")
-    
-    
-@app.route('/learn', methods = ['GET','POST'])
-def learn():
-    hideHeader = False 
-    return render_template('learn.html', selected = "learn",active = "learn", hideHeader=hideHeader)
+    return render_template('register.html', selected="register")
 
+@app.route('/about', methods=['GET'])
+def about():
+	return render_template('about.html', selected="about")
+    
+   
 @app.route('/login', methods = ['GET','POST'])
 def login():
     # con = connectToDB()
@@ -97,7 +93,7 @@ def login():
         #     print("Username not valid")
 
     
-    return render_template('login.html', active = "home")
+    return render_template('login.html', selected="login/account")
 
 
 

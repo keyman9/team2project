@@ -9,24 +9,26 @@
 
 	<div class="header">
 
-        <!-- Hide the header in some cases -->
-        {% if hideHeader %}
-        {% else %}
 		<div>
 		    <h1><a href="/">coffee corner</a></h1>
 		</div>
-        {% endif %}
 
 		<div class="nav-bar">
 		    <ul>
 		      <li {% if selected == 'home' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/">HOME</a></li>
-		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
-		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
+		      <li {% if selected == 'browse' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/browse"><span class="border-item">BROWSE</span></a></li>
+		      <li {% if selected == 'learn' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/learn"><span class="border-item">LEARN<span></a></li>
 		      <li><a href="/shop"><span class="border-item">SHOP</span></a></li>
-		      <!--<li><a href="/about"><span class="border-item">ABOUT</span></a></li>-->
-		      <li{% if selected == 'register' %}
+		      <li {% if selected == 'about' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/about"><span class="border-item">ABOUT</span></a></li>
+		      <li{% if selected == 'login/account' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/login"><span class="border-item">
 		      	  {% if loggedIn %}
@@ -35,8 +37,6 @@
 		      	  	LOG IN
 		      	  {% endif %}
 		      	</span></a></li>
-		      	<li><a href="/register"><span class="border-item">REGISTER</span></a></li>
-		      	<li> {{user}}</li>
 		    </ul>
 		</div>
 	</div>
@@ -52,7 +52,7 @@
 		    <ul>
 		      <li><a href="/">HOME</a></li>
 		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
-		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
+		      <li><a hre	f="/learn"><span class="border-item">LEARN<span></a></li>
 		      <li><a href="/about"><span class="border-item">ABOUT</span></a></li>
 		      <li><a href="/contact"><span class="border-item">CONTACT US</span></a></li>
 		      <!--<li><a href="/register"><span class="border-item">-->
