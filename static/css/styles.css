@@ -203,23 +203,24 @@ body {
     box-shadow: none;
     border-radius: 0;
 
-    color: black;
+    color: #241109;
     background: #faf4ec;
-    border: solid 3px black;
+    border: solid 3px #241109;
+
+    transition: background .3s;
+    transition: color .4s;
+
 }
 
 .login button[type=submit]:hover {
     outline: none;
-
-    border-color: grey;
-    color: grey;
+    color: #c8b69d;
+    background: #241109;
 }
 
 .login button[type=submit]:active {
     outline: none;
 
-    border-color: white;
-    color: white;
 }
 
 
