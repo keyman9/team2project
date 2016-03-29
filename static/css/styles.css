@@ -166,6 +166,109 @@ body {
     color: black;
 }
 
+/************** 
+ * login page *
+ **************/
+
+#sign-in {
+    font-family: 'Avenir';
+    font-size: 2.7em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+
+}
+.login input[type="text"] {
+    display: block;
+    margin: 0;
+    width 100%;
+    font-family: sans-serif;
+    font-size: 13px;
+    appearance: none;
+    border-radius: none;
+    border: none;
+
+    background-color: #faf4ec;
+
+    padding: 10px;
+    box-shadow: none;
+
+    border-bottom: solid 2px black;
+    transition: border 0.3s;
+}
+
+.login td {
+    font-family: 'Avenir';
+    font-size: 1.1em;
+
+}
+
+.login input[type="text"]:focus {
+    outline: none;
+    border-bottom: solid 2px orange;
+}
+
+/* login button stuff */
+.login button[type="submit"]{
+    display: inline-block;
+    margin: 20px 0 0 0;
+    padding: 0px 20px;
+    font-size: 20px;
+    font-family: 'Avenir';
+    line-height: 1.8;
+    appearance: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    color: #241109;
+    background: #faf4ec;
+    border: solid 3px #241109;
+
+    transition: background .3s;
+    transition: color .4s;
+
+}
+
+.login button[type=submit]:hover {
+    outline: none;
+    color: #c8b69d;
+    background: #241109;
+}
+
+.login button[type=submit]:active {
+    outline: none;
+
+}
+
+
+.login input[type="password"] {
+    display: block;
+    margin: 0;
+    width 100%;
+    font-family: sans-serif;
+    font-size: 18px;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+
+    background-color: #faf4ec;
+
+    padding: 5px;
+    border: none;
+    border-bottom: solid 2px black;
+    transition: border 0.3s;
+
+}
+
+.login input[type="password"]:focus {
+    outline: none;
+    border-bottom: solid 2px orange;
+}
+
+/*** End login page rules ****/
+
+
+
+
 /* Used on the learn page, for example */
 .content-block h2 {
     background-color: #7A5D39;
