@@ -79,19 +79,20 @@ def about():
    
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    # con = connectToDB()
-    # cur = con.cursor()
+    con = connectToDB()
+    cur = con.cursor()
     if request.method == 'POST':
         username  = request.form['username']
         password = request.form['password']
         print("Username: " + username + "Password: " + password)
-        # print('Password: ' + hashed_password)
-        # valdate = cur.execute("SELECT Username, Password FROM Users WHERE Username = %s and Password = %s" % (username,password))
-        # if valdate != []:
-        #     print("Connection Successful")
-        #     con.commit()
-        # else:
-        #     print("Username not valid")
+        print('Password: ' + hashed_password)
+        valdate = cur.execute("SELECT Username, Password FROM Users WHERE Username = %s and Password = %s" % (username,password))
+        if valdate != []:
+            print("Connection Successful")
+            con.commit()
+            return render_template('index.html', selected="home", loggedIn=True)
+        else:
+            print("Username not valid")
 
    
     return render_template('login.html', selected="login/account")
