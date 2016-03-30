@@ -1,37 +1,43 @@
 {% extends "index.html" %}
 
 {% block content %}
-<p>Testing Browse page</p>
-<div>
-<form method="POST" action="/browse">
+<center>
+    <h1 id="sign-in">Search for coffee!</h1>
+    <div>
+        <form method="POST" action="/browse">
 
-	<p>Search: <select name="roast" id="roast">
-		<option value="Light">Light</option>
-		<option value="Medium Light">Medium Light</option>
-		<option value="Medium">Medium</option>
-		<option value="Medium Dark">Medium Dark</option>
-		<option value="Dark">Dark</option>
-	</select>
+            <p>Search: <select name="roast" id="roast">
+                <option value="Light">Light</option>
+                <option value="Medium Light">Medium Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Medium Dark">Medium Dark</option>
+                <option value="Dark">Dark</option>
+            </select>
 
-	<input type="Submit" action='/browse'>
-	</p>
-</form>
-</div>
-<div>
-	<table>
-	<tr>{% for row in columns %}
-		{% for colName in row %}
-		<th>{{colName}}</th>
-		{% endfor %}
-		{% endfor %}
-	</tr>
-	{% for row in results %}
-		<tr>
-		{% for item in row %}
-			<td>{{item}}</td>
-		{% endfor %}
-		</tr>
-	{% endfor %}
-	</table>
-</div>
+            <section class="login">
+                <button onclick="showDiv('results')" type="Submit" action='/browse'>Go!</button>
+            </section>
+            </p>
+        </form>
+    </div>
+
+    <div style="display: none" id="results">
+        <table>
+        <tr>{% for row in columns %}
+            {% for colName in row %}
+            <th>{{colName}}</th>
+            {% endfor %}
+            {% endfor %}
+        </tr>
+        {% for row in results %}
+            <tr>
+            {% for item in row %}
+                <td>{{item}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+</center>
 {% endblock %}
