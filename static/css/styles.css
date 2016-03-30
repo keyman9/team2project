@@ -103,7 +103,8 @@ body {
 .page-title h1 {
     font-family: 'Futura';
     color: #402A0B;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 4.5em;
 }
 
 .block-title{
@@ -129,6 +130,10 @@ body {
     margin-right: auto;
 }
 
+.content-block p {
+    font-size: 1.3em;
+}
+
 .content-header {
     position: relative;
     font-family: 'Avenir';
@@ -141,7 +146,7 @@ body {
     padding-right: 10px;
 }
 
-.content-header ul h2{
+.content-header ul h2 {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -283,22 +288,6 @@ body {
 }
 
 /*** End login page rules ****/
-
-
-
-
-/* Used on the learn page, for example */
-.content-block h2 {
-    background-color: #7A5D39;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    text-align : center;
-    padding-bottom : 5px;
-    padding-top: 5px;
-    color :#C0B897; /* this is a gross color right now */
-}
 
 footer{
    position: relative;

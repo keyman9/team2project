@@ -105,7 +105,7 @@ def login():
             session['password'] = password
             return render_template('index.html', selected="home", loggedIn=True)
         else:
-            return render_template('login.html', selected="home", loggedIn=False, invalid="INVALID INFO")
+            return render_template('login.html', selected="login/account", loggedIn=False, invalid="INVALID INFO")
     
     loggedIn = False
     if 'username' in session:
