@@ -177,6 +177,24 @@ body {
     margin-bottom: 0px;
 
 }
+
+#to-register {
+    font-family: 'Avenir';
+    font-size: 1.0em;
+}
+
+#to-register a {
+    text-decoration: none;
+    color: #ff9933;
+
+    transition: color .2s;
+}
+
+#to-register a:hover {
+    color: #e67300;
+
+}
+
 .login input[type="text"] {
     display: block;
     margin: 0;
