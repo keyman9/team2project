@@ -25,7 +25,9 @@
 		      <li {% if selected == 'learn' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/learn"><span class="border-item">LEARN<span></a></li>
-		      <li><a href="/shop"><span class="border-item">SHOP</span></a></li>
+		      <li {% if selected == 'shop' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/shop"><span class="border-item">SHOP</span></a></li>
 		      <li {% if selected == 'about' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/about"><span class="border-item">ABOUT</span></a></li>

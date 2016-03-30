@@ -82,10 +82,10 @@ def register():
         cur.execute(query, [username])
         userCheck = cur.fetchall()
         if len(userCheck) > 0:
-            print "USERNAME IS TAKEN"
+            return render_template('register.html', invalid="Username is already taken!")
         else:
             if password != passwordConf:
-                print "PASSWORDS DO NOT MATCH"
+                return render_template('register.html', invalid="Passwords do not match!")
             else: 
                 try:
                     query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
@@ -109,7 +109,8 @@ def about():
     loggedIn = False
     if 'username' in session:
         loggedIn = True
-	return render_template('about.html', selected="about", loggedIn=loggedIn)
+	
+    return render_template('about.html', selected="about", loggedIn=loggedIn)
     
    
 @app.route('/login', methods = ['GET','POST'])
@@ -130,7 +131,7 @@ def login():
             session['password'] = password
             return render_template('index.html', selected="home", loggedIn=True)
         else:
-            return render_template('login.html', selected="login/account", loggedIn=False, invalid="INVALID INFO")
+            return render_template('login.html', selected="login/account", loggedIn=False, invalid="Invalid Username or Password")
     
     loggedIn = False
     if 'username' in session:

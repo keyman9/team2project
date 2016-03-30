@@ -310,7 +310,10 @@ body {
 
 }
 
-
+.invalid {
+    font-family: "Avenir";
+    color: red;
+}
 
 
 /*** End login page rules ****/
