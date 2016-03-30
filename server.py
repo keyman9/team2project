@@ -137,6 +137,12 @@ def login():
         loggedIn = True
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
 
+@app.route('/shop', methods = ['GET', 'POST'])
+def shop():
+
+    loggedIn = False
+    return render_template('shop.html', selected="shop", loggedIn=loggedIn)
+
 
 
 
