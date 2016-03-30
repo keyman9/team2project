@@ -66,18 +66,42 @@ def learn():
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
-    # con = connectToDB()
-    # cur = con.cursor()
+    con = connectToDB()
+    cur = con.cursor()
     if request.method == 'POST':
-        # print(request.form['first'])
-        salt = uuid.uuid4().hex
-        hashed_password = hashlib.sha224(request.form['password'] + salt).hexdigest()
-        # print('Password: ' + hashed_password)
-        # cur.execute("""INSERT INTO users (First_Name, Last_Name, Username, Password) VALUES (%s, %s, %s, %s)""" ,(request.form['first'], request.form['last'], request.form['username'], hashed_password))
-        # con.commit()
-        print("Great Success!")
+        # Get the user inputs into variables
+        firstName = request.form['first']
+        lastName = request.form['last']
+        zipcode = request.form['zipcode']
+        favCoffee = request.form['fav-coffee']
+        username = request.form['username']
+        password = request.form['password']
+        passwordConf = request.form['password-conf']
+        # Check if username already exists
+        query = "SELECT username FROM login WHERE username = %s"
+        cur.execute(query, [username])
+        userCheck = cur.fetchall()
+        if len(userCheck) > 0:
+            print "USERNAME IS TAKEN"
+        else:
+            if password != passwordConf:
+                print "PASSWORDS DO NOT MATCH"
+            else: 
+                try:
+                    query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
+                    cur.execute(query, [firstName, lastName, username, password])
+                    con.commit()
+                    query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
+                    cur.execute(query, [username, zipcode, favCoffee])
+                    con.commit()
+                    return render_template('login.html', selected="login/account")
 
-    return render_template('register.html', selected="register")
+                except Exception, e:
+                    raise e
+                    con.rollback()
+
+
+    return render_template('register.html')
 
 
 @app.route('/about', methods=['GET'])
