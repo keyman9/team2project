@@ -30,7 +30,8 @@ def mainIndex():
 
 @app.route('/browse', methods = ['GET','POST'])
 def browse():
-    results = defaultdict(list)
+    #results = defaultdict(list)
+    results = []
     colNames = []
     con = connectToDB()
     cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
