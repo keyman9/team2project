@@ -2,24 +2,47 @@
 
 {% block content %}
 <center>
-<h1>Register Here</h1>
+<h1 id="sign-in">Sign Up</h1>
 <form method = "POST" action="/register">
-<table>
-  <tr> 
-    <td>First Name</td> <td> <input type="text" name="first"></td>
-  </tr>
-  <tr> 
-    <td>Last Name</td> <td> <input type="text" name="last"></td>
-  </tr>
-  <tr> 
-    <td>Username</td> <td> <input type="text" name="username"/></td>
-  </tr>
-  <tr>
-    <td>Password</td> <td> <input type="password" name="password"/></td>
-  </tr>
+    <table class="login">
+          <tr> 
+            <td>First Name: </td> <td> <input type="text" name="first"></td>
+          </tr>
+          <tr> 
+            <td>Last Name: </td> <td> <input type="text" name="last"></td>
+          </tr>
 
-</table>
-<input type="Submit" value = "Register" action='/login'/>
+
+          <tr>
+            <td>ZIP Code: </td> <td> <input size=5 maxlength=5 type="text" name="zipcode"/></td>
+          </tr>
+          <tr>
+            <td>Favorite Coffee: </td> <td> <input type="text" name="fav-coffee"/></td>
+          </tr>
+          
+
+          <tr> 
+            <td>Username: </td> <td> <input type="text" name="username"/></td>
+          </tr>
+          <tr>
+            <td>Password: </td> <td> <input type="password" name="password"/></td>
+          </tr>
+          <tr>
+            <td>Confirm Password: </td> <td> <input type="password" name="password-conf"/></td>
+          </tr>
+          
+
+
+    </table>
+
+    <section class="login">
+        <button type="submit" value = "Login" action='/home'>submit</button>
+    </section>
+
+    <section id="to-register">
+        <h3>Already have an account?<a href="/login"> Sign in here.</a></h3>
+    </section>
+
 </form>
 </center>
 
