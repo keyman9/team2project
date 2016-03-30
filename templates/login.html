@@ -3,7 +3,7 @@
 {% block content %}
 <center>
     <h1 id="sign-in">Sign In</h1>
-    <form method = "POST">
+    <form method="post" action="/login">
 
         <table class="login">
               <p><br></p>
@@ -21,5 +21,6 @@
         </section>
 
     </form>
+    <p>{{invalid}}</p>
 </center>
 {% endblock %}
