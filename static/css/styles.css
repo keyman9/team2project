@@ -10,28 +10,10 @@ body {
     background-color: #FAF4EC;
 }
 
-.home-banner {
-    position: relative;
-}
 
-.coffee-image img{
-    height: auto; 
-    width: 100%;
-}
-
-.banner-title h1 {
-    font-family: 'Futura';
-    color: #F7E6CE;
-}
-
-.banner-title {
-    position: absolute;
-    right: 1px;
-    margin-top: 130px;
-    margin-right: 40px;
-    width: 320px;
-}
-
+/********************** 
+ * Header bar styles *
+ **********************/
 #selected a{
     color: white;
 }
@@ -86,13 +68,15 @@ body {
     transition: .2s;
 }
 
+.nav-bar a:hover {
+    color: white;
+}
+/*** End header bar styles ***/
+
+
 .border-item {
     border-left: 1px solid #7A5D39;
     padding-left: 20px;
-}
-
-.nav-bar a:hover {
-    color: white;
 }
 
 .page-content {
@@ -170,59 +154,12 @@ body {
     background-color: white;
     color: black;
 }
-/************** 
- * browse page *
- **************/
-
-.search-results table tr th {
-
-    font-family: 'Avenir';
-    padding: 5px 10px 5px;
-    background: #241109;
-    color: #c8b69d;
-    
-}
-
-.search-results table tr td {
-    font-family: 'Avenir';
-    padding: 5px 10px 5px;
-    color: black;
-    border-bottom: 1px solid #ddd;
-}
 
 
-
-
-/************** 
- * login page *
- **************/
-
-#sign-in {
-    font-family: 'Avenir';
-    font-size: 2.7em;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
-
-}
-
-#to-register {
-    font-family: 'Avenir';
-    font-size: 1.0em;
-}
-
-#to-register a {
-    text-decoration: none;
-    color: #ff9933;
-
-    transition: color .2s;
-}
-
-#to-register a:hover {
-    color: #e67300;
-
-}
-
-.login input[type="text"] {
+/**************************** 
+ * Button and input styles *
+ ****************************/
+.styled-input input[type="text"] {
     display: block;
     margin: 0;
     width 100%;
@@ -241,7 +178,7 @@ body {
     transition: border 0.3s;
 }
 
-.login td {
+.styled-input td {
     font-family: 'Avenir';
     font-size: 1.1em;
     padding: 0 10px 7px 0;
@@ -249,12 +186,12 @@ body {
 
 }
 
-.login input[type="text"]:focus {
+.styled-input input[type="text"]:focus {
     outline: none;
     border-bottom: solid 2px orange;
 }
 
-.login input[type="password"] {
+.styled-input input[type="password"] {
     display: block;
     margin: 0;
     width 100%;
@@ -273,13 +210,12 @@ body {
 
 }
 
-.login input[type="password"]:focus {
+.styled-input input[type="password"]:focus {
     outline: none;
     border-bottom: solid 2px orange;
 }
 
-/* login button stuff */
-.login button[type="submit"]{
+.styled-button button[type="submit"]{
     display: inline-block;
     margin: 20px 0 0 0;
     padding: 0px 20px;
@@ -299,14 +235,84 @@ body {
 
 }
 
-.login button[type=submit]:hover {
+.styled-button button[type=submit]:hover {
     outline: none;
     color: #c8b69d;
     background: #241109;
 }
 
-.login button[type=submit]:active {
+.styled-button button[type=submit]:active {
     outline: none;
+}
+
+
+/************** 
+ * home page *
+ **************/
+.home-banner {
+    position: relative;
+}
+
+.coffee-image img{
+    height: auto; 
+    width: 100%;
+}
+
+.banner-title h1 {
+    font-family: 'Futura';
+    color: #F7E6CE;
+}
+
+.banner-title {
+    position: absolute;
+    right: 1px;
+    margin-top: 130px;
+    margin-right: 40px;
+    width: 320px;
+}
+
+
+/************** 
+ * browse page *
+ **************/
+.search-results table tr th {
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    background: #241109;
+    color: #c8b69d;
+}
+
+.search-results table tr td {
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+
+/************** 
+ * login page *
+ **************/
+#sign-in {
+    font-family: 'Avenir';
+    font-size: 2.7em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+#to-register {
+    font-family: 'Avenir';
+    font-size: 1.0em;
+}
+
+#to-register a {
+    text-decoration: none;
+    color: #ff9933;
+    transition: color .2s;
+}
+
+#to-register a:hover {
+    color: #e67300;
 
 }
 
@@ -316,8 +322,9 @@ body {
 }
 
 
-/*** End login page rules ****/
-
+/******************
+ * Footer styles *
+ ******************/
 footer{
    position: relative;
    margin-top: 40px;
