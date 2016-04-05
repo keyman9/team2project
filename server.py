@@ -6,9 +6,11 @@ import psycopg2
 import psycopg2.extras
 from collections import defaultdict
 from flask import Flask, render_template, request, session
+from flask.ext.socketio import SocketIO, emit
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24).encode('hex')
+socketio = SocketIO(app)
 
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
@@ -19,6 +21,10 @@ def connectToDB():
     except:
         print("Can't connect to database")
 
+
+@socketio.on('connect')
+def makeConnection():
+    print "connected"
 
 @app.route('/')
 def mainIndex():
@@ -136,6 +142,7 @@ def login():
     loggedIn = False
     if 'username' in session:
         loggedIn = True
+
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
 
 @app.route('/shop', methods = ['GET', 'POST'])
@@ -150,4 +157,5 @@ def shop():
 
 # start the server
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
+    # app.run(host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
+    socketio.run(app, host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
