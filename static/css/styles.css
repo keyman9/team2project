@@ -215,7 +215,7 @@ body {
     border-bottom: solid 2px orange;
 }
 
-.styled-button button[type="submit"]{
+.styled-button button[type="submit"], .styled-button button {
     display: inline-block;
     margin: 20px 0 0 0;
     padding: 0px 20px;
@@ -232,19 +232,28 @@ body {
 
     transition: background .3s;
     transition: color .4s;
-
 }
 
-.styled-button button[type=submit]:hover {
+.styled-button button#learn {
+    padding: 0px 20px;
+    margin-bottom: 20px;
+}
+
+.styled-button button[type=submit]:hover, .styled-button button#learn:hover  {
     outline: none;
     color: #c8b69d;
     background: #241109;
 }
 
-.styled-button button[type=submit]:active {
+.styled-button button[type=submit]:active{
     outline: none;
 }
 
+.styled-button button#learn:active{
+    outline: none;
+    color: #c8b69d;
+    background: #241109;
+}
 
 /************** 
  * home page *
