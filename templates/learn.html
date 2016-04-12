@@ -12,38 +12,49 @@ function showContent(toShow) {
 
         document.getElementById("brew").style.display= 'block';
         document.getElementById("beans").style.display= 'none';
+
+        /* change the color of the active button */
+        document.getElementById("tech").style.background= '#241109';
+        document.getElementById("tech").style.color= '#c8b69d';
+
+        document.getElementById("bean-and-roast").style.background= '#faf4ec';
+        document.getElementById("bean-and-roast").style.color= '#241109';
+
+
     } else {
         document.getElementById("brew").style.visibility = 'hidden';
         document.getElementById("beans").style.visibility = 'visible';
 
         document.getElementById("brew").style.display= 'none';
         document.getElementById("beans").style.display= 'block';
+
+        /* change the colors of the buttons after being clicked */
+        document.getElementById("bean-and-roast").style.background= '#241109';
+        document.getElementById("bean-and-roast").style.color= '#c8b69d';
+
+        document.getElementById("tech").style.background= '#faf4ec';
+        document.getElementById("tech").style.color= '#241109';
     }
 }
+
 document.getElementById("brew-button").onclick = function() {
 }
 
 document.getElementById("bean-button").onclick = function() {
 }
 
-
-
 </script>
 
-<div class="page-title" >
-    <h1>What would you like to learn about?</h1>
-</div>
-
-<div class="content-header">
-    <ul>
-        <li onclick="showContent('brew')"><h2>Brew Techniques</h2></li>
-        <li onclick="showContent('beans')"><h2>Beans & Roasts</h2></li>
-    </ul>
-</div>
+<center>
+    <section class="styled-button">
+        <button id="tech" onclick="showContent('brew')"><p>Brew Techniques</p></button>
+        <button id="bean-and-roast" onclick="showContent('beans')"><p>Beans & Roasts</p></button>
+    </section>
+</center>
 
 <div class="content-block">
     <div  id="brew" style="visibility: hidden; display: none" >
-        <h1> Hey i'm brew </h1>
+        <h1>Hey i'm brew</h1>
         <p> I'm gonna tell you a whole lot of stuff about brewing coffee!
         you just wait, we're gonan have a lot of good ole times together.
         </p>
