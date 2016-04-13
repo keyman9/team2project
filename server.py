@@ -38,18 +38,30 @@ def browse():
     con = connectToDB()
     cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
-        roast = request.form['roast']
-        region = request.form['region']
-        price = request.form['price']
-        order = request.form['order']
-        statement = "select a.name,a.body,a.description,b.region,c.roast,f.price,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where c.roast like %s and b.region like %s and f.price <= %s order by " + order 
-        ###roast-region-price-orderedBy
-        try:
-            print(cur.mogrify(statement,(roast,region,price)))
-            cur.execute(statement,(roast,region,price))
-        except:
-            print("Error executing select statement")
-        results = cur.fetchall()
+        searchBox = request.form['searchBox']
+        if len(searchBox) > 0:
+            #super search the names,descriptions OR bodies like '%searchBox%'
+            searchFor = '%'+searchBox+'%'
+            statement = "select a.name,c.roast,a.description,f.price,b.region,a.body,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where a.name like %s OR a.body like %s OR a.description like %s"
+            try:
+                print(cur.mogrify(statement,(searchFor,searchFor,searchFor)))
+                cur.execute(statement,(searchFor,searchFor,searchFor))
+            except:
+                print("Error executing select statement")
+            results = cur.fetchall()
+        else:
+            roast = request.form['roast']
+            region = request.form['region']
+            price = request.form['price']
+            order = request.form['order']
+            statement = "select a.name,c.roast,a.description,f.price,b.region,a.body,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where c.roast like %s and b.region like %s and f.price <= %s order by " + order 
+            ###roast-region-price-orderedBy
+            try:
+                print(cur.mogrify(statement,(roast,region,price)))
+                cur.execute(statement,(roast,region,price))
+            except:
+                print("Error executing select statement")
+            results = cur.fetchall()
     try:
         cur.execute("""select column_name from information_schema.columns where table_name = 'coffee_names' union select column_name from information_schema.columns where table_name = 'coffee_cost' union select column_name from information_schema.columns where table_name = 'roast' and column_name like 'roast' union select column_name from information_schema.columns where table_name = 'region' and column_name like 'region'""")
     except:
