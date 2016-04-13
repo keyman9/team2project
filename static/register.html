@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<center>
+<!-- STATIC REGISTER FILE -->
+<center> 
 <h1 id="sign-in">Sign Up</h1>
-<form ng-app="CoffeeCorner" method = "POST" action="/register">
+<form method = "POST" action="/register">
     <table class="styled-input">
           <tr> 
             <td>First Name: </td> <td> <input type="text" name="first"></td>
@@ -11,7 +12,6 @@
           <tr> 
             <td>Last Name: </td> <td> <input type="text" name="last"></td>
           </tr>
-
 
           <tr>
             <td>ZIP Code: </td> <td> <input size=5 maxlength=5 type="text" name="zipcode"/></td>
@@ -34,8 +34,8 @@
     </table>
 
     <section class="styled-button" ng-controller="FormFailedController">
-        <button type="submit" value="Login" action='/home'>Register</button>
-        <div class="invalid"><p>{{invalid}}</p></div>
+        <button type="submit" value = "Login" action='/home'>Register</button>
+        <div class="invalid"><p></p></div>
     </section>
 
     <section id="to-register">

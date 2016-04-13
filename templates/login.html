@@ -20,9 +20,11 @@
         </section>
         <div class="invalid"><p>{{invalid}}</p></div>
 
-        <section id="to-register">
-            <h3>Don't have an account? <a href="/register"> Register here.</a></h3>
-        </section>
+        <div ng-controller="FormFailedController">
+          <section id="to-register">
+              <h3>Don't have an account? <a href="/register"> Register here.</a></h3>
+          </section>
+        </div>
 
     </form>
 </center>
