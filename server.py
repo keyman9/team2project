@@ -109,7 +109,7 @@ def register():
                     con.rollback()
 
 
-    return render_template('register.html', selected="login/account", loggedIn=loggedIn)
+    return render_template('register.html', loggedIn=loggedIn)
     # return app.send_static_file('register.html')
 
 
