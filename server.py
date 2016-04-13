@@ -25,14 +25,8 @@ def connectToDB():
         print("Can't connect to database")
 
 
-@socketio.on('connect', namespace='/coffee')
-def makeConnection():
-    print "connected"
-
-
-
 @app.route('/')
-def mainIndex():
+def home():
 	return render_template('index.html', selected="home", loggedIn=loggedIn)
 
 
@@ -79,48 +73,32 @@ def about():
    
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    con = connectToDB()
-    cur = con.cursor()
-    # Track log in success state
-    global loggedIn
-    if request.method == 'POST':
-        # Get username and password inputs and check for info in DB
-        username  = request.form['username']
-        password = request.form['password']
-        query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
-        cur.execute(query, [username, password])
-        valdate = cur.fetchall()
-        # Check if user info was found in DB
-        if len(valdate) != 0:
-            # Create session variables for logged in user
-            session['uuid'] = uuid.uuid1()
-            user[session['uuid']] = {'username': username}
-            loggedIn = True
-            return render_template('index.html', selected="home", loggedIn=loggedIn)
-        else:
-            return render_template('login.html', selected="login/account", loggedIn=loggedIn, invalid="Invalid Username or Password")
-
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
 
 
-@socketio.on('register', namespace='/coffee')
+@socketio.on('connect')
+def makeConnection():
+    print "connected"
+
+@socketio.on('register')
 def register(firstName, lastName, zipcode, favCoffee, username, password, passwordConf):
     con = connectToDB()
     cur = con.cursor()
     if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
-            emit('registerFail', 'Please fill out all of the fields!')
+            emit('FormFail', 'Please fill out all of the fields!')
     else:
         # Check if username already exists
         query = "SELECT username FROM login WHERE username = %s"
         cur.execute(query, [username])
         userCheck = cur.fetchall()
         if len(userCheck) > 0:
-            emit('registerFail', 'Username already taken!')
+            emit('FormFail', 'Username already taken!')
         # Check if passwords match
         else:
             if password != passwordConf:
-                emit('registerFail', 'Passwords do not match!')
+                emit('FormFail', 'Passwords do not match!')
             else: 
+                # Insert new user into DB and load login page
                 try:
                     query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
                     cur.execute(query, [firstName, lastName, username, password])
@@ -133,6 +111,24 @@ def register(firstName, lastName, zipcode, favCoffee, username, password, passwo
                     raise e
                     con.rollback()
 
+@socketio.on('login')
+def login(username, password):
+    con = connectToDB()
+    cur = con.cursor()
+    # Track log in success state
+    global loggedIn
+    query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
+    cur.execute(query, [username, password])
+    valdate = cur.fetchall()
+    # Check if user info was found in DB
+    if len(valdate) != 0:
+        # Create session variables for logged in user
+        session['uuid'] = uuid.uuid1()
+        user[session['uuid']] = {'username': username}
+        loggedIn = True
+        emit('redirect', {'url': url_for('home')})
+    else:
+         emit('FormFail', 'Invalid username or password!')
 
 
 
