@@ -36,11 +36,15 @@ def browse():
     con = connectToDB()
     cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
-        searchFor = request.form['roast']
-        statement = """SELECT * FROM coffee WHERE Roast = %s"""
+        roast = request.form['roast']
+        region = request.form['region']
+        price = request.form['price']
+        order = request.form['order']
+        statement = "select a.name,a.body,a.description,b.region,c.roast,f.price,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where c.roast like %s and b.region like %s and f.price <= %s order by " + order 
+        ###roast-region-price-orderedBy
         try:
-            print(cur.mogrify(statement,(searchFor,)))
-            cur.execute(statement,(searchFor,))
+            print(cur.mogrify(statement,(roast,region,price)))
+            cur.execute(statement,(roast,region,price))
         except:
             print("Error executing select statement")
         results = cur.fetchall()

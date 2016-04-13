@@ -272,14 +272,14 @@ ALTER TABLE ONLY roast ALTER COLUMN roast_id SET DEFAULT nextval('roast_roast_id
 --
 
 COPY coffee (id, name, price, weight, roast, body, region, description) FROM stdin;
-1	Aldo's Blend	14.00	12	Medium Dark	Chewy, creamy, like a brownie	Central America	Spiced cider, dark chocolate, earthy, mequite
-2	Bell's Blend	14.00	12	Medium	Chocolate Chip Cookie, Medium-light	Central America	Peanut butter, floral earth, hot cocoa with marshmallows, a happy childhood memory
+1	Aldo''s Blend	14.00	12	Medium Dark	Chewy, creamy, like a brownie	Central America	Spiced cider, dark chocolate, earthy, mequite
+2	Bell''s Blend	14.00	12	Medium	Chocolate Chip Cookie, Medium-light	Central America	Peanut butter, floral earth, hot cocoa with marshmallows, a happy childhood memory
 4	Espresso Savio	14.00	12	Medium Dark	Full, Sultry, and soft like Mink fur	Central America	Nutty, fresh citrus, toffee, milk chocolate
 5	Ethiopia Borboya	16.00	12	Medium	Full and creamy	Africa	Blackberry, lemongrass, and peach tea
 6	Fazenda Ambiental Fortaleza	16.00	12	Medium	Full yet nuanced	South America	Plum, fig, cumin, red fruit, tawny port, blood orange
 7	Finca Idealista	16.00	12	Medium	Full	Central America	Dark chocolate and ripe plums. Mellow finish
-8	Finca Idealista Microlots	22.00	12	Medium	Full, Creamy	Central America	Baker's chocolate, almond, plum, cacao, juicy, citrus.
-9	Misty Valley	16.00	12	Medium	Milky	Africa	Blueberry muffins, floral, baker's chocolate
+8	Finca Idealista Microlots	22.00	12	Medium	Full, Creamy	Central America	Baker''s chocolate, almond, plum, cacao, juicy, citrus.
+9	Misty Valley	16.00	12	Medium	Milky	Africa	Blueberry muffins, floral, baker''s chocolate
 10	Singgalang	16.00	12	Medium	Heavy, Syrupy, Stout	Indonesia	Roasted pineapple, pear, kola syrup
 11	Suka Quto	16.00	12	Medium	Juicy	Africa	Stone fruit, ripe Asian pear and apricot, silky.
 12	William and Maria - Costa Rica	16.00	12	Medium	Buttery, Pastry-Like	Central America	Graham cracker and lemon peel.
@@ -317,8 +317,8 @@ COPY coffee (id, name, price, weight, roast, body, region, description) FROM std
 --
 
 COPY coffee_cost (name, price, weight) FROM stdin;
-Aldo's Blend	14.00	12
-Bell's Blend	14.00	12
+Aldo''s Blend	14.00	12
+Bell''s Blend	14.00	12
 Espresso Savio	14.00	12
 Ethiopia Borboya	16.00	12
 Fazenda Ambiental Fortaleza	16.00	12
@@ -368,14 +368,14 @@ SELECT pg_catalog.setval('coffee_id_seq', 1, false);
 --
 
 COPY coffee_names (name, body, description) FROM stdin;
-Aldo's Blend	Chewy, creamy, like a brownie	Spiced cider, dark chocolate, earthy, mequite
-Bell's Blend	Chocolate Chip Cookie, Medium-light	Peanut butter, floral earth, hot cocoa with marshmallows, a happy childhood memory
+Aldo''s Blend	Chewy, creamy, like a brownie	Spiced cider, dark chocolate, earthy, mequite
+Bell''s Blend	Chocolate Chip Cookie, Medium-light	Peanut butter, floral earth, hot cocoa with marshmallows, a happy childhood memory
 Espresso Savio	Full, Sultry, and soft like Mink fur	Nutty, fresh citrus, toffee, milk chocolate
 Ethiopia Borboya	Full and creamy	Blackberry, lemongrass, and peach tea
 Fazenda Ambiental Fortaleza	Full yet nuanced	Plum, fig, cumin, red fruit, tawny port, blood orange
 Finca Idealista	Full	Dark chocolate and ripe plums. Mellow finish
-Finca Idealista Microlots	Full, Creamy	Baker's chocolate, almond, plum, cacao, juicy, citrus.
-Misty Valley	Milky	Blueberry muffins, floral, baker's chocolate
+Finca Idealista Microlots	Full, Creamy	Baker''s chocolate, almond, plum, cacao, juicy, citrus.
+Misty Valley	Milky	Blueberry muffins, floral, baker''s chocolate
 Singgalang	Heavy, Syrupy, Stout	Roasted pineapple, pear, kola syrup
 Suka Quto	Juicy	Stone fruit, ripe Asian pear and apricot, silky.
 William and Maria - Costa Rica	Buttery, Pastry-Like	Graham cracker and lemon peel.
@@ -418,8 +418,8 @@ Redcab - Brazil	1
 Redcab - Espresso	1
 Santander EP - FT Organic	1
 The Boss Espresso	1
-Aldo's Blend	2
-Bell's Blend	2
+Aldo''s Blend	2
+Bell''s Blend	2
 Espresso Savio	2
 Finca Idealista	2
 Finca Idealista Microlots	2
@@ -472,11 +472,11 @@ Finca Idealista Microlots	1
 Finca Idealista	1
 Fazenda Ambiental Fortaleza	1
 Ethiopia Borboya	1
-Bell's Blend	1
+Bell''s Blend	1
 Redcab - Brazil	2
 Espresso Intensi	2
 Espresso Savio	2
-Aldo's Blend	2
+Aldo''s Blend	2
 The Heavy	3
 The Beast	3
 Redcab - Espresso	3
@@ -701,7 +701,7 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
-GRANT SELECT ON SCHEMA public TO visiting;
+GRANT ALL ON SCHEMA public TO visiting;
 
 
 --
