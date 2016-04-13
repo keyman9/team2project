@@ -280,6 +280,35 @@ body {
     width: 320px;
 }
 
+/**************
+ * Learn Page *
+ **************/
+.learn-content div button {
+    display: inline-block;
+    margin: 20px 0 0 0;
+    padding: 0px 15px;
+    font-size: 15px;
+    font-family: 'Avenir';
+    line-height: 1.8;
+    appearance: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    color: #241109;
+    background: #faf4ec;
+    border: solid 2px #241109;
+
+    outline: none;
+
+    transition: color .4s;
+}
+
+.learn-content div button:hover {
+    color: #e67300;
+}
+
+.learn-content div {
+}
 
 /************** 
  * browse page *
