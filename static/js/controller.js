@@ -1,8 +1,7 @@
 var CoffeeCorner = angular.module('CoffeeCorner', []);
 
 CoffeeCorner.controller('FormFailedController', function($scope){
-	var socket = io.connect('http://' + document.domain + ':'
-		+ location.port + '/coffee');
+	var socket = io.connect('http://' + document.domain + ':' + location.port);
 
 	$scope.test = 'Text is here';
 
