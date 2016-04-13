@@ -314,7 +314,7 @@ body {
 }
 
 .learn-content div section#aero, div section#french,
-div section#moka, div section#chemex {
+div section#moka, div section#chemex, div section#beansRoasts{
     position: relative;
     float: left;
     font-family: 'Avenir';
