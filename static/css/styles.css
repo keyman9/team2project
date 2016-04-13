@@ -288,6 +288,7 @@ body {
     margin: 20px 0 0 0;
     padding: 0px 20px;
     font-size: 20px;
+
     font-family: 'Avenir', 'black' ;
     line-height: 1.8;
     appearance: none;
@@ -312,7 +313,18 @@ body {
     color: #e67300;
 }
 
-.learn-content div {
+.learn-content div section#aero, div section#french,
+div section#moka, div section#chemex {
+    position: relative;
+    float: left;
+    font-family: 'Avenir';
+    width: 30%;
+    height: 458px;
+    margin-top: 0px;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
 }
 
 /************** 
