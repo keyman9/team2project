@@ -777,3 +777,5 @@ GRANT SELECT ON coffee_id_seq TO visiting;
 GRANT INSERT, SELECT ON Login TO visiting;
 GRANT SELECT ON login_id_seq TO visiting;
 GRANT INSERT, SELECT ON User_Info TO visiting;
+GRANT INSERT, SELECT ON roast_roast_id_seq TO visiting;
+GRANT INSERT, SELECT ON region_region_id_seq TO visiting;
