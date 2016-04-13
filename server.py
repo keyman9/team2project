@@ -45,7 +45,7 @@ def browse():
             print("Error executing select statement")
         results = cur.fetchall()
     try:
-        cur.execute("""Select column_name from information_schema.columns where table_name = 'coffee'""")     
+        cur.execute("""select column_name from information_schema.columns where table_name = 'coffee_names' union select column_name from information_schema.columns where table_name = 'coffee_cost' union select column_name from information_schema.columns where table_name = 'roast' and column_name like 'roast' union select column_name from information_schema.columns where table_name = 'region' and column_name like 'region'""")
     except:
         print("Error retrieving Column names")
     colNames = cur.fetchall()    

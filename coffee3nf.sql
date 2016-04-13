@@ -1,3 +1,4 @@
+
 --
 -- PostgreSQL database dump
 --
@@ -32,7 +33,7 @@ SET default_with_oids = false;
 --
 -- Name: coffee; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
-
+DROP TABLE IF EXISTS coffee;
 CREATE TABLE coffee (
     id integer NOT NULL,
     name character varying(35) DEFAULT ''::character varying NOT NULL,
@@ -50,7 +51,7 @@ ALTER TABLE public.coffee OWNER TO postgres;
 --
 -- Name: coffee_cost; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
-
+DROP TABLE IF EXISTS coffee_cost;
 CREATE TABLE coffee_cost (
     name character varying(35) NOT NULL,
     price numeric(6,2),
@@ -85,6 +86,7 @@ ALTER SEQUENCE coffee_id_seq OWNED BY coffee.id;
 -- Name: coffee_names; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
+DROP TABLE IF EXISTS coffee_names;
 CREATE TABLE coffee_names (
     name character varying(35) NOT NULL,
     body text,
@@ -97,7 +99,7 @@ ALTER TABLE public.coffee_names OWNER TO postgres;
 --
 -- Name: coffee_region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
-
+DROP TABLE IF EXISTS coffee_region;
 CREATE TABLE coffee_region (
     name character varying(35),
     region_id integer
@@ -110,6 +112,7 @@ ALTER TABLE public.coffee_region OWNER TO postgres;
 -- Name: coffee_roast; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
+DROP TABLE IF EXISTS coffee_roast;
 CREATE TABLE coffee_roast (
     name character varying(35) NOT NULL,
     roast_id integer NOT NULL
@@ -122,6 +125,7 @@ ALTER TABLE public.coffee_roast OWNER TO postgres;
 -- Name: login; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
+DROP TABLE IF EXISTS login;
 CREATE TABLE login (
     id integer NOT NULL,
     first_name character varying(35) DEFAULT ''::character varying NOT NULL,
@@ -157,10 +161,10 @@ ALTER SEQUENCE login_id_seq OWNED BY login.id;
 --
 -- Name: region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
-
+DROP TABLE IF EXISTS region;
 CREATE TABLE region (
     region_id integer NOT NULL,
-    name text DEFAULT ''::text NOT NULL
+    region text DEFAULT ''::text NOT NULL
 );
 
 
@@ -191,6 +195,7 @@ ALTER SEQUENCE region_region_id_seq OWNED BY region.region_id;
 -- Name: roast; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
+DROP TABLE IF EXISTS roast;
 CREATE TABLE roast (
     roast_id integer NOT NULL,
     roast text DEFAULT ''::text NOT NULL
@@ -223,7 +228,7 @@ ALTER SEQUENCE roast_roast_id_seq OWNED BY roast.roast_id;
 --
 -- Name: user_info; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
-
+DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info (
     username character varying(35) DEFAULT ''::character varying NOT NULL,
     email character varying(40) DEFAULT ''::character varying NOT NULL,
@@ -696,6 +701,7 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON SCHEMA public FROM postgres;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
+GRANT SELECT ON SCHEMA public TO visiting;
 
 
 --
@@ -747,6 +753,17 @@ REVOKE ALL ON TABLE user_info FROM postgres;
 GRANT ALL ON TABLE user_info TO postgres;
 GRANT SELECT,INSERT ON TABLE user_info TO visiting;
 
+
+--
+--Visiting permissions
+--
+
+GRANT SELECT,INSERT ON TABLE coffee_names TO visiting;
+GRANT SELECT,INSERT ON TABLE coffee_cost TO visiting;
+GRANT SELECT,INSERT ON TABLE coffee_region TO visiting;
+GRANT SELECT,INSERT ON TABLE coffee_roast TO visiting;
+GRANT SELECT,INSERT ON TABLE roast TO visiting;
+GRANT SELECT,INSERT ON TABLE region TO visiting;
 
 --
 -- PostgreSQL database dump complete
