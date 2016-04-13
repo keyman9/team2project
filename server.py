@@ -25,7 +25,7 @@ def connectToDB():
         print("Can't connect to database")
 
 
-@socketio.on('connect', namespace='/coffee')
+@socketio.on('connect')
 def makeConnection():
     print "connected"
 
@@ -140,10 +140,6 @@ def login():
             return render_template('login.html', selected="login/account", loggedIn=loggedin, invalid="Invalid Username or Password")
 
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
-
-@app.route('/shop', methods = ['GET', 'POST'])
-def shop():
-    return render_template('shop.html', selected="shop", loggedIn=loggedIn)
 
 
 

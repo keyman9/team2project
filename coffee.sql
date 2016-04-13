@@ -117,8 +117,69 @@ ALTER TABLE public.login OWNER TO postgres;
 --
 -- Name: login_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
+--
+
+CREATE TABLE coffee_roast (
+    name character varying(35) NOT NULL,
+    roast_id integer NOT NULL
+);
+
+
+ALTER TABLE public.coffee_roast OWNER TO postgres;
+
+--
+-- Name: login; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE login (
+    id integer NOT NULL,
+    first_name character varying(35) DEFAULT ''::character varying NOT NULL,
+    last_name character varying(40) DEFAULT ''::character varying NOT NULL,
+    username character varying(35) DEFAULT ''::character varying NOT NULL,
+    password character varying(60) DEFAULT ''::character varying NOT NULL
+);
+
+
+ALTER TABLE public.login OWNER TO postgres;
+
+--
+-- Name: login_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
 
 CREATE SEQUENCE login_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.login_id_seq OWNER TO postgres;
+
+--
+-- Name: login_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE login_id_seq OWNED BY login.id;
+
+
+--
+-- Name: region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE region (
+    region_id integer NOT NULL,
+    name text DEFAULT ''::text NOT NULL
+);
+
+
+ALTER TABLE public.region OWNER TO postgres;
+
+--
+-- Name: region_region_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE region_region_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
