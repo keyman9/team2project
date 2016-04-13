@@ -1,41 +1,43 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<section ng-controller="FormFailedController">
 <center>
 <h1 id="sign-in">Sign Up</h1>
-<form ng-app="CoffeeCorner" method = "POST" action="/register">
+<form ng-submit="register()">
     <table class="styled-input">
           <tr> 
-            <td>First Name: </td> <td> <input type="text" name="first"></td>
+            <td>First Name: </td> <td> <input ng-model="firstName" type="text"></td>
           </tr>
           <tr> 
-            <td>Last Name: </td> <td> <input type="text" name="last"></td>
+            <td>Last Name: </td> <td> <input ng-model="lastName" type="text" ></td>
           </tr>
 
 
           <tr>
-            <td>ZIP Code: </td> <td> <input size=5 maxlength=5 type="text" name="zipcode"/></td>
+            <td>ZIP Code: </td> <td> <input ng-model="zipcode" size=5 maxlength=5 type="text"/></td>
           </tr>
           <tr>
-            <td>Favorite Coffee: </td> <td> <input type="text" name="fav-coffee"/></td>
+            <td>Favorite Coffee: </td> <td> <input ng-model="favCoffee" type="text"/></td>
           </tr>
           
 
           <tr> 
-            <td>Username: </td> <td> <input type="text" name="username"/></td>
+            <td>Username: </td> <td> <input ng-model="username" type="text" /></td>
           </tr>
           <tr>
-            <td>Password: </td> <td> <input type="password" name="password"/></td>
+            <td>Password: </td> <td> <input ng-model="password" type="password"/></td>
           </tr>
           <tr>
-            <td>Confirm Password: </td> <td> <input type="password" name="password-conf"/></td>
+            <td>Confirm Password: </td> <td> <input ng-model"passwordConf" type="password"/></td>
           </tr>
           
     </table>
 
-    <section class="styled-button" ng-controller="FormFailedController">
-        <button type="submit" value="Login" action='/home'>Register</button>
-        <div class="invalid"><p>{{invalid}}</p></div>
+    <section class="styled-button">
+        <button type="submit">Register</button>
+        <!-- <input type="submit" value="Register" name="login" id="login"> -->
+        <div class="invalid"><p id="message"></p></div>
     </section>
 
     <section id="to-register">
@@ -44,6 +46,7 @@
 
 </form>
 </center>
+</section>
 
 
 {% endblock %}

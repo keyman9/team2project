@@ -25,9 +25,51 @@ def connectToDB():
         print("Can't connect to database")
 
 
-@socketio.on('connect')
+@socketio.on('connect', namespace='/coffee')
 def makeConnection():
     print "connected"
+
+@socketio.on('register', namespace='/coffee')
+def register(firstName, lastName, zipcode, favCoffee, username, password, passwordConf):
+    con = connectToDB()
+    cur = con.cursor()
+    print 'HERE IN RESGISTER IN SERVER'
+    print 'Username is: ' + username
+    print 'First name is: ' + firstName
+    print 'Password is: ' + password
+    print 'Password Conf is: ' + passwordConf
+    # if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
+    #         print 'ALL FIELDS NOT FILLED'
+    #         emit('registerFail', 'Please fill out all of the fields!')
+    # else:
+    # Check if username already exists
+    query = "SELECT username FROM login WHERE username = %s"
+    cur.execute(query, [username])
+    userCheck = cur.fetchall()
+    if len(userCheck) > 0:
+        print 'USERNAME TAKEN'
+        emit('registerFail', 'Username already taken!')
+    else:
+        # if password != passwordConf:
+        #     print 'PASSWORDS DO NOT MATCH'
+        #     emit('registerFail', 'Passwords do not match!')
+        # else: 
+            try:
+                print 'INSERTING INTO DB'
+                query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
+                cur.execute(query, [firstName, lastName, username, password])
+                con.commit()
+                query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
+                cur.execute(query, [username, zipcode, favCoffee])
+                con.commit()
+                return render_template('login.html', selected="login/account")
+
+            except Exception, e:
+                raise e
+                con.rollback()
+
+
+
 
 @app.route('/')
 def mainIndex():
@@ -67,46 +109,46 @@ def learn():
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
-    con = connectToDB()
-    cur = con.cursor()
-    if request.method == 'POST':
-        # Get the user inputs into variables
-        firstName = request.form['first']
-        lastName = request.form['last']
-        zipcode = request.form['zipcode']
-        favCoffee = request.form['fav-coffee']
-        username = request.form['username']
-        password = request.form['password']
-        passwordConf = request.form['password-conf']
-        if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
-             return render_template('register.html', invalid="Please fill out all of the fields!")
-        # Check if username already exists
-        query = "SELECT username FROM login WHERE username = %s"
-        cur.execute(query, [username])
-        userCheck = cur.fetchall()
-        if len(userCheck) > 0:
-            # return app.send_static_file('register.html')
-            return render_template('register.html', invalid="Username is already taken!")
-        else:
-            if password != passwordConf:
-                return render_template('register.html', invalid="Passwords do not match!")
-            else: 
-                try:
-                    query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
-                    cur.execute(query, [firstName, lastName, username, password])
-                    con.commit()
-                    query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
-                    cur.execute(query, [username, zipcode, favCoffee])
-                    con.commit()
-                    return render_template('login.html', selected="login/account")
+    # con = connectToDB()
+    # cur = con.cursor()
+    # if request.method == 'POST':
+    #     # Get the user inputs into variables
+    #     firstName = request.form['first']
+    #     lastName = request.form['last']
+    #     zipcode = request.form['zipcode']
+    #     favCoffee = request.form['fav-coffee']
+    #     username = request.form['username']
+    #     password = request.form['password']
+    #     passwordConf = request.form['password-conf']
+    #     print 'CHECKING IF FIELDS FILLED'
+    #     if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
+    #         print 'HERE'
+    #         socketio.emit('registerFail', 'Please fill out all of the fields!')
+    #     # Check if username already exists
+    #     query = "SELECT username FROM login WHERE username = %s"
+    #     cur.execute(query, [username])
+    #     userCheck = cur.fetchall()
+    #     if len(userCheck) > 0:
+    #         socketio.emit('registerFail', 'Username already taken!')
+    #     else:
+    #         if password != passwordConf:
+    #             return render_template('register.html', invalid="Passwords do not match!")
+    #         else: 
+    #             try:
+    #                 query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
+    #                 cur.execute(query, [firstName, lastName, username, password])
+    #                 con.commit()
+    #                 query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
+    #                 cur.execute(query, [username, zipcode, favCoffee])
+    #                 con.commit()
+    #                 return render_template('login.html', selected="login/account")
 
-                except Exception, e:
-                    raise e
-                    con.rollback()
+    #             except Exception, e:
+    #                 raise e
+    #                 con.rollback()
 
 
     return render_template('register.html', loggedIn=loggedIn)
-    # return app.send_static_file('register.html')
 
 
 @app.route('/about', methods=['GET'])
@@ -136,6 +178,8 @@ def login():
             return render_template('login.html', selected="login/account", loggedIn=loggedin, invalid="Invalid Username or Password")
 
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
+
+
 
 
 
