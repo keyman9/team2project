@@ -12,8 +12,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24).encode('hex')
 socketio = SocketIO(app)
 
-loggedIn = False
 user = {}
+passed = False
+name = ''
 
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
@@ -27,12 +28,27 @@ def connectToDB():
 
 @app.route('/')
 def home():
-	return render_template('index.html', selected="home", loggedIn=loggedIn)
+    global passed
+    global name
+    if passed:
+        passed = False
+        session['uuid'] = uuid.uuid1()
+        user[session['uuid']] = {'username': name}
+        name = ""
+
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('index.html', selected="home", loggedIn=loggedIn)
 
 
 @app.route('/browse', methods = ['GET','POST'])
 def browse():
-    #results = defaultdict(list)
+    loggedIn = False
+    if 'uuid' in session:
+        print 'NAME IS ' + user[session['uuid']]['username']
+        loggedIn = True
     results = []
     colNames = []
     con = connectToDB()
@@ -75,27 +91,43 @@ def browse():
 
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
     return render_template('learn.html', selected="learn", loggedIn=loggedIn)
 
 
 @app.route('/about', methods=['GET'])
 def about():	
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
     return render_template('about.html', selected="about", loggedIn=loggedIn)
     
    
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    if loggedIn:
+    if 'uuid' in session:
         return redirect(url_for('account'))
     else:
-        return render_template('login.html', selected="login/account", loggedIn=loggedIn)
+        return render_template('login.html', selected="login/account", loggedIn=False)
 
 @app.route('/register', methods = ['GET'])
 def register():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
     return render_template('register.html', loggedIn=loggedIn)
 
 @app.route('/account')
 def account():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
 
@@ -139,20 +171,19 @@ def login(username, password):
     con = connectToDB()
     cur = con.cursor()
     # Track log in success state
-    global loggedIn
+    global passed
+    global name
     query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
     cur.execute(query, [username, password])
     valdate = cur.fetchall()
     # Check if user info was found in DB
     if len(valdate) != 0:
         # Create session variables for logged in user
-        session['uuid'] = uuid.uuid1()
-        user[session['uuid']] = {'username': username}
-        loggedIn = True
+        passed = True
+        name = username
         emit('redirect', {'url': url_for('home')})
     else:
-         emit('FormFail', 'Invalid username or password!')
-
+        emit('FormFail', 'Invalid username or password!')
 
 
 
