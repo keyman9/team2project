@@ -61,10 +61,6 @@ def browse():
 def learn():
     return render_template('learn.html', selected="learn", loggedIn=loggedIn)
 
-@app.route('/register', methods = ['GET'])
-def register():
-    return render_template('register.html', loggedIn=loggedIn)
-
 
 @app.route('/about', methods=['GET'])
 def about():	
@@ -73,7 +69,18 @@ def about():
    
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    return render_template('login.html', selected="login/account", loggedIn=loggedIn)
+    if loggedIn:
+        return redirect(url_for('account'))
+    else:
+        return render_template('login.html', selected="login/account", loggedIn=loggedIn)
+
+@app.route('/register', methods = ['GET'])
+def register():
+    return render_template('register.html', loggedIn=loggedIn)
+
+@app.route('/account')
+def account():
+    return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
 
 @socketio.on('connect')
