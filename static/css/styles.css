@@ -42,8 +42,9 @@ body {
 .nav-bar{
     margin-right: auto;
     margin-left: auto;
-    width: 475px;
+    width: 35%;
     padding: 3px;
+    padding-left: 55px;
 }
 
 .nav-bar ul {
@@ -215,7 +216,7 @@ body {
     border-bottom: solid 2px orange;
 }
 
-.styled-button button[type="submit"]{
+.styled-button button[type="submit"], .styled-button button {
     display: inline-block;
     margin: 20px 0 0 0;
     padding: 0px 20px;
@@ -232,19 +233,28 @@ body {
 
     transition: background .3s;
     transition: color .4s;
-
 }
 
-.styled-button button[type=submit]:hover {
+.styled-button button#learn {
+    padding: 0px 20px;
+    margin-bottom: 20px;
+}
+
+.styled-button button[type=submit]:hover, .styled-button button#learn:hover  {
     outline: none;
     color: #c8b69d;
     background: #241109;
 }
 
-.styled-button button[type=submit]:active {
+.styled-button button[type=submit]:active{
     outline: none;
 }
 
+.styled-button button#learn:active{
+    outline: none;
+    color: #c8b69d;
+    background: #241109;
+}
 
 /************** 
  * home page *
@@ -271,6 +281,52 @@ body {
     width: 320px;
 }
 
+/**************
+ * Learn Page *
+ **************/
+.learn-content div button {
+    display: inline-block;
+    margin: 20px 0 0 0;
+    padding: 0px 20px;
+    font-size: 20px;
+
+    font-family: 'Avenir', 'black' ;
+    line-height: 1.8;
+    appearance: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    color: #241109;
+    background: #faf4ec;
+    border-top: solid 2px #241109;
+    border-bottom: solid 2px #241109;
+    border-right: none;
+    border-left: none;
+
+    border: none;
+
+    outline: none;
+
+    transition: color .4s;
+}
+
+.learn-content div button:hover {
+    color: #e67300;
+}
+
+.learn-content div section#aero, div section#french,
+div section#moka, div section#chemex, div section#beansRoasts{
+    position: relative;
+    float: left;
+    font-family: 'Avenir';
+    width: 30%;
+    height: 458px;
+    margin-top: 0px;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
 
 /************** 
  * browse page *
@@ -293,7 +349,7 @@ body {
 /************** 
  * login page *
  **************/
-#sign-in {
+#styled-title {
     font-family: 'Avenir';
     font-size: 2.7em;
     padding-bottom: 0px;

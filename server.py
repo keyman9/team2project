@@ -5,10 +5,15 @@ import hashlib, uuid
 import psycopg2
 import psycopg2.extras
 from collections import defaultdict
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask.ext.socketio import SocketIO, emit
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24).encode('hex')
+socketio = SocketIO(app)
+
+loggedIn = False
+user = {}
 
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
@@ -21,10 +26,7 @@ def connectToDB():
 
 
 @app.route('/')
-def mainIndex():
-	loggedIn = False
-	if 'username' in session:
-		loggedIn = True
+def home():
 	return render_template('index.html', selected="home", loggedIn=loggedIn)
 
 
@@ -56,41 +58,58 @@ def browse():
     for item in colNames:
         for colName in item:
             colName = str(colName).capitalize()
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
+
     return render_template('browse.html',selected="browse",columns=colNames,results=results, loggedIn=loggedIn)
 
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
     return render_template('learn.html', selected="learn", loggedIn=loggedIn)
 
-@app.route('/register', methods = ['GET','POST'])
+
+@app.route('/about', methods=['GET'])
+def about():	
+    return render_template('about.html', selected="about", loggedIn=loggedIn)
+    
+   
+@app.route('/login', methods = ['GET','POST'])
+def login():
+    if loggedIn:
+        return redirect(url_for('account'))
+    else:
+        return render_template('login.html', selected="login/account", loggedIn=loggedIn)
+
+@app.route('/register', methods = ['GET'])
 def register():
+    return render_template('register.html', loggedIn=loggedIn)
+
+@app.route('/account')
+def account():
+    return render_template('account.html', selected='login/account', loggedIn=loggedIn)
+
+
+@socketio.on('connect')
+def makeConnection():
+    print "connected"
+
+@socketio.on('register')
+def register(firstName, lastName, zipcode, favCoffee, username, password, passwordConf):
     con = connectToDB()
     cur = con.cursor()
-    if request.method == 'POST':
-        # Get the user inputs into variables
-        firstName = request.form['first']
-        lastName = request.form['last']
-        zipcode = request.form['zipcode']
-        favCoffee = request.form['fav-coffee']
-        username = request.form['username']
-        password = request.form['password']
-        passwordConf = request.form['password-conf']
+    if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
+            emit('FormFail', 'Please fill out all of the fields!')
+    else:
         # Check if username already exists
         query = "SELECT username FROM login WHERE username = %s"
         cur.execute(query, [username])
         userCheck = cur.fetchall()
         if len(userCheck) > 0:
-            return render_template('register.html', invalid="Username is already taken!")
+            emit('FormFail', 'Username already taken!')
+        # Check if passwords match
         else:
             if password != passwordConf:
-                return render_template('register.html', invalid="Passwords do not match!")
+                emit('FormFail', 'Passwords do not match!')
             else: 
+                # Insert new user into DB and load login page
                 try:
                     query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
                     cur.execute(query, [firstName, lastName, username, password])
@@ -98,60 +117,34 @@ def register():
                     query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
                     cur.execute(query, [username, zipcode, favCoffee])
                     con.commit()
-                    return render_template('login.html', selected="login/account")
-
+                    emit('redirect', {'url': url_for('login')})
                 except Exception, e:
                     raise e
                     con.rollback()
 
-
-    return render_template('register.html')
-
-
-@app.route('/about', methods=['GET'])
-def about():
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
-	
-    return render_template('about.html', selected="about", loggedIn=loggedIn)
-    
-   
-@app.route('/login', methods = ['GET','POST'])
-def login():
+@socketio.on('login')
+def login(username, password):
     con = connectToDB()
     cur = con.cursor()
-    if request.method == 'POST':
-        # Get username and password inputs and check for info in DB
-        username  = request.form['username']
-        password = request.form['password']
-        query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
-        cur.execute(query, [username, password])
-        valdate = cur.fetchall()
-        # Check if user info was found in DB
-        if len(valdate) != 0:
-            # Create session variables for logged in user
-            session['username'] = username
-            session['password'] = password
-            return render_template('index.html', selected="home", loggedIn=True)
-        else:
-            return render_template('login.html', selected="login/account", loggedIn=False, invalid="Invalid Username or Password")
-    
-    loggedIn = False
-    if 'username' in session:
+    # Track log in success state
+    global loggedIn
+    query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
+    cur.execute(query, [username, password])
+    valdate = cur.fetchall()
+    # Check if user info was found in DB
+    if len(valdate) != 0:
+        # Create session variables for logged in user
+        session['uuid'] = uuid.uuid1()
+        user[session['uuid']] = {'username': username}
         loggedIn = True
-    return render_template('login.html', selected="login/account", loggedIn=loggedIn)
-
-@app.route('/shop', methods = ['GET', 'POST'])
-def shop():
-
-    loggedIn = False
-    return render_template('shop.html', selected="shop", loggedIn=loggedIn)
-
+        emit('redirect', {'url': url_for('home')})
+    else:
+         emit('FormFail', 'Invalid username or password!')
 
 
 
 
 # start the server
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
+    # app.run(host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)
+    socketio.run(app, host=os.getenv('IP', '0.0.0.0'), port =int(os.getenv('PORT', 8080)), debug=True)

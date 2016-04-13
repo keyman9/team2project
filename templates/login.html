@@ -1,29 +1,33 @@
-{% extends "index.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
-<center>
-    <h1 id="sign-in">Sign In</h1>
-    <form method="post" action="/login">
+<section ng-controller="FormFailedController">
+  <center>
+      <h1 id="styled-title">Sign In</h1>
+      <form ng-submit="login()">
 
-        <table class="styled-input">
-              <tr>
-                <td>Username: </td> <td > <input type="text" id="user" name="username"/></td>
-              </tr>
-              <tr>
-                <td>Password: </td> <td> <input type="password" name="password"/></td>
-              </tr>
+          <table class="styled-input">
+                <tr>
+                  <td>Username: </td> <td > <input ng-model="username" type="text"/></td>
+                </tr>
+                <tr>
+                  <td>Password: </td> <td> <input ng-model="password" type="password"/></td>
+                </tr>
 
-        </table>
+          </table>
 
-        <section class="styled-button">
-            <button type="submit" value = "Login" action='/home'>Login</button>
-        </section>
-        <div class="invalid"><p>{{invalid}}</p></div>
+          <section class="styled-button">
+              <button type="submit">Login</button>
+              <div class="invalid"><p id="message"></p></div>
+          </section>
 
-        <section id="to-register">
-            <h3>Don't have an account? <a href="/register"> Register here.</a></h3>
-        </section>
+          <div>
+            <section id="to-register">
+                <h3>Don't have an account? <a href="/register"> Register here.</a></h3>
+            </section>
+          </div>
 
-    </form>
-</center>
+      </form>
+  </center>
+</seciton>
 {% endblock %}

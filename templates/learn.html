@@ -5,6 +5,10 @@
 <script>
 
 function showContent(toShow) {
+    var aeropress = document.getElementById("aero");
+    var frenchPress = document.getElementById("french");
+    var mokaPot = document.getElementById("moka");
+    var chemex = document.getElementById("chemex");
 
     if(toShow == 'brew') {
         document.getElementById("brew").style.visibility = 'visible';
@@ -12,48 +16,156 @@ function showContent(toShow) {
 
         document.getElementById("brew").style.display= 'block';
         document.getElementById("beans").style.display= 'none';
-    } else {
+
+        /* change the color of the active button */
+        document.getElementById("tech").style.background= '#241109';
+        document.getElementById("tech").style.color= '#c8b69d';
+
+        document.getElementById("bean-and-roast").style.background= '#faf4ec';
+        document.getElementById("bean-and-roast").style.color= '#241109';
+
+
+    } else if(toShow == 'beans') {
         document.getElementById("brew").style.visibility = 'hidden';
         document.getElementById("beans").style.visibility = 'visible';
 
         document.getElementById("brew").style.display= 'none';
         document.getElementById("beans").style.display= 'block';
+
+        /* change the colors of the buttons after being clicked */
+        document.getElementById("bean-and-roast").style.background= '#241109';
+        document.getElementById("bean-and-roast").style.color= '#c8b69d';
+
+        document.getElementById("tech").style.background= '#faf4ec';
+        document.getElementById("tech").style.color= '#241109';
+    } else if(toShow == 'aero') {
+        aeropress.style.visibility = 'visible';
+        frenchPress.style.visibility = 'hidden';
+        mokaPot.style.visibility = 'hidden';
+        chemex.style.visibility = 'hidden';
+
+        aeropress.style.display = 'block';
+        frenchPress.style.display = 'none';
+        mokaPot.style.display = 'none';
+        chemex.style.display = 'none';
+
+    } else if(toShow == 'french') {
+        aeropress.style.visibility = 'hidden';
+        frenchPress.style.visibility = 'visible';
+        mokaPot.style.visibility = 'hidden';
+        chemex.style.visibility = 'hidden';
+
+        aeropress.style.display = 'none';
+        frenchPress.style.display = 'block';
+        mokaPot.style.display = 'none';
+        chemex.style.display = 'none';
+
+    } else if(toShow == 'moka') {
+        aeropress.style.visibility = 'hidden';
+        frenchPress.style.visibility = 'hidden';
+        mokaPot.style.visibility = 'visible';
+        chemex.style.visibility = 'hidden';
+
+        aeropress.style.display = 'none';
+        frenchPress.style.display = 'none';
+        mokaPot.style.display = 'block';
+        chemex.style.display = 'none';
+
+    } else if(toShow == 'chemex') {
+        aeropress.style.visibility = 'hidden';
+        frenchPress.style.visibility = 'hidden';
+        mokaPot.style.visibility = 'hidden';
+        chemex.style.visibility = 'visible';
+
+        aeropress.style.display = 'none';
+        frenchPress.style.display = 'none';
+        mokaPot.style.display = 'none';
+        chemex.style.display = 'block';
+
     }
 }
-document.getElementById("brew-button").onclick = function() {
-}
-
-document.getElementById("bean-button").onclick = function() {
-}
-
 
 
 </script>
 
-<div class="page-title" >
-    <h1>What would you like to learn about?</h1>
-</div>
+<center>
+    <section class="styled-button">
+        <button id="tech" onclick="showContent('brew')"><p>Brew Techniques</p></button>
+        <button id="bean-and-roast" onclick="showContent('beans')"><p>Beans & Roasts</p></button>
+    </section>
+</center>
 
-<div class="content-header">
-    <ul>
-        <li onclick="showContent('brew')"><h2>Brew Techniques</h2></li>
-        <li onclick="showContent('beans')"><h2>Beans & Roasts</h2></li>
-    </ul>
-</div>
+<div class="learn-content">
+    <div id="brew" style="visibility: hidden; display: none" >
+        <center>
+        <section>
 
-<div class="content-block">
-    <div  id="brew" style="visibility: hidden; display: none" >
-        <h1> Hey i'm brew </h1>
-        <p> I'm gonna tell you a whole lot of stuff about brewing coffee!
-        you just wait, we're gonan have a lot of good ole times together.
-        </p>
+        <button id="item" onclick="showContent('aero')">AeroPress</button>
+        <button id="item" onclick="showContent('french')">French Press</button>
+        <button id="item" onclick="showContent('moka')">Moka Pot</button>
+        <button id="item" onclick="showContent('chemex')">Chemex</button>
+
+        </section>
+        </center>
+
+        <section id="aero" style="visibility: hidden; display: block">
+            <h2>Quick Start: Aeropress</h2>
+            <p><b>1.</b> If you're using whole beans, grind to medium fine — similar to table salt.</p>
+            <p><b>2.</b> For a mostly full cup, pull the plunger to line up with the "4" printed on the press.
+            With the opening facing upward, place the Aeropress onto a table and pour a scoop of coffee inside.</p>
+            <p><b>3.</b> Once your water is boiling, slowly pour it over the grounds in a circular motion 
+            — making sure to evenly saturate the coffee grounds. Fill to 1cm from the top.</p>
+            <p><b>4.</b> Once your water is boiling, slowly pour it over the grounds — making sure to evenly
+            saturate the coffee grounds. Fill to 1cm from the top.</p>
+            <p><i>note:</i> If you feel as if there are still dry clumps of beans, give it a tender stir.</p>
+            <p><b>5.</b> Allow to steep for 1 minute. Wet your filter in the meantime and preheat your mug.</p>
+            <p><b>6.</b> Screw on filter and guard, then place opening of cup over the Aeropress opening. Flip the
+            whole mechanism over — push the plunger till you hear hissing air. Empty the grounds and enjoy. </p>
+        </section>
+
+
+        <section id="french" style="visibility: hidden; display: none">
+            <h2>Quick Start: French Press</h2>
+            <p><b>1.</b> Grind your beans to a medium-course, similar to bread crumbs.
+            Pour ground beans into the french press container.</p>
+            <p><b>2.</b> Once water has boiled, pour enough to wet the grounds — stir to ensure an even wetting.
+            Allow to bloom for 30 seconds.</p>
+            <p><b>3.</b> Pour water up to indicated mark on the press and allow the steep for 4 minutes.</p>
+            <p><b>4.</b> Press the plunger down with consistent force and serve immediately.</p>
+            <p><i>note:</i> Since the grounds are at the bottom, the water is still extracting flavor. If
+            you aren't going to serve it all immediately, opt for a glass carafe.</p>
+        </section>
+
+        <section id="moka" style="visibility: hidden; display: none">
+            <h2>Quick Start: Moka Pot</h2>
+            <p><b>1.</b> Grind your beans to a medium fine, table salt, like consistency.
+            Add water to the bottom chamber and place on high-heat.</p>
+            <p><b>2.</b> Once the water is boiling, pour the beans into the basket, place
+            the basket into the lower chamber, and screw the top on securely.
+            Lower the heat to medium. Leave the lid open.</p>
+            <p><b>3.</b> In 3-5 minutes, a smooth stream of dark coffee should come out the top.
+            Once the coffee coming out appears a light-brown/honey color, then remove the MokaPot
+            from the heat and run the base under cool water from a faucet.</p>
+            <p><b>4.</b> Serve the coffee immediately. It's probably gonna taste like dirt.</p>
+        </section>
+
+        <section id="chemex" style="visibility: hidden; display: none">
+            <h2>Quick Start: 8 cup Chemex</h2>
+            <p><b>1.</b> Grind beans to a kosher salt consistency. Rinse the Chemex filter with hot water
+            to rid of potential paper tastes. Place the filter in the top of the Chemex, followed by the
+            fresh grounds.</p>
+            <p><b>2.</b> Wet the grounds and stir as to moisten any dry clumps. Let stand for 45 seconds.</p>
+            <p><b>3.</b> Pour more grounds in a circular motion up to 1 inch from the rim. Let stand for 1 minute.</p>
+            <p><b>4.</b> Fill to the rim of the Chemex. Let brew for 3 more minutes. Lift the filter out and serve.</p>
+        </section>
+
     </div>
     <div id="beans" style="visibility:hidden; display: none" >
-        <h1> Hey i'm beans</h1>
-        <p>Dark, french, blah balh blah, here's where you learn some stuff
-        about the roast of beans and wher ethey come from. It's about time you
-        knew this shit anyways homies.
-        </p>
+        <section id="beansRoasts">
+        <h2>This section is coming soon!</h2>
+        <p>Read on to enrich your knowledge of coffee and open your eyes to exploring
+        different flavors and regions.</p>
+        <section>
     </div>
 </div>
 
