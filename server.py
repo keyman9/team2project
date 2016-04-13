@@ -12,6 +12,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24).encode('hex')
 socketio = SocketIO(app)
 
+loggedIn = False
+user = {}
+
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
     print(connectionString)
@@ -22,15 +25,12 @@ def connectToDB():
         print("Can't connect to database")
 
 
-@socketio.on('connect')
+@socketio.on('connect', namespace='/coffee')
 def makeConnection():
     print "connected"
 
 @app.route('/')
 def mainIndex():
-	loggedIn = False
-	if 'username' in session:
-		loggedIn = True
 	return render_template('index.html', selected="home", loggedIn=loggedIn)
 
 
@@ -43,7 +43,7 @@ def browse():
     cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         searchFor = request.form['roast']
-        statement = """SELECT * FROM coffee WHERE Roast = %s"""
+        statement = "SELECT * FROM coffee WHERE Roast = %s"
         try:
             print(cur.mogrify(statement,(searchFor,)))
             cur.execute(statement,(searchFor,))
@@ -51,23 +51,18 @@ def browse():
             print("Error executing select statement")
         results = cur.fetchall()
     try:
-        cur.execute("""Select column_name from information_schema.columns where table_name = 'coffee'""")     
+        cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'coffee'")     
     except:
         print("Error retrieving Column names")
     colNames = cur.fetchall()    
     for item in colNames:
         for colName in item:
             colName = str(colName).capitalize()
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
+
     return render_template('browse.html',selected="browse",columns=colNames,results=results, loggedIn=loggedIn)
 
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
     return render_template('learn.html', selected="learn", loggedIn=loggedIn)
 
 @app.route('/register', methods = ['GET','POST'])
@@ -83,11 +78,14 @@ def register():
         username = request.form['username']
         password = request.form['password']
         passwordConf = request.form['password-conf']
+        if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
+             return render_template('register.html', invalid="Please fill out all of the fields!")
         # Check if username already exists
         query = "SELECT username FROM login WHERE username = %s"
         cur.execute(query, [username])
         userCheck = cur.fetchall()
         if len(userCheck) > 0:
+            # return app.send_static_file('register.html')
             return render_template('register.html', invalid="Username is already taken!")
         else:
             if password != passwordConf:
@@ -107,15 +105,12 @@ def register():
                     con.rollback()
 
 
-    return render_template('register.html')
+    return render_template('register.html', selected="login/account", loggedIn=loggedIn)
+    # return app.send_static_file('register.html')
 
 
 @app.route('/about', methods=['GET'])
-def about():
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
-	
+def about():	
     return render_template('about.html', selected="about", loggedIn=loggedIn)
     
    
@@ -133,25 +128,18 @@ def login():
         # Check if user info was found in DB
         if len(valdate) != 0:
             # Create session variables for logged in user
-            session['username'] = username
-            session['password'] = password
-            return render_template('index.html', selected="home", loggedIn=True)
+            session['uuid'] = uuid.uuid1()
+            user[session['uuid']] = {'username': username}
+            loggedin = True
+            return render_template('index.html', selected="home", loggedIn=loggedin)
         else:
-            return render_template('login.html', selected="login/account", loggedIn=False, invalid="Invalid Username or Password")
-    
-    loggedIn = False
-    if 'username' in session:
-        loggedIn = True
+            return render_template('login.html', selected="login/account", loggedIn=loggedin, invalid="Invalid Username or Password")
 
     return render_template('login.html', selected="login/account", loggedIn=loggedIn)
 
 @app.route('/shop', methods = ['GET', 'POST'])
 def shop():
-
-    loggedIn = False
     return render_template('shop.html', selected="shop", loggedIn=loggedIn)
-
-
 
 
 
