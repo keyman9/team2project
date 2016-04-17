@@ -315,11 +315,24 @@ body {
 }
 
 .learn-content div section#aero, div section#french,
-div section#moka, div section#chemex, div section#beansRoasts{
+div section#moka, div section#chemex{
     position: relative;
     float: left;
     font-family: 'Avenir';
     width: 30%;
+    height: 458px;
+    margin-top: 0px;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.learn-content div section#beans, div section#roasts {
+    position: relative;
+    float: left;
+    font-family: 'Avenir';
+    width: 45%;
     height: 458px;
     margin-top: 0px;
     margin-left: 25px;
