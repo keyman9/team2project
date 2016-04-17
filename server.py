@@ -1,7 +1,7 @@
 import os
 import time
 import random
-import hashlib, uuid
+import hashlib, uuid, decimal
 import psycopg2
 import psycopg2.extras
 from collections import defaultdict
@@ -47,47 +47,9 @@ def home():
 def browse():
     loggedIn = False
     if 'uuid' in session:
-        print 'NAME IS ' + user[session['uuid']]['username']
         loggedIn = True
-    results = []
-    colNames = []
-    con = connectToDB()
-    cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    if request.method == 'POST':
-        searchBox = request.form['searchBox']
-        if len(searchBox) > 0:
-            #super search the names,descriptions OR bodies like '%searchBox%'
-            searchFor = '%'+searchBox+'%'
-            statement = "select a.name,c.roast,a.description,f.price,b.region,a.body,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where a.name like %s OR a.body like %s OR a.description like %s"
-            try:
-                print(cur.mogrify(statement,(searchFor,searchFor,searchFor)))
-                cur.execute(statement,(searchFor,searchFor,searchFor))
-            except:
-                print("Error executing select statement")
-            results = cur.fetchall()
-        else:
-            roast = request.form['roast']
-            region = request.form['region']
-            price = request.form['price']
-            order = request.form['order']
-            statement = "select a.name,c.roast,a.description,f.price,b.region,a.body,f.weight from coffee_names as a inner join coffee_region as d on a.name = d.name inner join region as b on d.region_id = b.region_id inner join coffee_roast as e on a.name = e.name inner join roast as c on e.roast_id = c.roast_id inner join coffee_cost as f on a.name = f.name where c.roast like %s and b.region like %s and f.price <= %s order by " + order 
-            ###roast-region-price-orderedBy
-            try:
-                print(cur.mogrify(statement,(roast,region,price)))
-                cur.execute(statement,(roast,region,price))
-            except:
-                print("Error executing select statement")
-            results = cur.fetchall()
-    try:
-        cur.execute("""select column_name from information_schema.columns where table_name = 'coffee_names' union select column_name from information_schema.columns where table_name = 'coffee_cost' union select column_name from information_schema.columns where table_name = 'roast' and column_name like 'roast' union select column_name from information_schema.columns where table_name = 'region' and column_name like 'region'""")
-    except:
-        print("Error retrieving Column names")
-    colNames = cur.fetchall()    
-    for item in colNames:
-        for colName in item:
-            colName = str(colName).capitalize()
 
-    return render_template('browse.html',selected="browse",columns=colNames,results=results, loggedIn=loggedIn)
+    return render_template('browse.html', selected="browse", loggedIn=loggedIn)
 
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
@@ -131,11 +93,44 @@ def account():
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
 
-@socketio.on('connect')
-def makeConnection():
-    print "connected"
 
-@socketio.on('register')
+@socketio.on('connect', namespace='/browse')
+def makeConnection():
+    print "CONNECTED TO BROWSE" 
+
+@socketio.on('search', namespace='/browse')
+def search(roast, region, price, orderBy, searchTerm):
+    results = []
+    con = connectToDB()
+    cur = con.cursor()
+    if searchTerm:
+        searchTerm = '%' + searchTerm + '%'
+        statement = "SELECT a.name, f.price, f.weight, c.roast, a.body, b.region, a.description FROM coffee_names AS a INNER JOIN coffee_region AS d ON a.name = d.name INNER JOIN region AS b ON d.region_id = b.region_id INNER JOIN coffee_roast AS e ON a.name = e.name INNER JOIN roast AS c ON e.roast_id = c.roast_id INNER JOIN coffee_cost AS f ON a.name = f.name WHERE LOWER(a.name) LIKE LOWER(%s) OR LOWER(a.body) LIKE LOWER(%s) OR LOWER(a.description) LIKE LOWER(%s)"
+        try:
+            cur.execute(statement, [searchTerm, searchTerm, searchTerm])
+            results = cur.fetchall()
+        except Exception, e:
+            raise e
+    else:
+        try:
+            query = "SELECT a.name AS Name, f.price AS Cost, f.weight, c.roast AS Roast, a.body, b.region AS Region, a.description FROM coffee_names AS a INNER JOIN coffee_region AS d ON a.name = d.name INNER JOIN region AS b ON d.region_id = b.region_id INNER JOIN coffee_roast AS e ON a.name = e.name INNER JOIN roast AS c ON e.roast_id = c.roast_id INNER JOIN coffee_cost AS f ON a.name = f.name WHERE c.roast LIKE %s OR b.region LIKE %s OR f.price <= %s ORDER BY " + orderBy 
+            cur.execute(query, [roast, region, price])
+            results = cur.fetchall()
+        except Exception, e:
+            raise e
+    emit('clearList')
+    for item in results:
+        coffee = {'name': item[0], 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6]}
+        emit('printResults', coffee)
+
+
+
+@socketio.on('connect', namespace='/form')
+def makeConnection():
+    print "CONNECTED TO FROM"
+
+
+@socketio.on('register', namespace='/form')
 def register(firstName, lastName, zipcode, favCoffee, username, password, passwordConf):
     con = connectToDB()
     cur = con.cursor()
@@ -166,7 +161,7 @@ def register(firstName, lastName, zipcode, favCoffee, username, password, passwo
                     raise e
                     con.rollback()
 
-@socketio.on('login')
+@socketio.on('login', namespace='/form')
 def login(username, password):
     con = connectToDB()
     cur = con.cursor()
