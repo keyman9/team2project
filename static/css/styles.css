@@ -43,17 +43,18 @@ body {
 .nav-bar{
     margin-right: auto;
     margin-left: auto;
-    position:    absolute;
+    float: center;
     left:        50%;        /* Start with top left in the center */
     top:         10%;
     width:       500px;      /* The fixed width... */
     height:      100px;      /* ...and height */
-    margin-left: -195px;     /* Shift over half the width */
-    margin-top:  20px;      /* Shift up half the height */
+    /*margin-left: 20px; */    /* Shift over half the width */
+    /*margin-top:  20px; */     /* Shift up half the height */
 /*    width: 30%;
     padding: 3px;
     padding-left: 55px;*/
 }
+
 
 .nav-bar ul {
     list-style-type: none;
