@@ -1,7 +1,8 @@
 var CoffeeCorner = angular.module('CoffeeCorner', []);
 
-CoffeeCorner.controller('FormFailedController', function($scope){
-	var socket = io.connect('http://' + document.domain + ':' + location.port);
+/** Controller for Login and Register Page **/
+CoffeeCorner.controller('Form', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/form');
 
 	$scope.firstName = "";
 	$scope.lastName = "";
@@ -13,7 +14,7 @@ CoffeeCorner.controller('FormFailedController', function($scope){
 
 
 	socket.on('connect', function(){
-		console.log('Connected');
+		console.log('Connected to Form');
 	});
 
 	socket.on('FormFail', function(msg){
@@ -32,5 +33,43 @@ CoffeeCorner.controller('FormFailedController', function($scope){
 		socket.emit('register', $scope.firstName, $scope.lastName, $scope.zipcode, 
 			$scope.favCoffee, $scope.username, $scope.password, $scope.passwordConf);
 	};
+});
 
+/** Controller for Browse Page **/
+CoffeeCorner.controller('Browse', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/browse');
+
+	$scope.roast = "Light";
+	$scope.region = "South America";
+	$scope.price = "12.00";
+	$scope.orderBy = "Name";
+	$scope.searchTerm = "";
+
+	$scope.colName = "Name";
+	$scope.colPrice = "Price";
+	$scope.colWeight = "Weight";
+	$scope.colRoast = "Roast";
+	$scope.colBody = "Body";
+	$scope.colRegion = "Region";
+	$scope.colDescription = "Description";
+	$scope.results = [];
+
+
+	socket.on('connect', function(){
+		console.log('Connected to Browse');
+	});
+
+	socket.on('clearList', function(){
+		$scope.results = [];
+	});
+
+	socket.on('printResults', function(coffee){
+		console.log(coffee);
+		$scope.results.push(coffee);
+		$scope.$apply()
+	});
+
+	$scope.search = function(){
+		socket.emit('search', $scope.roast, $scope.region, $scope.price, $scope.orderBy, $scope.searchTerm);
+	};
 });

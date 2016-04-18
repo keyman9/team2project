@@ -1,73 +1,80 @@
-{% extends "index.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
-<center>
-    <h1 id="sign-in">Search for coffee!</h1>
-    <div>
+<section ng-controller="Browse">
+    <center>
+        <h1 id="sign-in">Search for coffee!</h1>
+        <div>
 
-        <form method="POST" action="/browse">
-            <p>Roast: <select name="roast" id="roast">
-                <option value="Light">Light</option>
-                <option value="Medium Light">Medium Light</option>
-                <option value="Medium">Medium</option>
-                <option value="Medium Dark">Medium Dark</option>
-                <option value="Dark">Dark</option>
-            </select>
-            &nbsp;
-            Region: <select name="region" id="region">
-                <option value="South America">South America</option>
-                <option value="Central America">Central America</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Africa">Africa</option>
-            </select>
-            &nbsp;
-            Cost: <select name="price" id="price">
-                <option value="12.00">$12.00</option>
-                <option value="13.00">$13.00</option>
-                <option value="14.00">$14.00</option>
-                <option value="15.00">$15.00</option>
-                <option value="16.00">$16.00</option>
-                <option value="17.00">$17.00</option>
-                <option value="18.00">$18.00</option>
-                <option value="19.00">$19.00+</option>
-            </select>
-            &nbsp;
-            Ordered by: <select name="order" id="order">
-                <option value="a.name">Coffee Name</option>
-                <option value="c.roast">Roast</option>
-                <option value="b.region">Region</option>
-                <option value="f.price">Cost</option>
-            </select>
-            <hr>
-            OR
-            <hr>
+            <form ng-submit="search()">
+                <p>Roast: <select ng-model="roast" name="roast" id="roast">
+                    <option value="Light">Light</option>
+                    <option value="Medium Light">Medium Light</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Medium Dark">Medium Dark</option>
+                    <option value="Dark">Dark</option>
+                </select>
+                &nbsp;
+                Region: <select ng-model="region" name="region" id="region">
+                    <option value="South America">South America</option>
+                    <option value="Central America">Central America</option>
+                    <option value="Indonesia">Indonesia</option>
+                    <option value="Africa">Africa</option>
+                </select>
+                &nbsp;
+                Cost: <select ng-model="price" name="price" id="price">
+                    <option value="12.00">$12.00</option>
+                    <option value="13.00">$13.00</option>
+                    <option value="14.00">$14.00</option>
+                    <option value="15.00">$15.00</option>
+                    <option value="16.00">$16.00</option>
+                    <option value="17.00">$17.00</option>
+                    <option value="18.00">$18.00</option>
+                    <option value="19.00">$19.00+</option>
+                </select>
+                &nbsp;
+                Ordered by: <select ng-model="orderBy" name="order" id="order">
+                    <option value="Name">Coffee Name</option>
+                    <option value="Roast">Roast</option>
+                    <option value="Region">Region</option>
+                    <option value="Cost">Cost</option>
+                </select>
+                <hr>
+                OR
+                <hr>
 
-            <p>Search: <input type="text" name="searchBox" id="searchBox"></p>
+                <p>Search: <input ng-model="searchTerm" type="text" name="searchBox" id="searchBox"></p>
 
-            <section class="login">
-                <button onclick="showDiv('results')" type="Submit" action='/browse'>Go!</button>
-            </section>
-            </p>
-        </form>
-    </div>
+                <section class="login">
+                    <button type="submit">Go!</button>
+                </section>
+                </p>
+            </form>
+        </div>
 
-    <div style="display: block" id="results" class="search-results">
-        <table>
-        <tr>{% for row in columns %}
-            {% for colName in row %}
-            <th>{{colName}}</th>
-            {% endfor %}
-            {% endfor %}
-        </tr>
-        {% for row in results %}
+        <div style="display: block" id="results" class="search-results">
+            <table>
             <tr>
-            {% for item in row %}
-                <td>{{item}}</td>
-            {% endfor %}
+                <th ng-bind="colName"></th>
+                <th ng-bind="colPrice"></th>
+                <th ng-bind="colWeight"></th>
+                <th ng-bind="colRoast"></th>
+                <th ng-bind="colBody"></th>
+                <th ng-bind="colRegion"></th>
+                <th ng-bind="colDescription"></th>
             </tr>
-        {% endfor %}
-        </table>
-    </div>
+                <tr ng-repeat="coffee in results">
+                    <td ng-bind="coffee.name"></td>
+                    <td> </td>
+                    <td ng-bind="coffee.weight"></td>
+                    <td ng-bind="coffee.roast"></td>
+                    <td ng-bind="coffee.body"></td>
+                    <td ng-bind="coffee.region"></td>
+                    <td ng-bind="coffee.description"></td>
+                </tr>
+            </table>
+        </div>
 
-</center>
+    </center>
+</section>
 {% endblock %}
