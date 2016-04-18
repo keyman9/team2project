@@ -57,18 +57,16 @@ def learn():
     if 'uuid' in session:
         loggedIn = True
 
-    return render_template('learn.html', selected="learn", loggedIn=loggedIn)
-    # results = []
+    results = [] 
+    con = connectToDB()
+    cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    try:
+        cur.execute("SELECT * FROM learn")
+        results = cur.fetchall()
+    except:
+        print("Couldn't retrive roast types")
     
-    # con = connectToDB()
-    # cur = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # try:
-    #     cur.execute("SELECT * FROM learn")
-    #     results = cur.fetchall()
-    # except:
-    #     print("Couldn't retrive roast types")
-    
-    # return render_template('learn.html', selected="learn", loggedIn=loggedIn, roasts=results)
+    return render_template('learn.html', selected="learn", loggedIn=loggedIn, roasts=results)
 
 @app.route('/about', methods=['GET'])
 def about():	
