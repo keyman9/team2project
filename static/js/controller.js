@@ -36,6 +36,28 @@ CoffeeCorner.controller('Form', function($scope){
 	};
 });
 
+/** Controller for Recipes **/
+CoffeeCorner.controller('Recipes', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/addRecipe');
+
+	socket.on('connect', function(){
+		console.log('Connected to Form');
+	});
+
+	socket.on('redirect', function (data) {
+    	window.location = data.url;
+	});
+
+	$scope.recipeTitle = ""
+    $scope.recipe = ""
+    $scope.addRecipe = function(){
+        console.log($scope.recipeTitle);
+        console.log($scope.recipe);
+        socket.emit('addRecipe', $scope.recipeTitle, $scope.recipe);
+    };
+
+});
+
 /** Controller for Browse Page **/
 CoffeeCorner.controller('Browse', function($scope){
 	var socket = io.connect('http://' + document.domain + ':' + location.port + '/browse');

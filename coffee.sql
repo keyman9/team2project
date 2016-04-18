@@ -146,9 +146,22 @@ ALTER TABLE public.login_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE login_id_seq OWNED BY login.id;
 
+------
+DROP TABLE IF EXISTS recipes;
+CREATE TABLE recipes(
+    recipe_id serial NOT NULL,
+    title text NOT NULL DEFAULT '',
+    recipe text NOT NULL DEFAULT,
+    login_id int NOT NULL,
+    PRIMARY KEY(recipe_id),
+    FOREIGN KEY(login_id) REFERENCES login(id),
+    );
+
+----
 --
 -- Name: region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
+
 DROP TABLE IF EXISTS region;
 CREATE TABLE region (
     region_id integer NOT NULL,
@@ -754,6 +767,7 @@ REVOKE ALL ON TABLE learn FROM PUBLIC;
 REVOKE ALL ON TABLE learn FROM postgres;
 GRANT ALL ON TABLE learn TO postgres;
 GRANT SELECT,INSERT ON TABLE learn TO visiting;
+GRANT SELECT,INSERT ON TABLE recipes TO visiting;
 
 --
 -- Grant permissions
@@ -761,3 +775,5 @@ GRANT SELECT,INSERT ON TABLE learn TO visiting;
 
 GRANT UPDATE, SELECT ON roast_roast_id_seq TO visiting;
 GRANT UPDATE, SELECT ON region_region_id_seq TO visiting;
+GRANT UPDATE, SELECT ON recipes_recipe_id_seq TO visiting;
+

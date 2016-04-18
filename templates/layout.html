@@ -32,6 +32,9 @@
 		      <li {% if selected == 'about' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/about"><span class="border-item">ABOUT</span></a></li>
+		      <li {% if selected == 'AddRecipe' %}
+		      		id="selected"
+		      	  {% endif %}><a href="/addRecipe"><span class="border-item">ADD RECIPE</span></a></li>
 		      <li{% if selected == 'login/account' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/login"><span class="border-item">
@@ -58,6 +61,7 @@
 		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
 		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
 		      <li><a href="/about"><span class="border-item">ABOUT</span></a></li>
+		      <li><a href="/addRecipe"><span class="border-item">ADD RECIPE</span></a></li>
 		      <li><a href="/login"><span class="border-item">
 		      	  {% if loggedIn %}
 		      	  	ACCOUNT

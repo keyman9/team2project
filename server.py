@@ -78,6 +78,13 @@ def about():
 
     return render_template('about.html', selected="about", loggedIn=loggedIn)
     
+@app.route('/addRecipe', methods = ['GET','POST'])
+def addRecipe():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+    return render_template('addRecipe.html', selected='addRecipe', loggedIn=loggedIn)
+
    
 @app.route('/login', methods = ['GET','POST'])
 def login():
@@ -190,7 +197,19 @@ def login(username, password):
     else:
         emit('FormFail', 'Invalid username or password!')
 
-
+@socketio.on('addRecipe', namespace='/addRecipe')
+def addRecipe(title,recipe):
+    con = connectToDB()
+    cur = con.cursor()
+    #get user's id
+    statement = "SELECT id FROM login where username = %s"
+    cur.execute(statement,(user[session['uuid']]['username'],))
+    userId = cur.fetchone()[0]
+    print "Username?",user[session['uuid']]['username']
+    statement = "INSERT INTO recipes (title,recipe,login_id) VALUES (%s,%s,%s)"
+    cur.execute(statement,(title,recipe,userId))
+    con.commit()
+    emit('redirect', {'url': url_for('home')})
 
 # start the server
 if __name__ == '__main__':
