@@ -315,7 +315,7 @@ body {
 }
 
 .learn-content div section#aero, div section#french,
-div section#moka, div section#chemex, div section#beansRoasts{
+div section#moka, div section#chemex{
     position: relative;
     float: left;
     font-family: 'Avenir';
@@ -326,6 +326,40 @@ div section#moka, div section#chemex, div section#beansRoasts{
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;
+}
+
+.learn-content div section#beans, div section#roasts {
+    position: relative;
+    float: left;
+    font-family: 'Avenir';
+    width: 45%;
+    height: 458px;
+    margin-top: 0px;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.learn-content div section table {
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    color: black;
+    text-align: center;
+}
+
+.learn-content div section table th {
+
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    background: #241109;
+    color: #c8b69d;
+}
+
+.learn-content div section table td{
+    font-size: 15px;
+    border-bottom: 1px solid #ddd;
+    padding: 0px 10px 0px;
 }
 
 /************** 

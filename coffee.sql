@@ -22,6 +22,19 @@ CREATE TABLE coffee (
     description text DEFAULT ''::text NOT NULL
 );
 
+CREATE TABLE learn (
+    roastLevel integer DEFAULT 0 NOT NULL,
+    aka text DEFAULT '' NOT NULL,
+    surface varchar(15) DEFAULT '' NOT NULL,
+    acidity varchar(10) DEFAULT '' NOT NULL,
+    flavor text DEFAULT '' NOT NULL
+);
+
+INSERT INTO learn (roastLevel, aka, surface, acidity, flavor) VALUES (1, 'Cinnamon roast, half city, New England', 'Dry', 'High', 'Light bodied, sour, grassy, and snappy'),
+(2, 'Full city, American, regular, breakfast, brown', 'Dry', 'High', 'Sweeter than light roast; full body balanced by acidic snap, aroma and complexity'),
+(3, 'High, Viennese, Italian, Espresso, Continental', 'Slightly Shiny', 'Medium', 'Somewhat spicy; complexity exchanged for rich body, aroma exchanged for sweetness'),
+(4, 'French Roast', 'Very Oily', 'Low', 'Smokey; taste is derived from roasting rather than from the flavors of the bean');
+
 
 ALTER TABLE public.coffee OWNER TO postgres;
 
@@ -730,6 +743,17 @@ GRANT SELECT,INSERT ON TABLE region TO visiting;
 --
 -- PostgreSQL database dump complete
 --
+
+REVOKE ALL ON TABLE user_info FROM PUBLIC;
+REVOKE ALL ON TABLE user_info FROM postgres;
+GRANT ALL ON TABLE user_info TO postgres;
+GRANT SELECT,INSERT ON TABLE user_info TO visiting;
+
+
+REVOKE ALL ON TABLE learn FROM PUBLIC;
+REVOKE ALL ON TABLE learn FROM postgres;
+GRANT ALL ON TABLE learn TO postgres;
+GRANT SELECT,INSERT ON TABLE learn TO visiting;
 
 --
 -- Grant permissions
