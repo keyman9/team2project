@@ -341,6 +341,27 @@ div section#moka, div section#chemex{
     padding-left: 10px;
 }
 
+.learn-content div section table {
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    color: black;
+    text-align: center;
+}
+
+.learn-content div section table th {
+
+    font-family: 'Avenir';
+    padding: 5px 10px 5px;
+    background: #241109;
+    color: #c8b69d;
+}
+
+.learn-content div section table td{
+    font-size: 15px;
+    border-bottom: 1px solid #ddd;
+    padding: 0px 10px 0px;
+}
+
 /************** 
  * browse page *
  **************/
