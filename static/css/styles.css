@@ -26,6 +26,7 @@ body {
     margin: 0;
     padding: 0;
     padding-top: 20px;
+    padding-bottom: 55px;
     margin-bottom: -5px;
     text-align: center;
     font-family: 'Avenir';
@@ -42,9 +43,16 @@ body {
 .nav-bar{
     margin-right: auto;
     margin-left: auto;
-    width: 35%;
+    position:    absolute;
+    left:        50%;        /* Start with top left in the center */
+    top:         10%;
+    width:       500px;      /* The fixed width... */
+    height:      100px;      /* ...and height */
+    margin-left: -195px;     /* Shift over half the width */
+    margin-top:  20px;      /* Shift up half the height */
+/*    width: 30%;
     padding: 3px;
-    padding-left: 55px;
+    padding-left: 55px;*/
 }
 
 .nav-bar ul {
@@ -424,7 +432,7 @@ footer{
 }
 
 footer .nav-bar a{
-    padding-top: 25px;
+    padding-top: 10px;
     color: #241109;
 }
 

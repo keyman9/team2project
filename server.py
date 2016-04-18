@@ -141,7 +141,7 @@ def makeConnection():
 
 
 @socketio.on('register', namespace='/form')
-def register(firstName, lastName, zipcode, favCoffee, username, password, passwordConf):
+def register(firstName, lastName, zipcode, favCoffee, email, username, password, passwordConf):
     con = connectToDB()
     cur = con.cursor()
     if not firstName or not lastName or not zipcode or not favCoffee or not username or not password or not passwordConf:
@@ -163,8 +163,8 @@ def register(firstName, lastName, zipcode, favCoffee, username, password, passwo
                     query = "INSERT INTO login (first_name, last_name, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf')))"
                     cur.execute(query, [firstName, lastName, username, password])
                     con.commit()
-                    query = "INSERT INTO user_info (username, zipcode, favorite_coffee) VALUES (%s, %s, %s)"
-                    cur.execute(query, [username, zipcode, favCoffee])
+                    query = "INSERT INTO user_info (username, email, zipcode, favorite_coffee) VALUES (%s, %s, %s, %s)"
+                    cur.execute(query, [username, email, zipcode, favCoffee])
                     con.commit()
                     emit('redirect', {'url': url_for('login')})
                 except Exception, e:

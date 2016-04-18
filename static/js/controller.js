@@ -8,6 +8,7 @@ CoffeeCorner.controller('Form', function($scope){
 	$scope.lastName = "";
 	$scope.zipcode = "";
 	$scope.favCoffee = "";
+	$scope.email = "";
 	$scope.username = "";
 	$scope.password = "";
 	$scope.passwordConf = "";
@@ -31,7 +32,7 @@ CoffeeCorner.controller('Form', function($scope){
 
 	$scope.register = function(){
 		socket.emit('register', $scope.firstName, $scope.lastName, $scope.zipcode, 
-			$scope.favCoffee, $scope.username, $scope.password, $scope.passwordConf);
+			$scope.favCoffee, $scope.email, $scope.username, $scope.password, $scope.passwordConf);
 	};
 });
 
