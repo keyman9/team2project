@@ -1,6 +1,46 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>About Us</h1>
-<p>Here in about Page</p>
+<style>
+body {
+    background-image: url("static/images/CoffeeGraphic.png");
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+}  
+.ex{
+    font-size: 25px;
+    font-family: 'Futura';
+    text-shadow: .5px .5px #000000;
+    color: #6d4712;
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 500px;
+    margin-bottom: 440px;
+}
+
+h1.head{
+    font-size: 45px;
+    font-family: 'Futura';
+    color: #6d4712;
+    text-shadow: .5px .5px #000000;
+}
+</style>
+
+
+<div>
+    <div> 
+    <div class="coffee-image">
+        <center>
+        <h1 class="head">About Us</h1>
+        <p class="ex">Ever wondered what other people are saying different coffee types like Dark Sumatra or Breakfast Blend?
+        We sure did, that is why we decided to develop this modern style forum for other coffee lovers to enable us to discuss about different
+        styles of coffee. This site will also allow you to browse diffferent type of coffee and see what other people are saying about it.
+        Tell us your story about your favorite coffee and how it came to be. Cheers!
+        </p>
+    </center>
+    </div>
+    </div>
+</div>
 {% endblock %}
