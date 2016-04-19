@@ -26,6 +26,7 @@ CoffeeCorner.controller('Form', function($scope){
     	window.location = data.url;
 	});
 
+
 	$scope.login = function(){
 		socket.emit('login', $scope.username, $scope.password);
 	};
@@ -102,6 +103,14 @@ CoffeeCorner.controller('Account', function($scope){
 	var socket = io.connect('http://' + document.domain + ':' + location.port + '/account');
 
 	$scope.user = [];
+	$scope.firstName = "";
+	$scope.lastName = "";
+	$scope.zipcode = "";
+	$scope.favCoffee = "";
+	$scope.email = "";
+	$scope.username = "";
+	$scope.oldPassword = "";
+	$scope.newPassword = "";
 
 
 	socket.on('connect', function(){                     
@@ -112,8 +121,17 @@ CoffeeCorner.controller('Account', function($scope){
 		socket.emit('getUser');
 	});
 
+	socket.on('FormFail', function(msg){
+		document.getElementById('message').textContent = msg;
+	});
+
 	socket.on('displayInfo', function(user){  
-		console.log(user);                  
+		$scope.firstName = user['First_Name'];
+		$scope.lastName = user['Last_Name'];
+		$scope.zipcode = user['zipcode'];
+		$scope.favCoffee = user['favCoffee'];
+		$scope.email = user['email']; 
+		$scope.username = user['username'];              	 
 		$scope.user.push(user);
 		$scope.$apply();
 	});
@@ -122,7 +140,11 @@ CoffeeCorner.controller('Account', function($scope){
     	window.location = data.url;
 	});
 
+	$scope.updateAccount = function(){
+
+	};
+
 	$scope.logOut = function(){
 		socket.emit('logOut');
-	}
+	};
 });

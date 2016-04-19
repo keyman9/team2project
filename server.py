@@ -107,6 +107,14 @@ def account():
 
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
+@app.route('/edit')
+def edit():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('edit_account.html', selected='login/account', loggedIn=loggedIn)
+
 
 
 @socketio.on('connect', namespace='/browse')
