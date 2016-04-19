@@ -60,6 +60,7 @@
         <div style="display: block" id="results" class="styled-table">
             <table>
             <tr>
+                <th></th>
                 <th ng-bind="colName"></th>
                 <th ng-bind="colPrice"></th>
                 <th ng-bind="colWeight"></th>
@@ -69,6 +70,7 @@
                 <th ng-bind="colDescription"></th>
             </tr>
                 <tr ng-repeat="coffee in results">
+                    <td><div><button id="fav-button" type="button" ng-click="addFavorite(coffee.name)">Favorite</button></div></td>
                     <td ng-bind="coffee.name"></td>
                     <td> </td>
                     <td ng-bind="coffee.weight"></td>

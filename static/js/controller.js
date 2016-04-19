@@ -96,6 +96,10 @@ CoffeeCorner.controller('Browse', function($scope){
 	$scope.search = function(){
 		socket.emit('search', $scope.roast, $scope.region, $scope.price, $scope.orderBy, $scope.searchTerm);
 	};
+
+	$scope.addFavorite = function(coffeeName){
+		console.log(coffeeName);
+	}
 });
 
 /** Controller for Account Page **/
