@@ -1,9 +1,44 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<section ng-controller="Account">
+	<div class="account">
+		<center>
+			<h1 id="styled-title">My Account</h1>
+			<div class="styled-table">
+				<table>
+					<tr>
+						<th>Personal Information</th>
+					</tr>
+				</table>
+				<table ng-repeat="item in user">
+					<tr>
+						<td>Email: </td><td ng-bind="item.email"></td>
+					</tr>
+					<tr>
+						<td>First Name: </td><td ng-bind="item.First_Name"></td>
+					</tr>	
+					<tr>
+						<td>Last Name: </td><td ng-bind="item.Last_Name"></td>
+					</tr>	
+					<tr>
+						<td>Zip Code: </td><td ng-bind="item.zipcode"></td>
+					</tr>
+					<tr>
+						<td>Username: </td><td ng-bind="item.username"></td>
+					</tr>
+					<tr>
+						<td>Favorite Coffee: </td><td ng-bind="item.favCoffee"></td>
+					</tr>			
+				</table>
+			</div>
+			<div class="styled-button">
+				<a href="/edit"><button type="button">Edit</button></a>
+				<button type="button" ng-click="logOut()">Log Out</button>
+			</div>
 
-<center>
-	<h1 id="styled-title">My Account</h1>
-</center>
+		</center>
+	</div>
+</section>
 
 {% endblock %}

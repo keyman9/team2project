@@ -19,8 +19,7 @@ name = ''
 def connectToDB():
     connectionString = 'dbname=coffee user=visiting password=06*65uSl13Cu host=localhost'
     print(connectionString)
-    try: 
-        # there can be lots of errors early on, good to catch 'em. 
+    try:  
         return psycopg2.connect(connectionString)
     except:
         print("Can't connect to database")
@@ -34,7 +33,7 @@ def home():
         passed = False
         session['uuid'] = uuid.uuid1()
         user[session['uuid']] = {'username': name}
-        name = ""
+        name = ''
 
     loggedIn = False
     if 'uuid' in session:
@@ -106,6 +105,14 @@ def account():
         loggedIn = True
 
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
+
+@app.route('/edit')
+def edit():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('edit_account.html', selected='login/account', loggedIn=loggedIn)
 
 
 
@@ -183,6 +190,7 @@ def login(username, password):
     # Track log in success state
     global passed
     global name
+    global passWrd
     query = "SELECT Username, Password FROM login WHERE username = %s and password = crypt(%s, password)"
     cur.execute(query, [username, password])
     valdate = cur.fetchall()
@@ -191,9 +199,11 @@ def login(username, password):
         # Create session variables for logged in user
         passed = True
         name = username
+        passWrd = password
         emit('redirect', {'url': url_for('home')})
     else:
         emit('FormFail', 'Invalid username or password!')
+
 
 @socketio.on('addRecipe', namespace='/addRecipe')
 def addRecipe(title,recipe):
@@ -208,6 +218,95 @@ def addRecipe(title,recipe):
     cur.execute(statement,(title,recipe,userId))
     con.commit()
     emit('redirect', {'url': url_for('home')})
+
+
+@socketio.on('connect', namespace='/account')
+def makeConnection():
+    print "CONNECTED TO ACCOUNT"
+    emit('getUser')
+
+@socketio.on('getUser', namespace='/account')
+def getUser():
+    print 'GETTING USER'
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        # Get first and last name of current user
+        query = "SELECT first_name, last_name FROM login WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        currentUser = cur.fetchall()
+        # Get other info from user info table
+        query = "SELECT * FROM user_info WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        currentUser2 = cur.fetchall()
+        for item in currentUser:
+            for item2 in currentUser2:
+                currUser = {'First_Name': item[0], 'Last_Name': item[1], 'username': item2[0], 'email': item2[1], 'zipcode': item2[2], 'favCoffee': item2[3]}
+                emit('displayInfo', currUser)
+
+    except Exception, e:
+        raise e
+
+
+@socketio.on('updateAccount', namespace='/account')
+def updateAccount(firstName, lastName, zipcode, favCoffee, email, oldPassword, newPassword):
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        # Track if password change and also if it is ok to update
+        passwordChange = False
+        okChange = False
+        # Check if significant inputs are filled
+        if not firstName or not lastName or not zipcode or not favCoffee or not email:
+            emit('FormFail', 'Please fill out all of the field')
+        # Check if old password entered
+        elif oldPassword:
+            # Ask user for new password if none, else check if old password is correct
+            if not newPassword:
+                emit('FormFail', 'Please enter a new password')
+            else:
+                passwordChange = True
+                query = "SELECT password FROM login WHERE username = %s AND password = crypt(%s, password)"
+                cur.execute(query, [user[session['uuid']]['username'], oldPassword])
+                passCheck = cur.fetchall()
+                if not passCheck:
+                    emit('FormFail', 'Old password is incorrect!')
+                else:
+                    okChange = True
+        # Ask user for old password if putting in new password
+        elif newPassword and not oldPassword:
+                emit('FormFail', 'Please enter your old password!')
+        else:
+            okChange = True
+
+        if okChange:
+            # Update password if it was changed, otherwise update everything else
+            if passwordChange:
+                query = "UPDATE login SET first_name = %s, last_name = %s, password = crypt(%s, gen_salt('bf')) WHERE username = %s"
+                cur.execute(query, [firstName, lastName, newPassword, user[session['uuid']]['username']])
+            else:
+                query = "UPDATE login SET first_name = %s, last_name = %s WHERE username = %s"
+                cur.execute(query, [firstName, lastName, user[session['uuid']]['username']])
+            con.commit()
+
+            # Update user info table with any new info
+            query = "UPDATE user_info SET email = %s, zipcode = %s, favorite_coffee = %s WHERE username = %s"
+            cur.execute(query, [email, zipcode, favCoffee, user[session['uuid']]['username']])
+            con.commit()
+            emit('redirect', {'url': url_for('account')})
+
+    except Exception, e:
+        raise e  
+        con.rollback()  
+    
+
+@socketio.on('logOut', namespace='/account')
+def logOut():
+    session.clear()
+    user = {}
+    emit('redirect', {'url': url_for('home')})
+
+
 
 # start the server
 if __name__ == '__main__':

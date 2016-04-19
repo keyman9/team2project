@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section ng-controller="Account">
+  <center>
+    <h1 id="styled-title">Edit Account</h1>
+    <form ng-submit="updateAccount()">
+        <table class="styled-input">
+              <tr> 
+                <td>First Name: </td> <td> <input ng-model="firstName" type="text"></td>
+              </tr>
+              <tr> 
+                <td>Last Name: </td> <td> <input ng-model="lastName" type="text" ></td>
+              </tr>
+              <tr>
+                <td>ZIP Code: </td> <td> <input ng-model="zipcode" size=5 maxlength=5 type="text"/></td>
+              </tr>
+              <tr>
+                <td>Favorite Coffee: </td> <td> <input ng-model="favCoffee" type="text"/></td>
+              </tr>
+
+              <tr>
+                <td>Email: </td> <td> <input ng-model="email" type="text"/></td>
+              </tr>
+              <tr>
+                <td>Old Password: </td> <td> <input ng-model="oldPassword" type="password"/></td>
+              </tr>
+              <tr>
+                <td>New Password: </td> <td> <input ng-model="newPassword" type="password"/></td>
+              </tr>
+              
+        </table>
+
+        <section class="styled-button">
+            <button type="submit">Save</button>
+            <a href="/account"><button type="button">Cancel</button></a>
+            <div class="invalid"><p id="message"></p></div>
+        </section>
+
+    </form>
+  </center>
+</section>
+
+{% endblock %}
