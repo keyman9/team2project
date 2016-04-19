@@ -34,7 +34,7 @@ def home():
         passed = False
         session['uuid'] = uuid.uuid1()
         user[session['uuid']] = {'username': name}
-        name = ""
+        name = ''
 
     loggedIn = False
     if 'uuid' in session:
@@ -195,6 +195,7 @@ def login(username, password):
     else:
         emit('FormFail', 'Invalid username or password!')
 
+
 @socketio.on('addRecipe', namespace='/addRecipe')
 def addRecipe(title,recipe):
     con = connectToDB()
@@ -208,6 +209,42 @@ def addRecipe(title,recipe):
     cur.execute(statement,(title,recipe,userId))
     con.commit()
     emit('redirect', {'url': url_for('home')})
+
+
+@socketio.on('connect', namespace='/account')
+def makeConnection():
+    print "CONNECTED TO ACCOUNT"
+    emit('getUser')
+
+@socketio.on('getUser', namespace='/account')
+def getUser():
+    print 'GETTING USER'
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        # Get first and last name of current user
+        query = "SELECT first_name, last_name FROM login WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        currentUser = cur.fetchall()
+        # Get other info from user info table
+        query = "SELECT * FROM user_info WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        currentUser2 = cur.fetchall()
+        for item in currentUser:
+            for item2 in currentUser2:
+                currUser = {'First_Name': item[0], 'Last_Name': item[1], 'username': item2[0], 'email': item2[1], 'zipcode': item2[2], 'favCoffee': item2[3]}
+                emit('displayInfo', currUser)
+
+    except Exception, e:
+        raise e
+
+@socketio.on('logOut', namespace='/account')
+def logOut():
+    session.clear()
+    user = {}
+    emit('redirect', {'url': url_for('home')})
+
+
 
 # start the server
 if __name__ == '__main__':
