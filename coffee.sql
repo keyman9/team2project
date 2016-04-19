@@ -154,8 +154,16 @@ CREATE TABLE recipes(
     recipe text NOT NULL DEFAULT,
     login_id int NOT NULL,
     PRIMARY KEY(recipe_id),
-    FOREIGN KEY(login_id) REFERENCES login(id),
-    );
+    FOREIGN KEY(login_id) REFERENCES login(id)
+);
+
+
+DROP TABLE IF EXISTS user_likes;
+CREATE TABLE user_likes(
+    username varchar(35)  REFERENCES login(username) NOT NULL,
+    coffee_name varchar(35) NOT NULL,
+    PRIMARY KEY (username, coffee_name)
+);
 
 ----
 --
@@ -768,6 +776,11 @@ REVOKE ALL ON TABLE learn FROM postgres;
 GRANT ALL ON TABLE learn TO postgres;
 GRANT SELECT,INSERT ON TABLE learn TO visiting;
 GRANT SELECT,INSERT ON TABLE recipes TO visiting;
+
+REVOKE ALL ON TABLE user_likes FROM PUBLIC;
+REVOKE ALL ON TABLE user_likes FROM postgres;
+GRANT ALL ON TABLE user_likes TO postgres;
+GRANT SELECT,INSERT,DELETE ON TABLE user_likes TO visiting;
 
 --
 -- Grant permissions

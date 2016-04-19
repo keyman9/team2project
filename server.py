@@ -122,6 +122,10 @@ def makeConnection():
 
 @socketio.on('search', namespace='/browse')
 def search(roast, region, price, orderBy, searchTerm):
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
     results = []
     con = connectToDB()
     cur = con.cursor()
@@ -140,10 +144,35 @@ def search(roast, region, price, orderBy, searchTerm):
             results = cur.fetchall()
         except Exception, e:
             raise e
+
+    if loggedIn:
+        query = "SELECT coffee_name FROM user_likes WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        coffeeLikes = cur.fetchall()
+
     emit('clearList')
     for item in results:
-        coffee = {'name': item[0], 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6]}
+        coffee = {'name': item[0], 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6], 'liked': False}
+        if loggedIn:
+            for like in coffeeLikes:
+                if item[0] in like:
+                    coffee['liked'] = True         
         emit('printResults', coffee)
+
+@socketio.on('updateFavorite', namespace='/browse')
+def updateFavorite(coffeeName, liked):
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        if liked:
+            query = "DELETE FROM user_likes WHERE username = %s AND coffee_name = %s"
+        else:
+            query = "INSERT INTO user_likes VALUES (%s, %s)"
+        cur.execute(query, [user[session['uuid']]['username'], coffeeName])
+        con.commit()
+    except Exception, e:
+        raise e
+        con.rollback()
 
 
 
