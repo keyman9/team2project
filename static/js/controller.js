@@ -96,3 +96,33 @@ CoffeeCorner.controller('Browse', function($scope){
 		socket.emit('search', $scope.roast, $scope.region, $scope.price, $scope.orderBy, $scope.searchTerm);
 	};
 });
+
+/** Controller for Account Page **/
+CoffeeCorner.controller('Account', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/account');
+
+	$scope.user = [];
+
+
+	socket.on('connect', function(){                     
+		console.log('Connected to Account');
+	});
+
+	socket.on('getUser', function(){                     
+		socket.emit('getUser');
+	});
+
+	socket.on('displayInfo', function(user){  
+		console.log(user);                  
+		$scope.user.push(user);
+		$scope.$apply();
+	});
+
+	socket.on('redirect', function (data) {
+    	window.location = data.url;
+	});
+
+	$scope.logOut = function(){
+		socket.emit('logOut');
+	}
+});
