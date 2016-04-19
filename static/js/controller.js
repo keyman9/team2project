@@ -88,7 +88,6 @@ CoffeeCorner.controller('Browse', function($scope){
 	});
 
 	socket.on('printResults', function(coffee){
-		console.log(coffee);
 		$scope.results.push(coffee);
 		$scope.$apply()
 	});
@@ -97,9 +96,14 @@ CoffeeCorner.controller('Browse', function($scope){
 		socket.emit('search', $scope.roast, $scope.region, $scope.price, $scope.orderBy, $scope.searchTerm);
 	};
 
-	$scope.addFavorite = function(coffeeName){
-		console.log(coffeeName);
-	}
+	$scope.updateFavorite = function(coffeeName, liked){
+		socket.emit('updateFavorite', coffeeName, liked);
+		for (i=0; i<$scope.results.length; i++){
+			if ($scope.results[i]['name'] == coffeeName){
+				$scope.results[i]['liked'] = !liked;
+			}
+		}
+	};
 });
 
 /** Controller for Account Page **/

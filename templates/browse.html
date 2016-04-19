@@ -70,7 +70,14 @@
                 <th ng-bind="colDescription"></th>
             </tr>
                 <tr ng-repeat="coffee in results">
-                    <td><div><button id="fav-button" type="button" ng-click="addFavorite(coffee.name)">Favorite</button></div></td>
+                    <td>
+                        <div ng-if="coffee.liked">
+                            <button id="fav-button" type="button" ng-click="updateFavorite(coffee.name, coffee.liked)">Unfavorite</button>
+                        </div>
+                        <div ng-if="!coffee.liked">
+                            <button id="fav-button" type="button" ng-click="updateFavorite(coffee.name, coffee.liked)">Favorite</button>
+                        </div>
+                    </td>
                     <td ng-bind="coffee.name"></td>
                     <td> </td>
                     <td ng-bind="coffee.weight"></td>
