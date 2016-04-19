@@ -130,8 +130,7 @@ CoffeeCorner.controller('Account', function($scope){
 		$scope.lastName = user['Last_Name'];
 		$scope.zipcode = user['zipcode'];
 		$scope.favCoffee = user['favCoffee'];
-		$scope.email = user['email']; 
-		$scope.username = user['username'];              	 
+		$scope.email = user['email'];              	 
 		$scope.user.push(user);
 		$scope.$apply();
 	});
@@ -141,7 +140,8 @@ CoffeeCorner.controller('Account', function($scope){
 	});
 
 	$scope.updateAccount = function(){
-
+		socket.emit('updateAccount', $scope.firstName, $scope.lastName, $scope.zipcode, 
+			$scope.favCoffee, $scope.email, $scope.oldPassword, $scope.newPassword);
 	};
 
 	$scope.logOut = function(){
