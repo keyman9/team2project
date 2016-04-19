@@ -225,7 +225,7 @@ body {
     border-bottom: solid 2px orange;
 }
 
-.styled-button button[type="submit"], .styled-button button {
+.styled-button button[type="submit"], button[type="button"], .styled-button button {
     display: inline-block;
     margin: 20px 0 0 0;
     padding: 0px 20px;
@@ -249,13 +249,13 @@ body {
     margin-bottom: 20px;
 }
 
-.styled-button button[type=submit]:hover, .styled-button button#learn:hover  {
+.styled-button button[type=submit]:hover, button[type="button"]:hover, .styled-button button#learn:hover  {
     outline: none;
     color: #c8b69d;
     background: #241109;
 }
 
-.styled-button button[type=submit]:active{
+.styled-button button[type=submit]:active, button[type="button"]:active{
     outline: none;
 }
 
@@ -372,16 +372,16 @@ div section#moka, div section#chemex{
 }
 
 /************** 
- * browse page *
+ * Browse Page *
  **************/
-.search-results table tr th {
+.styled-table table tr th {
     font-family: 'Avenir';
     padding: 5px 10px 5px;
     background: #241109;
     color: #c8b69d;
 }
 
-.search-results table tr td {
+.styled-table table tr td {
     font-family: 'Avenir';
     padding: 5px 10px 5px;
     color: black;
@@ -390,7 +390,7 @@ div section#moka, div section#chemex{
 
 
 /************** 
- * login page *
+ * Login Page *
  **************/
 #styled-title {
     font-family: 'Avenir';
@@ -419,6 +419,19 @@ div section#moka, div section#chemex{
     font-family: "Avenir";
     color: red;
 }
+
+/**************** 
+ * Account Page *
+ ****************/
+.account #styled-title{
+    margin-bottom: 10px;
+}
+
+.account .styled-table table tr th{
+    width: 440px;
+    font-size: 1.3em;
+}
+
 
 
 /******************
