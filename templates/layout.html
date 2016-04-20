@@ -19,7 +19,11 @@
 		    <h1><a href="/">coffee corner</a></h1>
 		</div>
 
-		<div class="nav-bar" id="navbar">
+		{% if loggedIn %}
+			<div class="nav-bar" id="navbar" style="width:400px;">
+		{% else %}
+			<div class="nav-bar" id="navbar">
+		{% endif %}
 		    <ul>
 		      <li {% if selected == 'home' %}
 		      		id="selected"
@@ -33,9 +37,6 @@
 		      <li {% if selected == 'about' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/about"><span class="border-item">ABOUT</span></a></li>
-		      <li {% if selected == 'AddRecipe' %}
-		      		id="selected"
-		      	  {% endif %}><a href="/addRecipe"><span class="border-item">ADD RECIPE</span></a></li>
 		      <li{% if selected == 'login/account' %}
 		      		id="selected"
 		      	  {% endif %}><a href="/login"><span class="border-item">
@@ -56,13 +57,16 @@
 	</div>
 
 	<footer>
-		<div class="nav-bar">
+		{% if loggedIn %}
+			<div class="nav-bar" id="navbar" style="width:410px;">
+		{% else %}
+			<div class="nav-bar" id="navbar">
+		{% endif %}
 		    <ul>
 		      <li><a href="/">HOME</a></li>
 		      <li><a href="/browse"><span class="border-item">BROWSE</span></a></li>
 		      <li><a href="/learn"><span class="border-item">LEARN<span></a></li>
 		      <li><a href="/about"><span class="border-item">ABOUT</span></a></li>
-		      <li><a href="/addRecipe"><span class="border-item">ADD RECIPE</span></a></li>
 		      <li><a href="/login"><span class="border-item">
 		      	  {% if loggedIn %}
 		      	  	ACCOUNT

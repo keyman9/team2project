@@ -85,10 +85,12 @@ CoffeeCorner.controller('Browse', function($scope){
 	});
 
 	socket.on('clearList', function(){
+		document.getElementById("results").style.display = "none";
 		$scope.results = [];
 	});
 
 	socket.on('printResults', function(data){
+		document.getElementById("results").style.display = "block";
 		$scope.loggedIn = data[1];
 		$scope.results.push(data[0]);
 		$scope.$apply()
