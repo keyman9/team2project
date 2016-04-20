@@ -158,3 +158,36 @@ CoffeeCorner.controller('Account', function($scope){
 		socket.emit('logOut');
 	};
 });
+
+/** Controller for Favorite Page **/
+CoffeeCorner.controller('Favorites', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/favorites');
+
+	$scope.colName = "Name";
+	$scope.colPrice = "Price";
+	$scope.colWeight = "Weight";
+	$scope.colRoast = "Roast";
+	$scope.colBody = "Body";
+	$scope.colRegion = "Region";
+	$scope.colDescription = "Description";
+	$scope.results = [];
+
+	socket.on('connect', function(){                     
+		console.log('Connected to Favorites');
+	});
+
+	socket.on('getFavorites', function(coffee){
+		$scope.results.push(coffee);
+		$scope.$apply()
+	});
+
+	$scope.updateFavorite = function(coffeeName, liked){
+		socket.emit('updateFavorite', coffeeName, liked);
+		for (i=0; i<$scope.results.length; i++){
+			if ($scope.results[i]['name'] == coffeeName){
+				$scope.results[i]['liked'] = !liked;
+			}
+		}
+	};
+});
+

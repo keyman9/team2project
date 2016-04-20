@@ -123,7 +123,9 @@ def edit():
     return render_template('edit_account.html', selected='login/account', loggedIn=loggedIn)
 
 
-
+###############################
+# Socket Functions for Browse #
+###############################
 @socketio.on('connect', namespace='/browse')
 def makeConnection():
     print "CONNECTED TO BROWSE" 
@@ -185,7 +187,9 @@ def updateFavorite(coffeeName, liked):
         con.rollback()
 
 
-
+#########################################
+# Socket Functions for Login & Register #
+#########################################
 @socketio.on('connect', namespace='/form')
 def makeConnection():
     print "CONNECTED TO FROM"
@@ -244,6 +248,9 @@ def login(username, password):
         emit('FormFail', 'Invalid username or password!')
 
 
+###################################
+# Socket Functions for Add Recipe #
+###################################
 @socketio.on('addRecipe', namespace='/addRecipe')
 def addRecipe(title,recipe):
     con = connectToDB()
@@ -259,6 +266,9 @@ def addRecipe(title,recipe):
     emit('redirect', {'url': url_for('home')})
 
 
+################################
+# Socket Functions for Account #
+################################
 @socketio.on('connect', namespace='/account')
 def makeConnection():
     print "CONNECTED TO ACCOUNT"
@@ -345,6 +355,49 @@ def logOut():
     user = {}
     emit('redirect', {'url': url_for('home')})
 
+
+
+##################################
+# Socket Functions for Favorites #
+##################################
+@socketio.on('connect', namespace='/favorites')
+def makeConnection():
+    print "CONNECTED TO FAVORITES"
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        query = "SELECT coffee_name FROM user_likes WHERE username = %s"
+        cur.execute(query, [user[session['uuid']]['username']])
+        coffeeLikes = cur.fetchall()
+
+        query = "SELECT a.name, f.price, f.weight, c.roast, a.body, b.region, a.description FROM coffee_names AS a INNER JOIN coffee_region AS d ON a.name = d.name INNER JOIN region AS b ON d.region_id = b.region_id INNER JOIN coffee_roast AS e ON a.name = e.name INNER JOIN roast AS c ON e.roast_id = c.roast_id INNER JOIN coffee_cost AS f ON a.name = f.name WHERE a.name IN (SELECT coffee_name FROM user_likes WHERE username = %s)"
+        cur.execute(query, [user[session['uuid']]['username']])
+        favorites = cur.fetchall()
+        for item in favorites:
+            cost = str(item[1])
+            coffee = {'name': item[0], 'price': cost, 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6], 'liked': False}
+            for like in coffeeLikes:
+                if item[0] in like:
+                    coffee['liked'] = True
+            emit('getFavorites', coffee)         
+
+    except Exception, e:
+        raise e
+
+@socketio.on('updateFavorite', namespace='/favorites')
+def updateFavorite(coffeeName, liked):
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        if liked:
+            query = "DELETE FROM user_likes WHERE username = %s AND coffee_name = %s"
+        else:
+            query = "INSERT INTO user_likes VALUES (%s, %s)"
+        cur.execute(query, [user[session['uuid']]['username'], coffeeName])
+        con.commit()
+    except Exception, e:
+        raise e
+        con.rollback()
 
 
 # start the server
