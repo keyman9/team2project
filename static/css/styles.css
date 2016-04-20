@@ -437,6 +437,14 @@ div section#moka, div section#chemex{
     font-size: 1.3em;
 }
 
+/******************** 
+ * Find Friend Page *
+ ********************/
+ .styled-table table tr td button{
+    display: block;
+    margin: auto;
+    font-size: 1em;
+ }
 
 
 /******************
