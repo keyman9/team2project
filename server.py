@@ -269,13 +269,8 @@ def addRecipe(title, recipe):
     con = connectToDB()
     cur = con.cursor()
     try:
-        #get user's id
-        statement = "SELECT username FROM login WHERE username = %s"
-        cur.execute(statement, [user[session['uuid']]['username']])
-        username = cur.fetchone()[0]
-        print 'Username is ' + username
         statement = "INSERT INTO recipes (title, recipe, username) VALUES (%s, %s, %s)"
-        cur.execute(statement, [title, recipe, username])
+        cur.execute(statement, [title, recipe, user[session['uuid']]['username']])
         con.commit()
         emit('redirect', {'url': url_for('account')})
     except Exception, e:
