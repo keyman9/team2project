@@ -106,6 +106,14 @@ def account():
 
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
+@app.route('/favorites')
+def favorites():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('favorites.html', selected='login/account', loggedIn=loggedIn)
+
 @app.route('/edit')
 def edit():
     loggedIn = False
@@ -152,12 +160,14 @@ def search(roast, region, price, orderBy, searchTerm):
 
     emit('clearList')
     for item in results:
-        coffee = {'name': item[0], 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6], 'liked': False}
+        cost = str(item[1])
+        print 'COST IS ' + cost
+        coffee = {'name': item[0], 'price': cost, 'weight': item[2], 'roast': item[3], 'body': item[4], 'region': item[5], 'description': item[6], 'liked': False}
         if loggedIn:
             for like in coffeeLikes:
                 if item[0] in like:
                     coffee['liked'] = True         
-        emit('printResults', coffee)
+        emit('printResults', [coffee, loggedIn])
 
 @socketio.on('updateFavorite', namespace='/browse')
 def updateFavorite(coffeeName, liked):
