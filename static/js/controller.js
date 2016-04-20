@@ -215,6 +215,7 @@ CoffeeCorner.controller('FindFriends', function($scope){
 	});
 
 	socket.on('displayUsers', function(user){
+		document.getElementById('message').textContent = "";
 		document.getElementById("results").style.display = "block";
 		console.log(user);
 		$scope.userList.push(user);
