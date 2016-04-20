@@ -63,11 +63,17 @@ CoffeeCorner.controller('Recipes', function($scope){
 CoffeeCorner.controller('Browse', function($scope){
 	var socket = io.connect('http://' + document.domain + ':' + location.port + '/browse');
 
-	$scope.roast = "Light";
-	$scope.region = "South America";
-	$scope.price = "12.00";
-	$scope.orderBy = "Name";
+	$scope.roast = "";
+	$scope.region = "";
+	$scope.price = "100";
+	$scope.orderBy = "";
 	$scope.searchTerm = "";
+
+    $scope.checkRoast = '';
+    $scope.checkRegion = '';
+    $scope.checkCost = '';
+    $scope.checkOrdered = '';
+    $scope.checkRoast = '';
 
 	$scope.colName = "Name";
 	$scope.colPrice = "Price";

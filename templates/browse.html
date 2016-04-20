@@ -7,7 +7,8 @@
         <div>
 
             <form ng-submit="search()">
-                <p><span class="param-title">Roast:</span> <select ng-model="roast" name="roast" id="roast">
+                <p><input type="checkbox" ng-model="checkRoast"><span class="param-title">Roast:</span><select ng-model="roast" name="roast" id="roast" ng-disabled="!checkRoast">
+                    <option value="" ng-selected="!checkRoast"></option>
                     <option value="Light">Light</option>
                     <option value="Medium Light">Medium Light</option>
                     <option value="Medium">Medium</option>
@@ -15,14 +16,16 @@
                     <option value="Dark">Dark</option>
                 </select>
                 &nbsp;
-                <span class="param-title">Region:</span> <select ng-model="region" name="region" id="region">
+                <input type="checkbox" ng-model="checkRegion"><span class="param-title">Region:</span> <select ng-model="region" name="region" id="region" ng-disabled="!checkRegion">
+                    <option value="" ng-selected="!checkRegion"></option>
                     <option value="South America">South America</option>
                     <option value="Central America">Central America</option>
                     <option value="Indonesia">Indonesia</option>
                     <option value="Africa">Africa</option>
                 </select>
                 &nbsp;
-                <span class="param-title">Cost:</span> <select ng-model="price" name="price" id="price">
+                <input type="checkbox" ng-model="checkPrice"><span class="param-title">Cost:</span> <select ng-model="price" name="price" id="price" ng-disabled="!checkPrice">
+                    <option value="" ng-selected="!checkPrice"></option>
                     <option value="12.00">$12.00</option>
                     <option value="13.00">$13.00</option>
                     <option value="14.00">$14.00</option>
@@ -33,7 +36,8 @@
                     <option value="19.00">$19.00+</option>
                 </select>
                 &nbsp;
-                <span class="param-title">Ordered by:</span> <select ng-model="orderBy" name="order" id="order">
+                <input type="checkbox" ng-model="checkOrder" ng-click="selected()"><span class="param-title">Ordered by:</span> <select ng-model="orderBy" name="order" id="order" ng-disabled="!checkOrder">
+                    <option value="" ng-selected="!checkOrder"></option>
                     <option value="Name">Coffee Name</option>
                     <option value="Roast">Roast</option>
                     <option value="Region">Region</option>
