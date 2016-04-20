@@ -7,7 +7,7 @@
         <div>
 
             <form ng-submit="search()">
-                <p>Roast: <select ng-model="roast" name="roast" id="roast">
+                <p><span class="param-title">Roast:</span> <select ng-model="roast" name="roast" id="roast">
                     <option value="Light">Light</option>
                     <option value="Medium Light">Medium Light</option>
                     <option value="Medium">Medium</option>
@@ -15,14 +15,14 @@
                     <option value="Dark">Dark</option>
                 </select>
                 &nbsp;
-                Region: <select ng-model="region" name="region" id="region">
+                <span class="param-title">Region:</span> <select ng-model="region" name="region" id="region">
                     <option value="South America">South America</option>
                     <option value="Central America">Central America</option>
                     <option value="Indonesia">Indonesia</option>
                     <option value="Africa">Africa</option>
                 </select>
                 &nbsp;
-                Cost: <select ng-model="price" name="price" id="price">
+                <span class="param-title">Cost:</span> <select ng-model="price" name="price" id="price">
                     <option value="12.00">$12.00</option>
                     <option value="13.00">$13.00</option>
                     <option value="14.00">$14.00</option>
@@ -33,14 +33,14 @@
                     <option value="19.00">$19.00+</option>
                 </select>
                 &nbsp;
-                Ordered by: <select ng-model="orderBy" name="order" id="order">
+                <span class="param-title">Ordered by:</span> <select ng-model="orderBy" name="order" id="order">
                     <option value="Name">Coffee Name</option>
                     <option value="Roast">Roast</option>
                     <option value="Region">Region</option>
                     <option value="Cost">Cost</option>
                 </select>
                 <hr>
-                OR
+                <span class="param-title">OR</span>
                 <hr>
 
                 <table class="styled-input">
@@ -60,7 +60,7 @@
         <div style="display: block" id="results" class="styled-table">
             <table>
             <tr>
-                <th></th>
+                <th ng-if="loggedIn"></th>
                 <th ng-bind="colName"></th>
                 <th ng-bind="colPrice"></th>
                 <th ng-bind="colWeight"></th>
@@ -70,7 +70,7 @@
                 <th ng-bind="colDescription"></th>
             </tr>
                 <tr ng-repeat="coffee in results">
-                    <td>
+                    <td ng-if="loggedIn">
                         <div ng-if="coffee.liked">
                             <button id="fav-button" type="button" ng-click="updateFavorite(coffee.name, coffee.liked)">Unfavorite</button>
                         </div>
@@ -79,7 +79,7 @@
                         </div>
                     </td>
                     <td ng-bind="coffee.name"></td>
-                    <td> </td>
+                    <td ng-bind="coffee.price"></td>
                     <td ng-bind="coffee.weight"></td>
                     <td ng-bind="coffee.roast"></td>
                     <td ng-bind="coffee.body"></td>
