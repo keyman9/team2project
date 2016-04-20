@@ -382,6 +382,7 @@ div section#moka, div section#chemex{
 }
 
 .styled-table table tr td {
+    text-align: center;
     font-family: 'Avenir';
     padding: 5px 10px 5px;
     color: black;

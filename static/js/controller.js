@@ -193,3 +193,15 @@ CoffeeCorner.controller('Favorites', function($scope){
 	};
 });
 
+/** Controller for Favorite Page **/
+CoffeeCorner.controller('Find Friends', function($scope){
+	var socket = io.connect('http://' + document.domain + ':' + location.port + '/friends');
+
+	socket.on('connect', function(){                     
+		console.log('Connected to Find Friends');
+	});
+
+});
+
+
+
