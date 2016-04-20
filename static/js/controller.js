@@ -186,6 +186,7 @@ CoffeeCorner.controller('Favorites', function($scope){
 	$scope.updateFavorite = function(coffeeName, liked){
 		socket.emit('updateFavorite', coffeeName, liked);
 		for (i=0; i<$scope.results.length; i++){
+			// When coffee found, update to opposite of current state
 			if ($scope.results[i]['name'] == coffeeName){
 				$scope.results[i]['liked'] = !liked;
 			}
@@ -223,6 +224,16 @@ CoffeeCorner.controller('FindFriends', function($scope){
 	$scope.findFriends = function(){
 		console.log("Looking for " + $scope.userSearch);
 		socket.emit('findFriends', $scope.userSearch);
+	};
+
+	$scope.updateFriend = function(username, alreadyFollowing){
+		socket.emit('updateFriend', username, alreadyFollowing);
+		for (i=0; i<$scope.userList.length; i++){
+			// When user found, update to opposite of current state
+			if ($scope.userList[i]['username'] == username){
+				$scope.userList[i]['following'] = !alreadyFollowing;
+			}
+		}
 	};
 });
 

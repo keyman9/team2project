@@ -435,16 +435,49 @@ def findFriends(searchTerm):
         if not searchTerm:
             emit('FormFail', 'Please enter a search term!')
         else:
+            # Get all users current user is following by id
+            query = "SELECT username FROM login WHERE id IN (SELECT following_id FROM following WHERE username = %s)"
+            cur.execute(query, [user[session['uuid']]['username']])
+            followingUser = cur.fetchall()
+            # Query DB for users by search term
             query = "SELECT a.first_name, a.last_name, a.username, b.favorite_coffee FROM login AS a join user_info AS b ON a.username = b.username WHERE (LOWER(a.first_name) = LOWER(%s) OR LOWER(a.last_name) = LOWER(%s) OR LOWER(a.username) = LOWER(%s) OR LOWER(b.favorite_coffee) = LOWER(%s)) AND LOWER(a.username) <> LOWER(%s)"
             cur.execute(query, [searchTerm, searchTerm, searchTerm, searchTerm, user[session['uuid']]['username']])
             userResults = cur.fetchall()
             emit('clearList')
+            # Create user dict to emit to client
             for item in userResults:
-                User = {'firstName': item[0], 'lastName': item[1], 'username': item[2], 'favCoffee': item[3]}
-                print User
+                User = {'firstName': item[0], 'lastName': item[1], 'username': item[2], 'favCoffee': item[3], 'following': False}
+                # Check if user is following this user
+                for name in followingUser:
+                    if item[2] in name:
+                        User['following'] = True
                 emit('displayUsers', User)
     except Exception, e:
         raise e
+
+@socketio.on('updateFriend', namespace='/friends')
+def addFriend(username, alreadyFollowing):
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        query1 = ""
+        query2 = ""
+        if alreadyFollowing:
+            print 'DELETING!!!!'
+            query1 = "DELETE FROM following WHERE username = %s AND following_id = (SELECT id FROM login WHERE username = %s)"
+            query2 = "DELETE FROM followers WHERE username = %s AND follower_id = (SELECT id FROM login WHERE username = %s)"
+        else:
+            print 'INSERTING!!!!'
+            query1 = "INSERT INTO following VALUES (%s, (SELECT id FROM login WHERE username = %s))"
+            query2 = "INSERT INTO followers VALUES (%s, (SELECT id FROM login WHERE username = %s))"
+        cur.execute(query1, [user[session['uuid']]['username'], username])
+        con.commit()
+        cur.execute(query2, [username, user[session['uuid']]['username']])
+        con.commit()
+        print 'DONE DEAL!!!'
+    except Exception, e:
+        raise e
+        con.rollback()
 
 
 # start the server

@@ -164,6 +164,22 @@ CREATE TABLE user_likes(
     PRIMARY KEY (username, coffee_name)
 );
 
+
+DROP TABLE IF EXISTS following
+CREATE TABLE following(
+    username varchar(35)  REFERENCES login(username) NOT NULL,
+    following_id int REFERENCES login(id),
+    PRIMARY KEY (username, following_id)
+);
+
+
+DROP TABLE IF EXISTS followers
+CREATE TABLE followers(
+    username varchar(35)  REFERENCES login(username) NOT NULL,
+    follower_id int REFERENCES login(id),
+    PRIMARY KEY (username, follower_id)
+);
+
 ----
 --
 -- Name: region; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -780,6 +796,16 @@ REVOKE ALL ON TABLE user_likes FROM PUBLIC;
 REVOKE ALL ON TABLE user_likes FROM postgres;
 GRANT ALL ON TABLE user_likes TO postgres;
 GRANT SELECT,INSERT,DELETE ON TABLE user_likes TO visiting;
+
+REVOKE ALL ON TABLE following FROM PUBLIC;
+REVOKE ALL ON TABLE following FROM postgres;
+GRANT ALL ON TABLE following TO postgres;
+GRANT SELECT,INSERT,DELETE ON TABLE following TO visiting;
+
+REVOKE ALL ON TABLE followers FROM PUBLIC;
+REVOKE ALL ON TABLE followers FROM postgres;
+GRANT ALL ON TABLE followers TO postgres;
+GRANT SELECT,INSERT,DELETE ON TABLE followers TO visiting;
 
 --
 -- Grant permissions
