@@ -19,12 +19,21 @@
     	<div style="display:none;" id="results" class="styled-table">
             <table>
 	            <tr>
+	            	<th></th>
 	                <th>First Name</th>
 	                <th>Last Name</th>
 	                <th>Username</th>
 	                <th>Favorite Coffee</th>
 	            </tr>
 	            <tr ng-repeat="user in userList">
+	            	<td>
+	            		<div ng-if="user.following">
+	            			<button type="button" ng-click="updateFriend(user.username, user.following)">Unfollow</button>
+	            		</div>
+	            		<div ng-if="!user.following">
+	            			<button type="button" ng-click="updateFriend(user.username, user.following)">Follow</button>
+	            		</div>
+	            	</td>
 	            	<td ng-bind="user.firstName"></td>
 	            	<td ng-bind="user.lastName"></td>
 	            	<td ng-bind="user.username"></td>
