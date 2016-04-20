@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section ng-controller="Favorites">
+	<div class="account">
+		<center>
+			<h1 id="styled-title">My Favorites</h1>
+			<div style="display: block" id="results" class="styled-table">
+	            <table>
+	            <tr>
+	                <th></th>
+	                <th ng-bind="colName"></th>
+	                <th ng-bind="colPrice"></th>
+	                <th ng-bind="colWeight"></th>
+	                <th ng-bind="colRoast"></th>
+	                <th ng-bind="colBody"></th>
+	                <th ng-bind="colRegion"></th>
+	                <th ng-bind="colDescription"></th>
+	            </tr>
+	                <tr ng-repeat="coffee in results">
+	                    <td>
+	                        <div ng-if="coffee.liked">
+	                            <button id="fav-button" type="button" ng-click="updateFavorite(coffee.name, coffee.liked)">Unfavorite</button>
+	                        </div>
+	                        <div ng-if="!coffee.liked">
+	                            <button id="fav-button" type="button" ng-click="updateFavorite(coffee.name, coffee.liked)">Favorite</button>
+	                        </div>
+	                    </td>
+	                    <td ng-bind="coffee.name"></td>
+	                    <td> </td>
+	                    <td ng-bind="coffee.weight"></td>
+	                    <td ng-bind="coffee.roast"></td>
+	                    <td ng-bind="coffee.body"></td>
+	                    <td ng-bind="coffee.region"></td>
+	                    <td ng-bind="coffee.description"></td>
+	                </tr>
+	            </table>
+        	</div>
+		</center>
+	</div>
+</section>
+
+{% endblock %}
