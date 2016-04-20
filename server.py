@@ -271,7 +271,7 @@ def login(username, password):
 
 
 ###################################
-# Socket Functions for Add Recipe #
+# Socket Functions for Recipes #
 ###################################
 @socketio.on('addRecipe', namespace='/addRecipe')
 def addRecipe(title, recipe):
@@ -284,6 +284,33 @@ def addRecipe(title, recipe):
         emit('redirect', {'url': url_for('account')})
     except Exception, e:
         raise e
+
+@socketio.on('browseRecipes', namespace='/addRecipe')
+def browseRecipes(searchTerm):
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    results = []
+    con = connectToDB()
+    cur = con.cursor()
+    if searchTerm:
+        searchTerm = '%' + searchTerm + '%'
+        statement = "SELECT title,recipe,username from recipes where title ilike %s OR recipe ilike %s OR username ilike %s"
+        try:
+            cur.execute(statement, [searchTerm, searchTerm, searchTerm])
+            results = cur.fetchall()
+        except Exception, e:
+            raise e
+
+    emit('clearList')
+    for item in results:
+        print item
+        recipe = {'title': item[0], 'recipe': item[1], 'username': item[2]} 
+        print recipe                    
+        emit('printResults', [recipe, loggedIn])
+
+
 
 
 ################################

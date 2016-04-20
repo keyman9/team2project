@@ -127,6 +127,21 @@ CREATE TABLE login (
 ALTER TABLE public.login OWNER TO postgres;
 
 --
+-- Name: login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY login
+    ADD CONSTRAINT login_pkey PRIMARY KEY (id);
+
+--
+-- Name: login_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY login
+    ADD CONSTRAINT login_username_key UNIQUE (username);
+
+
+--
 -- Name: login_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -165,7 +180,7 @@ CREATE TABLE user_likes(
 );
 
 
-DROP TABLE IF EXISTS following
+DROP TABLE IF EXISTS following;
 CREATE TABLE following(
     username varchar(35)  REFERENCES login(username) NOT NULL,
     following_id int REFERENCES login(id),
@@ -173,7 +188,7 @@ CREATE TABLE following(
 );
 
 
-DROP TABLE IF EXISTS followers
+DROP TABLE IF EXISTS followers;
 CREATE TABLE followers(
     username varchar(35)  REFERENCES login(username) NOT NULL,
     follower_id int REFERENCES login(id),
@@ -614,22 +629,6 @@ ALTER TABLE ONLY coffee
 
 ALTER TABLE ONLY coffee_roast
     ADD CONSTRAINT coffee_roast_pkey PRIMARY KEY (name, roast_id);
-
-
---
--- Name: login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY login
-    ADD CONSTRAINT login_pkey PRIMARY KEY (id);
-
-
---
--- Name: login_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY login
-    ADD CONSTRAINT login_username_key UNIQUE (username);
 
 
 --

@@ -49,14 +49,33 @@ CoffeeCorner.controller('Recipes', function($scope){
     	window.location = data.url;
 	});
 
-	$scope.recipeTitle = ""
-    $scope.recipe = ""
+	$scope.colTitle = "Title";
+    $scope.colRecipe = "Instructions";
+    $scope.colUser = "User";
+    $scope.results = [];
+    $scope.searchTerm = "";
+
+	socket.on('printResults', function(data){
+		document.getElementById("results").style.display = "block";
+		$scope.loggedIn = data[1];
+		$scope.results.push(data[0]);
+		$scope.$apply()
+	});
+
+	socket.on('clearList', function(){
+		document.getElementById("results").style.display = "none";
+		$scope.results = [];
+	});
+
     $scope.addRecipe = function(){
         console.log($scope.recipeTitle);
         console.log($scope.recipe);
         socket.emit('addRecipe', $scope.recipeTitle, $scope.recipe);
     };
 
+    $scope.browseRecipes = function(){
+    	socket.emit('browseRecipes',$scope.searchTerm);
+    };
 });
 
 /** Controller for Browse Page **/

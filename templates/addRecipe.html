@@ -23,5 +23,36 @@
   </form>
   </center>
 </section>
+<section ng-controller="Recipes">
+  <center>
+    <h1 id="styled-title">Browse Recipes</h1>
+    <div>
+    <form ng-submit="browseRecipes()">
+      <table class="styled-input">
+        <tr>
+          <td>Search: </td><td><input ng-model="searchTerm" type="text"></td>
+        </tr>
+        <section class="styled-button">
+          <button type="submit">Search</button>
+        </section>
+      </table>
+    </form>
+    </div>
+    <div style="display:none;" id="results" class="styled-table">
+      <table>
+        <tr>
+          <th ng-bind="colTitle"></th>
+          <th ng-bind="colRecipe"></th>
+          <th ng-bind="colUser"></th>
+        </tr>
+        <tr ng-repeat="recipe in results">
+          <td ng-bind="recipe.title"></td>
+          <td ng-bind="recipe.recipe"></td>
+          <td ng-bind="recipe.username"></td>
+        </tr>
+      </table>
+    </div>
+  </center>
+</section>
 
 {% endblock %}
