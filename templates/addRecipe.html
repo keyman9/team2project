@@ -1,24 +1,26 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<section ng-controller="Recipes">
-<center>
-<h1 id="styled-title">Add Recipe</h1>
-<form ng-submit="addRecipe()">
-    <table class="styled-input">
-          <tr>
-            <td>Title: </td> <td> <input ng-model="recipeTitle" type="text"></td>
-          </tr>
-          <tr> 
-            <td>Recipe: </td> <td> <input ng-model="recipe" type="text" ></td>
-          </tr>
-    </table>
 
-    <section class="styled-button">
-        <button type="submit">Submit Recipe</button>
-        <div class="invalid"><p id="message"></p></div>
-    </section>
-</form>
-</center>
+<section ng-controller="Recipes">
+  <center>
+  <h1 id="styled-title">Add Recipe</h1>
+  <form ng-submit="addRecipe()">
+      <table class="styled-input">
+            <tr>
+              <td>Title: </td> <td> <input ng-model="recipeTitle" type="text"></td>
+            </tr>
+            <tr> 
+              <td>Recipe: </td> <td> <input ng-model="recipe" type="text" ></td>
+            </tr>
+      </table>
+
+      <section class="styled-button">
+          <button type="submit">Submit Recipe</button>
+          <div class="invalid"><p id="message"></p></div>
+      </section>
+  </form>
+  </center>
 </section>
+
 {% endblock %}

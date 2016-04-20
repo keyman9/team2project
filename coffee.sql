@@ -151,10 +151,9 @@ DROP TABLE IF EXISTS recipes;
 CREATE TABLE recipes(
     recipe_id serial NOT NULL,
     title text NOT NULL DEFAULT '',
-    recipe text NOT NULL DEFAULT,
-    login_id int NOT NULL,
-    PRIMARY KEY(recipe_id),
-    FOREIGN KEY(login_id) REFERENCES login(id)
+    recipe text NOT NULL DEFAULT '',
+    username varchar(35) REFERENCES login(username) NOT NULL,
+    PRIMARY KEY(recipe_id)
 );
 
 
@@ -775,7 +774,7 @@ REVOKE ALL ON TABLE learn FROM PUBLIC;
 REVOKE ALL ON TABLE learn FROM postgres;
 GRANT ALL ON TABLE learn TO postgres;
 GRANT SELECT,INSERT ON TABLE learn TO visiting;
-GRANT SELECT,INSERT ON TABLE recipes TO visiting;
+GRANT SELECT,INSERT,DELETE ON TABLE recipes TO visiting;
 
 REVOKE ALL ON TABLE user_likes FROM PUBLIC;
 REVOKE ALL ON TABLE user_likes FROM postgres;

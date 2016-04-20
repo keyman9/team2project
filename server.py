@@ -1,7 +1,7 @@
 import os
 import time
 import random
-import hashlib, uuid, decimal
+import hashlib, uuid
 import psycopg2
 import psycopg2.extras
 from collections import defaultdict
@@ -24,7 +24,7 @@ def connectToDB():
     except:
         print("Can't connect to database")
 
-
+# Home Page
 @app.route('/')
 def home():
     global passed
@@ -41,7 +41,7 @@ def home():
 
     return render_template('index.html', selected="home", loggedIn=loggedIn)
 
-
+# Browse Page
 @app.route('/browse', methods = ['GET','POST'])
 def browse():
     loggedIn = False
@@ -50,6 +50,7 @@ def browse():
 
     return render_template('browse.html', selected="browse", loggedIn=loggedIn)
 
+# Learn Page
 @app.route('/learn', methods = ['GET','POST'])
 def learn():
     loggedIn = False
@@ -67,6 +68,7 @@ def learn():
     
     return render_template('learn.html', selected="learn", loggedIn=loggedIn, roasts=results)
 
+# About Page
 @app.route('/about', methods=['GET'])
 def about():	
     loggedIn = False
@@ -75,14 +77,7 @@ def about():
 
     return render_template('about.html', selected="about", loggedIn=loggedIn)
     
-@app.route('/addRecipe', methods = ['GET','POST'])
-def addRecipe():
-    loggedIn = False
-    if 'uuid' in session:
-        loggedIn = True
-    return render_template('addRecipe.html', selected='addRecipe', loggedIn=loggedIn)
-
-   
+# Login Page   
 @app.route('/login', methods = ['GET','POST'])
 def login():
     if 'uuid' in session:
@@ -90,6 +85,7 @@ def login():
     else:
         return render_template('login.html', selected="login/account", loggedIn=False)
 
+# Register Page
 @app.route('/register', methods = ['GET'])
 def register():
     loggedIn = False
@@ -98,6 +94,7 @@ def register():
 
     return render_template('register.html', loggedIn=loggedIn)
 
+# My Account Page
 @app.route('/account')
 def account():
     loggedIn = False
@@ -106,6 +103,7 @@ def account():
 
     return render_template('account.html', selected='login/account', loggedIn=loggedIn)
 
+# My Favorties Page
 @app.route('/favorites')
 def favorites():
     loggedIn = False
@@ -114,6 +112,16 @@ def favorites():
 
     return render_template('favorites.html', selected='login/account', loggedIn=loggedIn)
 
+# Add Recipe Page
+@app.route('/addRecipe', methods = ['GET','POST'])
+def addRecipe():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('addRecipe.html', selected='login/account', loggedIn=loggedIn)
+
+# Edit Account Page
 @app.route('/edit')
 def edit():
     loggedIn = False
@@ -121,6 +129,11 @@ def edit():
         loggedIn = True
 
     return render_template('edit_account.html', selected='login/account', loggedIn=loggedIn)
+
+
+
+
+##################### SocketIO Methods ##########################
 
 
 ###############################
@@ -252,18 +265,21 @@ def login(username, password):
 # Socket Functions for Add Recipe #
 ###################################
 @socketio.on('addRecipe', namespace='/addRecipe')
-def addRecipe(title,recipe):
+def addRecipe(title, recipe):
     con = connectToDB()
     cur = con.cursor()
-    #get user's id
-    statement = "SELECT id FROM login where username = %s"
-    cur.execute(statement,(user[session['uuid']]['username'],))
-    userId = cur.fetchone()[0]
-    print "Username?",user[session['uuid']]['username']
-    statement = "INSERT INTO recipes (title,recipe,login_id) VALUES (%s,%s,%s)"
-    cur.execute(statement,(title,recipe,userId))
-    con.commit()
-    emit('redirect', {'url': url_for('home')})
+    try:
+        #get user's id
+        statement = "SELECT username FROM login WHERE username = %s"
+        cur.execute(statement, [user[session['uuid']]['username']])
+        username = cur.fetchone()[0]
+        print 'Username is ' + username
+        statement = "INSERT INTO recipes (title, recipe, username) VALUES (%s, %s, %s)"
+        cur.execute(statement, [title, recipe, username])
+        con.commit()
+        emit('redirect', {'url': url_for('account')})
+    except Exception, e:
+        raise e
 
 
 ################################
