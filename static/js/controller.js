@@ -77,6 +77,7 @@ CoffeeCorner.controller('Browse', function($scope){
 	$scope.colRegion = "Region";
 	$scope.colDescription = "Description";
 	$scope.results = [];
+	$scope.loggedIn = false;
 
 
 	socket.on('connect', function(){
@@ -87,8 +88,9 @@ CoffeeCorner.controller('Browse', function($scope){
 		$scope.results = [];
 	});
 
-	socket.on('printResults', function(coffee){
-		$scope.results.push(coffee);
+	socket.on('printResults', function(data){
+		$scope.loggedIn = data[1];
+		$scope.results.push(data[0]);
 		$scope.$apply()
 	});
 
