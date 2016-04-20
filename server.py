@@ -121,6 +121,15 @@ def addRecipe():
 
     return render_template('addRecipe.html', selected='login/account', loggedIn=loggedIn)
 
+# Find Friends Page
+@app.route('/friends')
+def friends():
+    loggedIn = False
+    if 'uuid' in session:
+        loggedIn = True
+
+    return render_template('find_friends.html', selected='login/account', loggedIn=loggedIn)
+
 # Edit Account Page
 @app.route('/edit')
 def edit():
@@ -409,6 +418,33 @@ def updateFavorite(coffeeName, liked):
     except Exception, e:
         raise e
         con.rollback()
+
+
+#####################################
+# Socket Functions for Find Friends #
+#####################################
+@socketio.on('connect', namespace='/friends')
+def makeConnection():
+    print "CONNECTED TO FRIENDS"
+
+@socketio.on('findFriends', namespace="/friends")
+def findFriends(searchTerm):
+    con = connectToDB()
+    cur = con.cursor()
+    try:
+        if not searchTerm:
+            emit('FormFail', 'Please enter a search term!')
+        else:
+            query = "SELECT a.first_name, a.last_name, a.username, b.favorite_coffee FROM login AS a join user_info AS b ON a.username = b.username WHERE (LOWER(a.first_name) = LOWER(%s) OR LOWER(a.last_name) = LOWER(%s) OR LOWER(a.username) = LOWER(%s) OR LOWER(b.favorite_coffee) = LOWER(%s)) AND LOWER(a.username) <> LOWER(%s)"
+            cur.execute(query, [searchTerm, searchTerm, searchTerm, searchTerm, user[session['uuid']]['username']])
+            userResults = cur.fetchall()
+            emit('clearList')
+            for item in userResults:
+                User = {'firstName': item[0], 'lastName': item[1], 'username': item[2], 'favCoffee': item[3]}
+                print User
+                emit('displayUsers', User)
+    except Exception, e:
+        raise e
 
 
 # start the server

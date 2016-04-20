@@ -194,13 +194,36 @@ CoffeeCorner.controller('Favorites', function($scope){
 });
 
 /** Controller for Favorite Page **/
-CoffeeCorner.controller('Find Friends', function($scope){
+CoffeeCorner.controller('FindFriends', function($scope){
 	var socket = io.connect('http://' + document.domain + ':' + location.port + '/friends');
+
+	$scope.userSearch = "";
+	$scope.userList = [];
 
 	socket.on('connect', function(){                     
 		console.log('Connected to Find Friends');
 	});
 
+	socket.on('FormFail', function(msg){
+		document.getElementById('message').textContent = msg;
+	});
+
+	socket.on('clearList', function(){
+		document.getElementById("results").style.display = "none";
+		$scope.userList = [];
+	});
+
+	socket.on('displayUsers', function(user){
+		document.getElementById("results").style.display = "block";
+		console.log(user);
+		$scope.userList.push(user);
+		$scope.$apply()
+	});
+
+	$scope.findFriends = function(){
+		console.log("Looking for " + $scope.userSearch);
+		socket.emit('findFriends', $scope.userSearch);
+	};
 });
 
 

@@ -1,7 +1,38 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<section ng-controller="Find Friends">
+<section ng-controller="FindFriends">
+	<center>
+		<h1 id="styled-title" style="margin-bottom:20px;">Find Friends</h1>
+		<form ng-submit="findFriends()">
+			<table class="styled-input">
+	            <tr>
+	                <td>Search for Friends: </td><td> <input ng-model="userSearch" type="text"/></td>
+	            </tr>
+	        </table> 
+	        <div class="styled-button">
+	        	<button type="submit">Find</button>
+	        	<div class="invalid"><p id="message"></p></div>
+	        </div>
+    	</form>
+
+    	<div style="display:none;" id="results" class="styled-table">
+            <table>
+	            <tr>
+	                <th>First Name</th>
+	                <th>Last Name</th>
+	                <th>Username</th>
+	                <th>Favorite Coffee</th>
+	            </tr>
+	            <tr ng-repeat="user in userList">
+	            	<td ng-bind="user.firstName"></td>
+	            	<td ng-bind="user.lastName"></td>
+	            	<td ng-bind="user.username"></td>
+	            	<td ng-bind="user.favCoffee"></td>
+	            </tr>
+            </table>
+        </div>
+	</center>
 	
 </section>
 
