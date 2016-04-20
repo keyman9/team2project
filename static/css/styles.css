@@ -388,6 +388,10 @@ div section#moka, div section#chemex{
     border-bottom: 1px solid #ddd;
 }
 
+.param-title {
+    font-family: 'Avenir';
+}
+
 
 /************** 
  * Login Page *
