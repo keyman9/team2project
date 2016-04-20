@@ -462,6 +462,7 @@ def addFriend(username, alreadyFollowing):
     try:
         query1 = ""
         query2 = ""
+        # If already following then delete info from tables, otherwise insert into tables
         if alreadyFollowing:
             print 'DELETING!!!!'
             query1 = "DELETE FROM following WHERE username = %s AND following_id = (SELECT id FROM login WHERE username = %s)"
